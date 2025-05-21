@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "DemoChartProject.Controllers.APIS.UserChartController",
+    "Method": "GetUserRegistrations",
+    "RelativePath": "api/UserChart/user-registrations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
