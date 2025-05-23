@@ -9,9 +9,6 @@
   <ItemGroup>
     <Folder Include="EntityModels\" />
     <Folder Include="Data\" />
-    <Folder Include="DbSeeder\" />
-    <Folder Include="Repositories\Interfaces\" />
-    <Folder Include="Repositories\Implementations\" />
   </ItemGroup>
 
   <ItemGroup>

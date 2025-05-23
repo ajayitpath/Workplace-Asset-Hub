@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\IPS-74\\Desktop\\WAH_Backend\\WAH.Common\\WAH.Common.csproj": {}
+    "C:\\Users\\IPS-74\\Desktop\\WAH\\WAH_Backend\\WAH.Common\\WAH.Common.csproj": {}
   },
   "projects": {
-    "C:\\Users\\IPS-74\\Desktop\\WAH_Backend\\WAH.Common\\WAH.Common.csproj": {
+    "C:\\Users\\IPS-74\\Desktop\\WAH\\WAH_Backend\\WAH.Common\\WAH.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\IPS-74\\Desktop\\WAH_Backend\\WAH.Common\\WAH.Common.csproj",
+        "projectUniqueName": "C:\\Users\\IPS-74\\Desktop\\WAH\\WAH_Backend\\WAH.Common\\WAH.Common.csproj",
         "projectName": "WAH.Common",
-        "projectPath": "C:\\Users\\IPS-74\\Desktop\\WAH_Backend\\WAH.Common\\WAH.Common.csproj",
+        "projectPath": "C:\\Users\\IPS-74\\Desktop\\WAH\\WAH_Backend\\WAH.Common\\WAH.Common.csproj",
         "packagesPath": "C:\\Users\\IPS-74\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\IPS-74\\Desktop\\WAH_Backend\\WAH.Common\\obj\\",
+        "outputPath": "C:\\Users\\IPS-74\\Desktop\\WAH\\WAH_Backend\\WAH.Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

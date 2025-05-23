@@ -8,8 +8,11 @@ namespace WAH.DAL.EntityConfigs
     {
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
-            // Primary Key
+            // Primary Key with SQL Server NEWSEQUENTIALID() default value
             builder.HasKey(u => u.Id);
+
+            builder.Property(u => u.Id)
+                   .HasDefaultValueSql("NEWSEQUENTIALID()");
 
             // FirstName & LastName
             builder.Property(u => u.FirstName)
@@ -54,6 +57,9 @@ namespace WAH.DAL.EntityConfigs
             // Desk Number (Optional but validated)
             builder.Property(u => u.DeskNo)
                    .HasMaxLength(20);
+
+            // Ignore ConfirmPassword - not mapped to DB
+            builder.Ignore(u => u.ConfirmPassword);
         }
     }
 }
