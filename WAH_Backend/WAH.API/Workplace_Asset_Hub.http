@@ -1,0 +1,6 @@
+@Workplace_Asset_Hub_HostAddress = http://localhost:5133
+
+GET {{Workplace_Asset_Hub_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

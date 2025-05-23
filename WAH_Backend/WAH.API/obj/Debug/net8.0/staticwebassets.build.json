@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "mgSLoRV1SVV5mtcUN79D930vAxCQEoCE+QQQ2gtCVQc=",
+  "Source": "WAH.API",
+  "BasePath": "_content/WAH.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
