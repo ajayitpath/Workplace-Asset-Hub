@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; // Ensure this using directive is present
+using WAH.BLL.DbSeeder;
+using WAH.BLL.Services.Implementations;
+using WAH.BLL.Services.Interfaces;
 using WAH.DAL.Data;
 using WAH.DAL.Repositories.Implementations;
 using WAH.DAL.Repositories.Interfaces;
-using WAH.BLL.Services.Implementations;
-using WAH.BLL.Services.Interfaces;
-using WAH.BLL.DbSeeder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +26,14 @@ builder.Services.AddScoped<DatabaseSeeder>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+// Fix for CS0305: Specify the generic type parameter explicitly
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+
 
 var app = builder.Build();
 

@@ -53,6 +53,16 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.Extensions.Features": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -118,6 +128,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -253,9 +269,6 @@
             "projectReferences": {
               "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj": {
                 "projectPath": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj"
-              },
-              "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\WAH.DAL.csproj": {
-                "projectPath": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\WAH.DAL.csproj"
               }
             }
           }

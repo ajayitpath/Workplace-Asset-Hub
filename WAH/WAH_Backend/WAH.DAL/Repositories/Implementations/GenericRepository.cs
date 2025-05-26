@@ -31,10 +31,13 @@ namespace WAH.DAL.Repositories.Implementations
             return await _dbSet.Where(predicate).ToListAsync();
         }
 
-        public async Task AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
-            await _dbSet.AddAsync(entity);
+            var response = await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync(); // Optional: depends on your design
+            return response.Entity;
         }
+
 
         public async Task AddRangeAsync(IEnumerable<T> entities)
         {
