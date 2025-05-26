@@ -17,12 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WAH.BLL\WAH.BLL.csproj" />
-    <ProjectReference Include="..\WAH.DAL\WAH.DAL.csproj" />
   </ItemGroup>
 
 </Project>
