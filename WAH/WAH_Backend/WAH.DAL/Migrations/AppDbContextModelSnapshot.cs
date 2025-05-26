@@ -26,13 +26,13 @@ namespace WAH.DAL.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<DateTime>("DOB")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeskNo")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -47,7 +47,6 @@ namespace WAH.DAL.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Gender")
-                        .HasMaxLength(10)
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -60,12 +59,10 @@ namespace WAH.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("ProfileImage")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -75,7 +72,8 @@ namespace WAH.DAL.Migrations
                         .IsUnique();
 
                     b.HasIndex("PhoneNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[PhoneNumber] IS NOT NULL");
 
                     b.ToTable("Users");
                 });

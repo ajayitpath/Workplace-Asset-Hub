@@ -33,3 +33,21 @@ C:\Users\IPS-74\Desktop\WAH_Backend\WAH.DAL\bin\Debug\net8.0\WAH.Common.pdb
 C:\Users\IPS-74\Desktop\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.csproj.Up2Date
 C:\Users\IPS-74\Desktop\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.genruntimeconfig.cache
 C:\Users\IPS-74\Desktop\WAH_Backend\WAH.DAL\obj\Debug\net8.0\ref\WAH.DAL.dll
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\bin\Debug\net8.0\WAH.DAL.deps.json
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\bin\Debug\net8.0\WAH.DAL.runtimeconfig.json
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\bin\Debug\net8.0\WAH.DAL.dll
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\bin\Debug\net8.0\WAH.DAL.pdb
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\bin\Debug\net8.0\WAH.Common.dll
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\bin\Debug\net8.0\WAH.Common.pdb
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.csproj.AssemblyReference.cache
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.AssemblyInfoInputs.cache
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.AssemblyInfo.cs
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.csproj.CoreCompileInputs.cache
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.sourcelink.json
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.csproj.Up2Date
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.dll
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\refint\WAH.DAL.dll
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.pdb
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\WAH.DAL.genruntimeconfig.cache
+D:\Workplace Asset Hub\WAH\WAH_Backend\WAH.DAL\obj\Debug\net8.0\ref\WAH.DAL.dll
