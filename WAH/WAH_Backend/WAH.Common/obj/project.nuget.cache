@@ -1,15 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "q7QsXTe1s7w=",
+  "dgSpecHash": "yOelVPC082M=",
   "success": true,
-  "projectFilePath": "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH.Common\\WAH.Common.csproj",
+  "projectFilePath": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\WAH.Common.csproj",
   "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH.Common\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
