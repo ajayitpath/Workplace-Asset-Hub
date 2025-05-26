@@ -1,4 +1,5 @@
-﻿using WAH.Common.Enums;
+﻿using Microsoft.AspNetCore.Http;
+using WAH.Common.Enums;
 
 namespace WAH.DAL.EntityModels
 {

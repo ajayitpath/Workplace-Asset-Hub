@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore; // Ensure this using directive is present
+using WAH.BLL.Services.Implementations;
+using WAH.BLL.Services.Interfaces;
 using WAH.DAL.Data;
 using WAH.DAL.Repositories.Implementations;
 using WAH.DAL.Repositories.Interfaces; // Ensure this using directive is present and correct
@@ -17,7 +19,8 @@ builder.Services.AddSwaggerGen();
 
 // Fix for CS0305: Specify the generic type parameter explicitly
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<IPasswordHasher<object>, PasswordHasher<object>>();
+builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

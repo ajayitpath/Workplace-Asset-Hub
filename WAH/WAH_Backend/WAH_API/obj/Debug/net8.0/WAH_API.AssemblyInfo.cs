@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WAH_API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+063d7c369a76f87bb5c47c854473b131e96abfbd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e1bf1ba6336416fc3e35126ece9a9698b9199f0c")]
 [assembly: System.Reflection.AssemblyProductAttribute("WAH_API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WAH_API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
