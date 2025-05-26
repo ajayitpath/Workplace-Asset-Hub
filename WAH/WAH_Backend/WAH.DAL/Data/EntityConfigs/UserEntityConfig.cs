@@ -12,7 +12,8 @@ namespace WAH.DAL.EntityConfigs
             builder.HasKey(u => u.Id);
 
             builder.Property(u => u.Id)
-                   .HasDefaultValueSql("NEWSEQUENTIALID()");
+                .HasDefaultValueSql("NEWSEQUENTIALID()")
+                .ValueGeneratedOnAdd();
 
             // FirstName & LastName
             builder.Property(u => u.FirstName)
