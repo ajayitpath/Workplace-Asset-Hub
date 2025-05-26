@@ -1,17 +1,10 @@
-<<<<<<< HEAD
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore; // Ensure this using directive is present
+using WAH.BLL.DbSeeder;
 using WAH.BLL.Services.Implementations;
 using WAH.BLL.Services.Interfaces;
-=======
-using Microsoft.EntityFrameworkCore;
->>>>>>> 0ff99e46c831b4fc46ecf30dfefeeb44ba8e8e4d
 using WAH.DAL.Data;
 using WAH.DAL.Repositories.Implementations;
 using WAH.DAL.Repositories.Interfaces;
-using WAH.BLL.Services.Implementations;
-using WAH.BLL.Services.Interfaces;
-using WAH.BLL.DbSeeder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +16,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 // Services
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+
 builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<DatabaseSeeder>();
 
@@ -31,14 +27,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-<<<<<<< HEAD
+
 // Fix for CS0305: Specify the generic type parameter explicitly
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-=======
->>>>>>> 0ff99e46c831b4fc46ecf30dfefeeb44ba8e8e4d
+
+
 var app = builder.Build();
 
 // Seed Admin
