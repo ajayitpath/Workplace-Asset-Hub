@@ -1,0 +1,73 @@
+.login-container {
+ min-height: 100vh; 
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  background-color: var(--background-color);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.login-card {
+  background-color: var(--card-background);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  border: none;
+  width: 800px;
+  height: 460px;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-label {
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+input.form-control,
+.p-inputtext {
+  border: 1px solid var(--input-border);
+  background-color: #fff;
+  color: var(--text-color);
+}
+
+input.form-control:focus,
+.p-inputtext:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.ng-invalid.ng-dirty {
+  border-color: var(--error-color) !important;
+}
+
+.text-danger {
+  color: var(--error-color);
+  font-size: 0.875rem;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+a.text-primary {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+
+::ng-deep .p-password {
+  width: 100% !important;
+}
+
+::ng-deep .p-password input {
+  width: 100% !important;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}

@@ -1,0 +1,68 @@
+<div class="login-container d-flex justify-content-center align-items-center min-vh-100 bg-light p-3">
+  <div class="login-card bg-white p-4 rounded shadow w-100" style="max-width: 450px;">
+    <h2 class="text-center mb-4 text-dark">Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <!-- Email -->
+      <div class="form-group mb-3">
+        <label for="email" class="form-label fw-medium text-secondary">Email</label>
+        <input 
+          pInputText 
+          id="email"
+          formControlName="email" 
+          placeholder="Enter email"
+          class="form-control bg-white"
+          [ngClass]="{'ng-invalid ng-dirty': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+        />
+        <div class="text-danger mt-1" *ngIf="loginForm.get('email')?.touched">
+          <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email.</div>
+        </div>
+      </div>
+
+      <!-- Password -->
+       
+      <div class="form-group mb-3">
+        <label for="password" class="form-label fw-medium text-secondary">Password</label>
+        <p-password
+          id="password"
+          formControlName="password"
+          [feedback]="false"
+
+          inputStyleClass="form-control bg-white"
+          toggleMask="true"
+          placeholder="Enter password"
+          [ngClass]="{'ng-invalid ng-dirty': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
+        ></p-password>
+        <div class="text-danger mt-1" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+          <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
+          <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 4 characters.</div>
+          <div *ngIf="loginForm.get('password')?.errors?.['maxlength']">Password must not exceed 15 characters.</div>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <p-message 
+        *ngIf="errorMessage" 
+        severity="error" 
+        [text]="errorMessage"
+        class="mb-3"
+      ></p-message>
+
+      <!-- Submit -->
+      <button 
+        pButton 
+        type="submit" 
+        label="{{ isSubmitting ? 'Logging in...' : 'Login' }}" 
+        [disabled]="loginForm.invalid || isSubmitting"
+        class="btn btn-primary w-100 mt-2"
+      ></button>
+    </form>
+
+    <div class="form-footer mt-4 text-center small">
+      <p>Don't have an account? <a routerLink="/auth/register" class="text-primary">Sign Up</a></p>
+      <p>Forgot your password? <a routerLink="/auth/forgot-password" class="text-primary">Reset here</a></p>
+    </div>
+  </div>
+</div>
