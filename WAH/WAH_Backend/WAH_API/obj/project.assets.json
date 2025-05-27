@@ -5150,23 +5150,39 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\IPS-014\\.nuget\\packages\\": {},
+=======
+    "C:\\Users\\IPS-74\\.nuget\\packages\\": {},
+>>>>>>> 732a1fdbae241949342a4b2c2938664fec978259
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\WAH_API.csproj",
       "projectName": "WAH_API",
       "projectPath": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\WAH_API.csproj",
       "packagesPath": "C:\\Users\\IPS-014\\.nuget\\packages\\",
       "outputPath": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\obj\\",
+=======
+      "projectUniqueName": "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH_API\\WAH_API.csproj",
+      "projectName": "WAH_API",
+      "projectPath": "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH_API\\WAH_API.csproj",
+      "packagesPath": "C:\\Users\\IPS-74\\.nuget\\packages\\",
+      "outputPath": "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH_API\\obj\\",
+>>>>>>> 732a1fdbae241949342a4b2c2938664fec978259
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\IPS-014\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+        "C:\\Users\\IPS-74\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> 732a1fdbae241949342a4b2c2938664fec978259
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5181,6 +5197,7 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+<<<<<<< HEAD
             "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj": {
               "projectPath": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj"
             },
@@ -5189,6 +5206,10 @@
             },
             "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\WAH.DAL.csproj": {
               "projectPath": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\WAH.DAL.csproj"
+=======
+            "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj": {
+              "projectPath": "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj"
+>>>>>>> 732a1fdbae241949342a4b2c2938664fec978259
             }
           }
         }
@@ -5203,7 +5224,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0": {
@@ -5251,7 +5272,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
