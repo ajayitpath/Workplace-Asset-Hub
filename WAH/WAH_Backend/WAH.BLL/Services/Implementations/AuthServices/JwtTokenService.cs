@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using WAH.BLL.Services.Interfaces;
+using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.DAL.EntityModels.AuthEntities;
 
 namespace WAH.BLL.Services.Implementations.AuthServices

@@ -12,8 +12,8 @@ using WAH.DAL.Data;
 namespace WAH.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250527103233_Added Asset Entity")]
-    partial class AddedAssetEntity
+    [Migration("20250527114914_Initial one")]
+    partial class Initialone
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -281,8 +281,7 @@ namespace WAH.DAL.Migrations
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("ProfileImage")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
@@ -299,6 +298,27 @@ namespace WAH.DAL.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("WAH.DAL.EntityModels.AuthEntities.UserProfileEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProfileImage")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserProfiles");
                 });
 
             modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetAssignmentEntity", b =>
@@ -387,6 +407,17 @@ namespace WAH.DAL.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("WAH.DAL.EntityModels.AuthEntities.UserProfileEntity", b =>
+                {
+                    b.HasOne("WAH.DAL.EntityModels.AuthEntities.UserEntity", "User")
+                        .WithOne("UserProfile")
+                        .HasForeignKey("WAH.DAL.EntityModels.AuthEntities.UserProfileEntity", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetCategoryEntity", b =>
                 {
                     b.Navigation("Assets");
@@ -417,6 +448,9 @@ namespace WAH.DAL.Migrations
                     b.Navigation("AssetAssignments");
 
                     b.Navigation("AssetRequests");
+
+                    b.Navigation("UserProfile")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
