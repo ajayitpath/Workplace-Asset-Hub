@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WAH.BLL.Services.Interfaces;
 using WAH.Common.DtoModels;
 using WAH_API.DTO;

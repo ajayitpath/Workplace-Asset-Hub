@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WAH.DAL.EntityModels;
+using WAH.DAL.EntityModels.AuthEntities;
 
 namespace WAH.DAL.EntityConfigs
 {
@@ -8,15 +8,15 @@ namespace WAH.DAL.EntityConfigs
     {
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
-            // Primary Key with SQL Server NEWSEQUENTIALID() default value
+            builder.ToTable("Users"); // optional
+         
             builder.HasKey(u => u.Id);
 
             builder.Property(u => u.Id)
-                .HasDefaultValueSql("NEWSEQUENTIALID()")
-                .ValueGeneratedOnAdd();
+                   .HasDefaultValueSql("NEWSEQUENTIALID()")
+                   .ValueGeneratedOnAdd();
 
-            // FirstName & LastName
-            builder.Property(u => u.FirstName)
+            builder.Property(u => u.FirstName)  
                    .IsRequired()
                    .HasMaxLength(50);
 
@@ -24,11 +24,9 @@ namespace WAH.DAL.EntityConfigs
                    .IsRequired()
                    .HasMaxLength(50);
 
-            // Password (you might hash it before saving)
             builder.Property(u => u.Password)
                    .IsRequired();
 
-            // Email (Required + Unique)
             builder.Property(u => u.Email)
                    .IsRequired()
                    .HasMaxLength(100);
@@ -36,31 +34,32 @@ namespace WAH.DAL.EntityConfigs
             builder.HasIndex(u => u.Email)
                    .IsUnique();
 
-            // PhoneNumber (Optional + Unique)
             builder.Property(u => u.PhoneNumber)
                    .HasMaxLength(15);
 
             builder.HasIndex(u => u.PhoneNumber)
                    .IsUnique();
 
-            // Gender (Required Enum stored as int or string)
             builder.Property(u => u.Gender)
                    .IsRequired();
 
-            // DOB
             builder.Property(u => u.DOB)
                    .IsRequired();
 
-            // ProfileImage (Optional)
             builder.Property(u => u.ProfileImage)
                    .HasMaxLength(255);
 
-            // Desk Number (Optional but validated)
             builder.Property(u => u.DeskNo)
                    .HasMaxLength(20);
 
-            // Ignore ConfirmPassword - not mapped to DB
             builder.Ignore(u => u.ConfirmPassword);
+
+            builder.HasOne(u => u.Role)
+                   .WithMany(r => r.Users)
+                   .HasForeignKey("RoleId")
+                   .IsRequired()
+                   .OnDelete(DeleteBehavior.Restrict);
         }
+
     }
 }

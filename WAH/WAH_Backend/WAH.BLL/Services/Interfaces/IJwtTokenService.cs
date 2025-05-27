@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using WAH.DAL.EntityModels;
+﻿using System.Security.Claims;
+using WAH.DAL.EntityModels.AuthEntities;
 
 namespace WAH.BLL.Services.Interfaces
 {

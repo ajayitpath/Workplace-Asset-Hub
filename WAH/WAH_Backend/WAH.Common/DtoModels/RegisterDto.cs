@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Data;
 using Microsoft.AspNetCore.Http;
 using WAH.Common.Enums;
 

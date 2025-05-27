@@ -2,6 +2,7 @@
 using WAH.Common.Enums;
 using WAH.DAL.Data;
 using WAH.DAL.EntityModels;
+using WAH.DAL.EntityModels.AuthEntities;
 
 namespace WAH.BLL.DbSeeder
 {
@@ -18,6 +19,28 @@ namespace WAH.BLL.DbSeeder
 
         public void SeedAdmin()
         {
+            // Step 1: Ensure the required roles exist
+            var rolesToSeed = new[] { "Admin", "User", "Manager" };
+
+            foreach (var roleName in rolesToSeed)
+            {
+                if (!_context.Roles.Any(r => r.Name == roleName))
+                {
+                    _context.Roles.Add(new RoleEntity
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = roleName,
+                        isActive = true
+                    });
+                }
+            }
+
+            _context.SaveChanges();
+
+            // Step 2: Get the Admin role reference
+            var adminRole = _context.Roles.First(r => r.Name == "Admin");
+
+            // Step 3: Seed the system admin user if not already present
             if (!_context.Users.Any(u => u.Email == "admin@wah.com"))
             {
                 var admin = new UserEntity
@@ -30,12 +53,14 @@ namespace WAH.BLL.DbSeeder
                     DOB = new DateTime(1990, 1, 1),
                     PhoneNumber = "1234567891",
                     DeskNo = "A-01",
-                    ProfileImage = ""
+                    ProfileImage = "",
+                    Role = adminRole // Assign the Admin role
                 };
 
                 _context.Users.Add(admin);
                 _context.SaveChanges();
             }
         }
+
     }
 }
