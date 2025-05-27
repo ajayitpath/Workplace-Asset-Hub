@@ -1,4 +1,4 @@
-﻿namespace WAH.BLL.Services.Interfaces
+﻿namespace WAH.BLL.Services.Interfaces.AuthInterface
 {
     public interface IPasswordHasherService
     {
