@@ -47,19 +47,6 @@
           }
         }
       },
-      "BCrypt.Net-Next/4.0.3": {
-        "type": "package",
-        "compile": {
-          "lib/net6.0/BCrypt.Net-Next.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/BCrypt.Net-Next.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "Microsoft.AspNetCore.Http.Features/5.0.17": {
         "type": "package",
         "dependencies": {
@@ -329,19 +316,6 @@
         },
         "build": {
           "buildTransitive/net8.0/_._": {}
-        }
-      },
-      "Microsoft.Extensions.Features/9.0.5": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.Features.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Features.dll": {
-            "related": ".xml"
-          }
         }
       },
       "Microsoft.Extensions.Logging/9.0.5": {
@@ -1116,37 +1090,6 @@
         "lib/netstandard2.0/Azure.Identity.xml"
       ]
     },
-    "BCrypt.Net-Next/4.0.3": {
-      "sha512": "W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
-      "type": "package",
-      "path": "bcrypt.net-next/4.0.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "bcrypt.net-next.4.0.3.nupkg.sha512",
-        "bcrypt.net-next.nuspec",
-        "ico.png",
-        "lib/net20/BCrypt.Net-Next.dll",
-        "lib/net20/BCrypt.Net-Next.xml",
-        "lib/net35/BCrypt.Net-Next.dll",
-        "lib/net35/BCrypt.Net-Next.xml",
-        "lib/net462/BCrypt.Net-Next.dll",
-        "lib/net462/BCrypt.Net-Next.xml",
-        "lib/net472/BCrypt.Net-Next.dll",
-        "lib/net472/BCrypt.Net-Next.xml",
-        "lib/net48/BCrypt.Net-Next.dll",
-        "lib/net48/BCrypt.Net-Next.xml",
-        "lib/net5.0/BCrypt.Net-Next.dll",
-        "lib/net5.0/BCrypt.Net-Next.xml",
-        "lib/net6.0/BCrypt.Net-Next.dll",
-        "lib/net6.0/BCrypt.Net-Next.xml",
-        "lib/netstandard2.0/BCrypt.Net-Next.dll",
-        "lib/netstandard2.0/BCrypt.Net-Next.xml",
-        "lib/netstandard2.1/BCrypt.Net-Next.dll",
-        "lib/netstandard2.1/BCrypt.Net-Next.xml",
-        "readme.md"
-      ]
-    },
     "Microsoft.AspNetCore.Http.Features/5.0.17": {
       "sha512": "3jG2xS+dx8DDCGV/F+STdPTg89lX3ao3dF/VEPvJaz3wzBIjuadipTtYNEXDIVuOPZwb6jdmhrX9jkzOIBm5cw==",
       "type": "package",
@@ -1553,25 +1496,6 @@
         "microsoft.extensions.dependencyinjection.abstractions.9.0.5.nupkg.sha512",
         "microsoft.extensions.dependencyinjection.abstractions.nuspec",
         "useSharedDesignerContext.txt"
-      ]
-    },
-    "Microsoft.Extensions.Features/9.0.5": {
-      "sha512": "TCgCkMsHczJW7o9i9/J0zKgbrEzj/GWgJ7tG9ad32kPgSb9h8zouQcio5engv5luG/lEfuZ+tlSYxMoy25IWVQ==",
-      "type": "package",
-      "path": "microsoft.extensions.features/9.0.5",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/net462/Microsoft.Extensions.Features.dll",
-        "lib/net462/Microsoft.Extensions.Features.xml",
-        "lib/net9.0/Microsoft.Extensions.Features.dll",
-        "lib/net9.0/Microsoft.Extensions.Features.xml",
-        "lib/netstandard2.0/Microsoft.Extensions.Features.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.Features.xml",
-        "microsoft.extensions.features.9.0.5.nupkg.sha512",
-        "microsoft.extensions.features.nuspec"
       ]
     },
     "Microsoft.Extensions.Logging/9.0.5": {
@@ -2942,29 +2866,43 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "BCrypt.Net-Next >= 4.0.3",
-      "Microsoft.Extensions.Features >= 9.0.5",
       "WAH.DAL >= 1.0.0"
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
+    "C:\\Users\\IPS-014\\.nuget\\packages\\": {},
+=======
     "C:\\Users\\IPS-74\\.nuget\\packages\\": {},
+>>>>>>> 732a1fdbae241949342a4b2c2938664fec978259
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
+      "projectUniqueName": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj",
+      "projectName": "WAH.BLL",
+      "projectPath": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj",
+      "packagesPath": "C:\\Users\\IPS-014\\.nuget\\packages\\",
+      "outputPath": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\obj\\",
+=======
       "projectUniqueName": "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj",
       "projectName": "WAH.BLL",
       "projectPath": "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj",
       "packagesPath": "C:\\Users\\IPS-74\\.nuget\\packages\\",
       "outputPath": "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH.BLL\\obj\\",
+>>>>>>> 732a1fdbae241949342a4b2c2938664fec978259
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
+        "C:\\Users\\IPS-014\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
         "C:\\Users\\IPS-74\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> 732a1fdbae241949342a4b2c2938664fec978259
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2979,8 +2917,13 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+<<<<<<< HEAD
+            "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\WAH.DAL.csproj": {
+              "projectPath": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\WAH.DAL.csproj"
+=======
             "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH.DAL\\WAH.DAL.csproj": {
               "projectPath": "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH.DAL\\WAH.DAL.csproj"
+>>>>>>> 732a1fdbae241949342a4b2c2938664fec978259
             }
           }
         }
@@ -3000,16 +2943,6 @@
     "frameworks": {
       "net8.0": {
         "targetAlias": "net8.0",
-        "dependencies": {
-          "BCrypt.Net-Next": {
-            "target": "Package",
-            "version": "[4.0.3, )"
-          },
-          "Microsoft.Extensions.Features": {
-            "target": "Package",
-            "version": "[9.0.5, )"
-          }
-        },
         "imports": [
           "net461",
           "net462",

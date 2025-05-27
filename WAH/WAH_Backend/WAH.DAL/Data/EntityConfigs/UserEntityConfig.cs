@@ -46,8 +46,10 @@ namespace WAH.DAL.EntityConfigs
             builder.Property(u => u.DOB)
                    .IsRequired();
 
-            builder.Property(u => u.ProfileImage)
-                   .HasMaxLength(255);
+            builder.HasOne(u => u.UserProfile)
+                .WithOne(p => p.User)
+                .HasForeignKey<UserProfileEntity>(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(u => u.DeskNo)
                    .HasMaxLength(20);

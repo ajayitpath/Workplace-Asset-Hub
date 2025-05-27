@@ -23,6 +23,8 @@ namespace WAH.DAL.Data
         public DbSet<AssetAssignmentEntity> AssetAssignments { get; set; }
         public DbSet<AssetRequestEntity> AssetRequests { get; set; }
 
+        public DbSet<UserProfileEntity> UserProfiles { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
