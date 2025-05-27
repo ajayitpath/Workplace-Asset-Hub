@@ -20,7 +20,7 @@ namespace WAH.DAL.EntityModels
 
         public Gender Gender { get; set; }
 
-        public DateTime DOB { get; set; }
+        public DateOnly DOB { get; set; }
 
         public string? DeskNo { get; set; }
 
