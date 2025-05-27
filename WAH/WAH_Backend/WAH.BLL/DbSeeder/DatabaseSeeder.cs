@@ -30,7 +30,6 @@ namespace WAH.BLL.DbSeeder
                     DOB = new DateTime(1990, 1, 1),
                     PhoneNumber = "1234567891",
                     DeskNo = "A-01",
-                    ProfileImage = ""
                 };
 
                 _context.Users.Add(admin);
