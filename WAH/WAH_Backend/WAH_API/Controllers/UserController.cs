@@ -2,6 +2,7 @@
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.DtoModels.AuthDtos;
 using WAH.DAL.EntityModels;
+using WAH.DAL.EntityModels.AuthEntities;
 using WAH.DAL.Repositories.Interfaces;
 
 namespace WAH_API.Controllers
