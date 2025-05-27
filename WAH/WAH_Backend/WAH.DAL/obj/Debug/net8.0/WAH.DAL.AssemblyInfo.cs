@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WAH.DAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d636d9fb306a6359730536d756e529c0d7076d06")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d7a6945cf063a6b0a8e93297d8cf1c1ff77ef9d")]
 [assembly: System.Reflection.AssemblyProductAttribute("WAH.DAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WAH.DAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
