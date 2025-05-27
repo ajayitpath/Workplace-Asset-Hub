@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WAH.Common.DtoModels
+namespace WAH.Common.DtoModels.AuthDtos
 {
     public class ResetPasswordDto
     {

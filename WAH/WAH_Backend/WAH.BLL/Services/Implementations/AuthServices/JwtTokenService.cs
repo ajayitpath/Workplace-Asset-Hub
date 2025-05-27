@@ -3,14 +3,14 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using WAH.BLL.Services.Interfaces;
+using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.DAL.EntityModels;
 
-namespace WAH.BLL.Services.Implementations
+namespace WAH.BLL.Services.Implementations.AuthServices
 {
-    public class JwtTokenService: IJwtTokenService
+    public class JwtTokenService : IJwtTokenService
     {
-       private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         public JwtTokenService(IConfiguration configuration)
         {
             _configuration = configuration;

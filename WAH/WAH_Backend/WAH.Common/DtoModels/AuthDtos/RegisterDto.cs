@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WAH.Common.Enums;
 
-namespace WAH.Common.DtoModels
+namespace WAH.Common.DtoModels.AuthDtos
 {
     public class RegisterDto
     {
@@ -53,7 +53,7 @@ namespace WAH.Common.DtoModels
         {
             if (dob > DateTime.Today)
                 return new ValidationResult("Date of Birth cannot be in the future.");
-            if ((DateTime.Today.Year - dob.Year) < 18)
+            if (DateTime.Today.Year - dob.Year < 18)
                 return new ValidationResult("You must be at least 18 years old.");
             return ValidationResult.Success;
         }

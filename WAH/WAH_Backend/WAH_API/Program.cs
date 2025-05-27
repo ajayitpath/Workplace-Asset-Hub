@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore; // Ensure this using directive is present
 using Microsoft.IdentityModel.Tokens;
 using WAH.BLL.DbSeeder;
-using WAH.BLL.Services.Implementations;
-using WAH.BLL.Services.Interfaces;
+using WAH.BLL.Services.Implementations.AuthServices;
+using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.DAL.Data;
 using WAH.DAL.EntityModels;
 using WAH.DAL.Repositories.Implementations;
@@ -89,9 +89,12 @@ if (app.Environment.IsDevelopment())
 }
  
 app.UseHttpsRedirection();
+<<<<<<< HEAD
 app.UseRouting(); //AM Added
 
+=======
 app.UseAuthentication();
+>>>>>>> origin/main
 app.UseAuthorization();
 
 app.MapControllers();

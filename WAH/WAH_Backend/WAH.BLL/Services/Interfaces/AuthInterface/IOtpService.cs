@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WAH.BLL.Services.Interfaces
+namespace WAH.BLL.Services.Interfaces.AuthInterface
 {
     public interface IOtpService
     {

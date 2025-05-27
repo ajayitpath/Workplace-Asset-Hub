@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WAH.Common.DtoModels
+namespace WAH.Common.DtoModels.AuthDtos
 {
     public class ForgotPasswordDto
     {

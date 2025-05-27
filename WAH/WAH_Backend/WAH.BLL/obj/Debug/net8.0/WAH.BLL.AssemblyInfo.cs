@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WAH.BLL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e29c10d7b4c1cda0e29e6516617d722408f209d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2de7284c124d7a526baaff37e421dc7f8545f5b")]
 [assembly: System.Reflection.AssemblyProductAttribute("WAH.BLL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WAH.BLL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

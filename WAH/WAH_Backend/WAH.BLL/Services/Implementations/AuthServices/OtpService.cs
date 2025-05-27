@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WAH.BLL.Services.Interfaces;
+using WAH.BLL.Services.Interfaces.AuthInterface;
 
-namespace WAH.BLL.Services.Implementations
+namespace WAH.BLL.Services.Implementations.AuthServices
 {
     public class OtpService : IOtpService
     {
