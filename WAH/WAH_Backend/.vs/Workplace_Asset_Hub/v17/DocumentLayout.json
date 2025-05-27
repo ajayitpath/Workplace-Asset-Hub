@@ -39,7 +39,7 @@
               "RelativeDocumentMoniker": "WAH.DAL\\EntityModels\\UserEntity.cs",
               "ToolTip": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\EntityModels\\UserEntity.cs",
               "RelativeToolTip": "WAH.DAL\\EntityModels\\UserEntity.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-26T11:26:54.266Z",
               "EditorCaption": ""
@@ -50,12 +50,11 @@
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\Program.cs",
               "RelativeDocumentMoniker": "WAH_API\\Program.cs",
-              "ToolTip": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\Program.cs*",
-              "RelativeToolTip": "WAH_API\\Program.cs*",
+              "ToolTip": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\Program.cs",
+              "RelativeToolTip": "WAH_API\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T11:25:39.89Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-26T11:25:39.89Z"
             },
             {
               "$type": "Document",
@@ -67,8 +66,7 @@
               "RelativeToolTip": "WAH.BLL\\Services\\Implementations\\UserService.cs",
               "ViewState": "AgIAAGoAAAAAAAAAAAAcwGAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T11:24:26.531Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-26T11:24:26.531Z"
             },
             {
               "$type": "Document",
@@ -80,8 +78,7 @@
               "RelativeToolTip": "WAH.BLL\\obj\\Debug\\net8.0\\WAH.BLL.AssemblyInfo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T11:09:28.627Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-26T11:09:28.627Z"
             },
             {
               "$type": "Document",
