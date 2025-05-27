@@ -1,21 +1,93 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\",
+  "WorkspaceRootPath": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|d:\\workplace_asset_hub\\workplace-asset-hub\\wah\\wah_backend\\wah.dal\\entitymodels\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|solutionrelative:wah.dal\\entitymodels\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{38872423-4FFE-4A0E-AE42-70E5E9B11348}|WAH_API\\WAH_API.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah_api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38872423-4FFE-4A0E-AE42-70E5E9B11348}|WAH_API\\WAH_API.csproj|solutionrelative:wah_api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{38872423-4FFE-4A0E-AE42-70E5E9B11348}|WAH_API\\WAH_API.csproj|d:\\workplace_asset_hub\\workplace-asset-hub\\wah\\wah_backend\\wah_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{38872423-4FFE-4A0E-AE42-70E5E9B11348}|WAH_API\\WAH_API.csproj|solutionrelative:wah_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|d:\\workplace_asset_hub\\workplace-asset-hub\\wah\\wah_backend\\wah.bll\\services\\implementations\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.bll\\services\\implementations\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|solutionrelative:wah.bll\\services\\implementations\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\obj\\Debug\\net8.0\\WAH.BLL.AssemblyInfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{38872423-4FFE-4A0E-AE42-70E5E9B11348}|WAH_API\\WAH_API.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38872423-4FFE-4A0E-AE42-70E5E9B11348}|WAH_API\\WAH_API.csproj|solutionrelative:wah_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.dal\\entitymodels\\userprofileentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|solutionrelative:wah.dal\\entitymodels\\userprofileentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.dal\\entitymodels\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|solutionrelative:wah.dal\\entitymodels\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|solutionrelative:wah.dal\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.dal\\data\\entityconfigs\\userprofileconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|solutionrelative:wah.dal\\data\\entityconfigs\\userprofileconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.dal\\data\\entityconfigs\\userentityconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|solutionrelative:wah.dal\\data\\entityconfigs\\userentityconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C122F707-73D6-4B20-B60B-3149C0DF434B}|WAH.Common\\WAH.Common.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.common\\dtomodels\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C122F707-73D6-4B20-B60B-3149C0DF434B}|WAH.Common\\WAH.Common.csproj|solutionrelative:wah.common\\dtomodels\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C122F707-73D6-4B20-B60B-3149C0DF434B}|WAH.Common\\WAH.Common.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.common\\dtomodels\\loginresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C122F707-73D6-4B20-B60B-3149C0DF434B}|WAH.Common\\WAH.Common.csproj|solutionrelative:wah.common\\dtomodels\\loginresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C122F707-73D6-4B20-B60B-3149C0DF434B}|WAH.Common\\WAH.Common.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.common\\dtomodels\\forgotpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C122F707-73D6-4B20-B60B-3149C0DF434B}|WAH.Common\\WAH.Common.csproj|solutionrelative:wah.common\\dtomodels\\forgotpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C122F707-73D6-4B20-B60B-3149C0DF434B}|WAH.Common\\WAH.Common.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.common\\dtomodels\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C122F707-73D6-4B20-B60B-3149C0DF434B}|WAH.Common\\WAH.Common.csproj|solutionrelative:wah.common\\dtomodels\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.bll\\dbseeder\\databaseseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|solutionrelative:wah.bll\\dbseeder\\databaseseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.bll\\services\\implementations\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|solutionrelative:wah.bll\\services\\implementations\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.bll\\services\\implementations\\userprofileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|solutionrelative:wah.bll\\services\\implementations\\userprofileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.bll\\services\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|solutionrelative:wah.bll\\services\\interfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.bll\\services\\interfaces\\iuserprofileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DAACB340-0A70-4580-BC36-C934F0707F4E}|WAH.BLL\\WAH.BLL.csproj|solutionrelative:wah.bll\\services\\interfaces\\iuserprofileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38872423-4FFE-4A0E-AE42-70E5E9B11348}|WAH_API\\WAH_API.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah_api\\wah_api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{38872423-4FFE-4A0E-AE42-70E5E9B11348}|WAH_API\\WAH_API.csproj|solutionrelative:wah_api\\wah_api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C122F707-73D6-4B20-B60B-3149C0DF434B}|WAH.Common\\WAH.Common.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.common\\dtomodels\\userprofiledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C122F707-73D6-4B20-B60B-3149C0DF434B}|WAH.Common\\WAH.Common.csproj|solutionrelative:wah.common\\dtomodels\\userprofiledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.dal\\repositories\\implementations\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|solutionrelative:wah.dal\\repositories\\implementations\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|d:\\wah\\workplace-asset-hub\\wah\\wah_backend\\wah.dal\\migrations\\20250527064158_added pfp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B71BD29D-DAF4-4883-9AC1-96F0FF5FD764}|WAH.DAL\\WAH.DAL.csproj|solutionrelative:wah.dal\\migrations\\20250527064158_added pfp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\obj\\Debug\\net8.0\\WAH.BLL.AssemblyInfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WAH.BLL\\obj\\Debug\\net8.0\\WAH.BLL.AssemblyInfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -29,54 +101,304 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 12,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
+              "Title": "UserEntityConfig.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\Data\\EntityConfigs\\UserEntityConfig.cs",
+              "RelativeDocumentMoniker": "WAH.DAL\\Data\\EntityConfigs\\UserEntityConfig.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\Data\\EntityConfigs\\UserEntityConfig.cs",
+              "RelativeToolTip": "WAH.DAL\\Data\\EntityConfigs\\UserEntityConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:24:25.426Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UserProfileConfig.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\Data\\EntityConfigs\\UserProfileConfig.cs",
+              "RelativeDocumentMoniker": "WAH.DAL\\Data\\EntityConfigs\\UserProfileConfig.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\Data\\EntityConfigs\\UserProfileConfig.cs",
+              "RelativeToolTip": "WAH.DAL\\Data\\EntityConfigs\\UserProfileConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:27:37.302Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "WAH.DAL\\Data\\AppDbContext.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "WAH.DAL\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:37:31.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "UserEntity.cs",
-              "DocumentMoniker": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\EntityModels\\UserEntity.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\EntityModels\\UserEntity.cs",
               "RelativeDocumentMoniker": "WAH.DAL\\EntityModels\\UserEntity.cs",
-              "ToolTip": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\EntityModels\\UserEntity.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\EntityModels\\UserEntity.cs",
               "RelativeToolTip": "WAH.DAL\\EntityModels\\UserEntity.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-26T11:26:54.266Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\Program.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\Program.cs",
               "RelativeDocumentMoniker": "WAH_API\\Program.cs",
-              "ToolTip": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\Program.cs*",
-              "RelativeToolTip": "WAH_API\\Program.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAvAAAAAAAAAA==",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\Program.cs",
+              "RelativeToolTip": "WAH_API\\Program.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-26T11:25:39.89Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 9,
+              "Title": "LoginResponseDto.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\DtoModels\\LoginResponseDto.cs",
+              "RelativeDocumentMoniker": "WAH.Common\\DtoModels\\LoginResponseDto.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\DtoModels\\LoginResponseDto.cs",
+              "RelativeToolTip": "WAH.Common\\DtoModels\\LoginResponseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:04:20.862Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserProfileEntity.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\EntityModels\\UserProfileEntity.cs",
+              "RelativeDocumentMoniker": "WAH.DAL\\EntityModels\\UserProfileEntity.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\EntityModels\\UserProfileEntity.cs",
+              "RelativeToolTip": "WAH.DAL\\EntityModels\\UserProfileEntity.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAwAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:24:14.195Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "UserService.cs",
-              "DocumentMoniker": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Implementations\\UserService.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Implementations\\UserService.cs",
               "RelativeDocumentMoniker": "WAH.BLL\\Services\\Implementations\\UserService.cs",
-              "ToolTip": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Implementations\\UserService.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Implementations\\UserService.cs",
               "RelativeToolTip": "WAH.BLL\\Services\\Implementations\\UserService.cs",
-              "ViewState": "AgIAAGoAAAAAAAAAAAAcwGAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-26T11:24:26.531Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "WAH_API\\Controllers\\UserController.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\Controllers\\UserController.cs",
+              "RelativeToolTip": "WAH_API\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T11:56:45.022Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ForgotPasswordDto.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\DtoModels\\ForgotPasswordDto.cs",
+              "RelativeDocumentMoniker": "WAH.Common\\DtoModels\\ForgotPasswordDto.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\DtoModels\\ForgotPasswordDto.cs",
+              "RelativeToolTip": "WAH.Common\\DtoModels\\ForgotPasswordDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T08:36:08.166Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "RegisterDto.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\DtoModels\\RegisterDto.cs",
+              "RelativeDocumentMoniker": "WAH.Common\\DtoModels\\RegisterDto.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\DtoModels\\RegisterDto.cs",
+              "RelativeToolTip": "WAH.Common\\DtoModels\\RegisterDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T05:08:57.599Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "LoginDto.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\DtoModels\\LoginDto.cs",
+              "RelativeDocumentMoniker": "WAH.Common\\DtoModels\\LoginDto.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\DtoModels\\LoginDto.cs",
+              "RelativeToolTip": "WAH.Common\\DtoModels\\LoginDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T08:35:07.199Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "DatabaseSeeder.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\DbSeeder\\DatabaseSeeder.cs",
+              "RelativeDocumentMoniker": "WAH.BLL\\DbSeeder\\DatabaseSeeder.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\DbSeeder\\DatabaseSeeder.cs",
+              "RelativeToolTip": "WAH.BLL\\DbSeeder\\DatabaseSeeder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:15:23.16Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "JwtTokenService.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Implementations\\JwtTokenService.cs",
+              "RelativeDocumentMoniker": "WAH.BLL\\Services\\Implementations\\JwtTokenService.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Implementations\\JwtTokenService.cs",
+              "RelativeToolTip": "WAH.BLL\\Services\\Implementations\\JwtTokenService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAMAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T08:31:55.735Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "UserProfileService.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Implementations\\UserProfileService.cs",
+              "RelativeDocumentMoniker": "WAH.BLL\\Services\\Implementations\\UserProfileService.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Implementations\\UserProfileService.cs",
+              "RelativeToolTip": "WAH.BLL\\Services\\Implementations\\UserProfileService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:49:06.96Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Interfaces\\IUserService.cs",
+              "RelativeDocumentMoniker": "WAH.BLL\\Services\\Interfaces\\IUserService.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Interfaces\\IUserService.cs",
+              "RelativeToolTip": "WAH.BLL\\Services\\Interfaces\\IUserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:50:03.984Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IUserProfileService.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Interfaces\\IUserProfileService.cs",
+              "RelativeDocumentMoniker": "WAH.BLL\\Services\\Interfaces\\IUserProfileService.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\Services\\Interfaces\\IUserProfileService.cs",
+              "RelativeToolTip": "WAH.BLL\\Services\\Interfaces\\IUserProfileService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:49:30.902Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "WAH_API",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\WAH_API.csproj",
+              "RelativeDocumentMoniker": "WAH_API\\WAH_API.csproj",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH_API\\WAH_API.csproj",
+              "RelativeToolTip": "WAH_API\\WAH_API.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-27T08:57:10.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "UserProfileDto.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\DtoModels\\UserProfileDto.cs",
+              "RelativeDocumentMoniker": "WAH.Common\\DtoModels\\UserProfileDto.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\DtoModels\\UserProfileDto.cs",
+              "RelativeToolTip": "WAH.Common\\DtoModels\\UserProfileDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T07:44:06.799Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\Repositories\\Implementations\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "WAH.DAL\\Repositories\\Implementations\\GenericRepository.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\Repositories\\Implementations\\GenericRepository.cs",
+              "RelativeToolTip": "WAH.DAL\\Repositories\\Implementations\\GenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBAAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:56:22.4Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "20250527064158_Added Pfp.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\Migrations\\20250527064158_Added Pfp.cs",
+              "RelativeDocumentMoniker": "WAH.DAL\\Migrations\\20250527064158_Added Pfp.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.DAL\\Migrations\\20250527064158_Added Pfp.cs",
+              "RelativeToolTip": "WAH.DAL\\Migrations\\20250527064158_Added Pfp.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:41:58.444Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "WAH.BLL.AssemblyInfo.cs",
-              "DocumentMoniker": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\obj\\Debug\\net8.0\\WAH.BLL.AssemblyInfo.cs",
+              "DocumentMoniker": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\obj\\Debug\\net8.0\\WAH.BLL.AssemblyInfo.cs",
               "RelativeDocumentMoniker": "WAH.BLL\\obj\\Debug\\net8.0\\WAH.BLL.AssemblyInfo.cs",
-              "ToolTip": "D:\\Workplace_Asset_Hub\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\obj\\Debug\\net8.0\\WAH.BLL.AssemblyInfo.cs",
+              "ToolTip": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.BLL\\obj\\Debug\\net8.0\\WAH.BLL.AssemblyInfo.cs",
               "RelativeToolTip": "WAH.BLL\\obj\\Debug\\net8.0\\WAH.BLL.AssemblyInfo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -85,7 +407,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 22,
               "Title": ".gitignore",
               "DocumentMoniker": "D:\\Workplace Asset Hub\\.gitignore",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\Workplace Asset Hub\\.gitignore",

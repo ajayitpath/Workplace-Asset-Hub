@@ -12,6 +12,8 @@ namespace WAH.DAL.Data
 
         public DbSet<UserEntity> Users { get; set; }
 
+        public DbSet<UserProfileEntity> UserProfiles { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
