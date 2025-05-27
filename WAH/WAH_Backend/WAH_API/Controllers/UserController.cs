@@ -9,7 +9,7 @@ namespace WAH_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Consumes("multipart/form-data")]
+    //[Consumes("multipart/form-data")]
     public class UserController : ControllerBase
     {
 
@@ -32,9 +32,10 @@ namespace WAH_API.Controllers
 
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
-            {
+        {
             var token = await _userService.ForgotPasswordAsync(dto);
 
+        
             if (token == null)
                 return NotFound("User not found.");
 
@@ -42,7 +43,7 @@ namespace WAH_API.Controllers
             }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+        public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto dto)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return BadRequest("Passwords do not match.");
@@ -69,6 +70,23 @@ namespace WAH_API.Controllers
                 return Ok(new { message = "User registered successfully" });
             }
             return StatusCode(500, "Failed to register user");
+        }
+
+        [HttpPost("otp-verify")]
+        public async Task<IActionResult> OtpVerify([FromForm] VerifyOtpDto dto)
+        {
+            if (dto == null || string.IsNullOrEmpty(dto.Email) || string.IsNullOrEmpty(dto.Otp))
+            {
+                return BadRequest("Invalid OTP or email.");
+            }
+
+            var isValid = await _userService.VerifyOtpAsync(dto);
+            if (!isValid)
+            {
+                return Unauthorized("Invalid OTP.");
+            }
+
+            return Ok(new { message = "OTP verified successfully." });
         }
     }
 }

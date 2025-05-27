@@ -9,6 +9,7 @@ namespace WAH.BLL.Services.Interfaces
         Task<string?> LoginAsync(LoginDto loginDto);
         Task<string?> ForgotPasswordAsync(ForgotPasswordDto dto);
         Task<bool> ResetPasswordAsync(ResetPasswordDto dto);
-       
+        Task<bool> VerifyOtpAsync(VerifyOtpDto verifyOtpDto);
+
     }
 }

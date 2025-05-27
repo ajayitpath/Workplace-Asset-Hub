@@ -15,21 +15,21 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace WAH.BLL.Services.Implementations
 {
-     public class UserService : IUserService
+    public class UserService : IUserService
     {
         private readonly IGenericRepository<UserEntity> _genericRepository;
         private readonly IPasswordHasherService _passwordHasherService;
         private readonly IJwtTokenService _jwtTokenService;
         private readonly IConfiguration _configuration;
-        private readonly IMemoryCache _cache;
+        private readonly IOtpService _otpService;
 
-        public UserService(IPasswordHasherService passwordHasherService, IJwtTokenService jwtTokenService, IConfiguration configuration, IGenericRepository<UserEntity> genericRepository,IMemoryCache memoryCache)
+        public UserService(IPasswordHasherService passwordHasherService, IJwtTokenService jwtTokenService, IConfiguration configuration, IGenericRepository<UserEntity> genericRepository, IOtpService otpService)
         {
             _passwordHasherService = passwordHasherService;
             _jwtTokenService = jwtTokenService;
             _configuration = configuration;
             _genericRepository = genericRepository;
-            _cache = memoryCache;
+            _otpService = otpService;
         }
 
         public async Task<string?> LoginAsync(LoginDto loginDto)
@@ -49,7 +49,6 @@ namespace WAH.BLL.Services.Implementations
             return token;
         }
 
-
         public async Task<string?> ForgotPasswordAsync(ForgotPasswordDto dto)
         {
             var user = (await _genericRepository.FindAsync(u => u.Email == dto.Email)).FirstOrDefault();
@@ -58,8 +57,21 @@ namespace WAH.BLL.Services.Implementations
             var token = _jwtTokenService.GeneratePasswordResetToken(user);
 
             // TODO: Send email here using email service (not included in this code)
+            string otp = _otpService.GenerateAndCacheOtp(dto.Email);
+            var ClientAppBaseUrl = _configuration["AppSettings:ClientAppBaseUrl"];
 
-            return token; 
+            // 4. Generate link
+            //var resetLink = $"{ClientAppBaseUrl}/reset-password?token={token}&email={dto.Email}";
+            var resetLink = "https://localhost:7126/api/User/reset-password";
+
+            // 5. Send email
+            var subject = "Reset Your Password :";
+
+            await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
+
+
+
+            return token;
         }
 
         public async Task<bool> ResetPasswordAsync(ResetPasswordDto dto)
@@ -112,13 +124,14 @@ namespace WAH.BLL.Services.Implementations
                         ProfileImage = profileImagePath
                     };
 
+                    string otp = _otpService.GenerateAndCacheOtp(model.Email);
+                    await EmailHelper.SendOtpAsync(model.Email, otp);
+
                     var response = await _genericRepository.AddAsync(registration);
 
                     if (response != null)
                     {
-                        var otp = new Random().Next(100000, 999999).ToString();
-                        _cache.Set($"OTP_{model.Email}", otp, TimeSpan.FromMinutes(5));
-                        await EmailHelper.SendOtpAsync(model.Email, otp);
+
                         return true;
                     }
 
@@ -151,5 +164,26 @@ namespace WAH.BLL.Services.Implementations
 
             return Path.Combine("uploads", fileName).Replace("\\", "/");
         }
+
+
+
+        public async Task<bool> VerifyOtpAsync(VerifyOtpDto dto)
+        {
+
+            // If OTP is valid, mark the user as verified
+            var IsgetOTP = _otpService.ValidateOtp(dto.Email, dto.Otp);
+            if (!IsgetOTP)
+                return false;
+
+            var user = await _genericRepository.FindAsync(d => d.Email == dto.Email);
+            if (user is null) return false;
+
+            //user.IsVerified = true;
+            //await _genericRepository.SaveChangesAsync();
+
+            //_cache.Remove($"OTP_{dto.Email}");
+            return true;
+        }
     }
-}
+
+    }

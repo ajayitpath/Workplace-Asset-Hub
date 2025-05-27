@@ -17,9 +17,30 @@ namespace WAH.Common.Helpers
             using var client = new SmtpClient();
 
             await client.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            await client.AuthenticateAsync("ajaym.itpath@gmail.com", "your-app-password");
+            await client.AuthenticateAsync("ajaym.itpath@gmail.com", "przk uaxa xplj iezd");
             await client.SendAsync(message);
             await client.DisconnectAsync(true);
         }
+
+        public static async Task SendUserEmailAsync(string toEmail, string subject, string body)
+        {
+            var email = new MimeMessage(); 
+            email.From.Add(new MailboxAddress("Reser Password:", "ajaym.itpath@gmail.com"));
+
+            email.To.Add(MailboxAddress.Parse(toEmail));
+            email.Subject = subject;
+
+            var builder = new BodyBuilder { HtmlBody = body };
+            email.Body = builder.ToMessageBody();
+            using var client = new SmtpClient();
+
+            await client.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+            await client.AuthenticateAsync("ajaym.itpath@gmail.com", "przk uaxa xplj iezd");
+            await client.SendAsync(email);
+            await client.DisconnectAsync(true);
+        }
+
+
+
     }
 }
