@@ -1,4 +1,4 @@
-﻿using WAH.BLL.Services.Interfaces;
+﻿using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.Enums;
 using WAH.DAL.Data;
 using WAH.DAL.EntityModels;

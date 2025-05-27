@@ -1,4 +1,4 @@
-﻿namespace WAH.Common.DtoModels
+﻿namespace WAH.Common.DtoModels.AuthDtos
 {
     public class LoginResponseDto
     {

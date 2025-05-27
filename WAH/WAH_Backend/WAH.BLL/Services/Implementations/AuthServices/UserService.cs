@@ -1,13 +1,13 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using WAH.BLL.Services.Interfaces;
-using WAH.Common.DtoModels;
+﻿using Microsoft.Extensions.Configuration;
+using System.Security.Claims;
+using WAH.BLL.Services.Interfaces.AuthInterface;
+using WAH.Common.DtoModels.AuthDtos;
+using WAH.Common.Helpers;
+using WAH.DAL.EntityModels;
 using WAH.DAL.EntityModels.AuthEntities;
 using WAH.DAL.Repositories.Interfaces;
-using WAH_API.DTO;
 
-namespace WAH.BLL.Services.Implementations
+namespace WAH.BLL.Services.Implementations.AuthServices
 {
     public class UserService : IUserService
     {
@@ -15,32 +15,33 @@ namespace WAH.BLL.Services.Implementations
         private readonly IPasswordHasherService _passwordHasherService;
         private readonly IJwtTokenService _jwtTokenService;
         private readonly IConfiguration _configuration;
+        private readonly IOtpService _otpService;
 
-        public UserService(IPasswordHasherService passwordHasherService, IJwtTokenService jwtTokenService, IConfiguration configuration, IGenericRepository<UserEntity> genericRepository)
+        public UserService(
+            IPasswordHasherService passwordHasherService,
+            IJwtTokenService jwtTokenService,
+            IConfiguration configuration,
+            IGenericRepository<UserEntity> genericRepository,
+            IOtpService otpService)
         {
             _passwordHasherService = passwordHasherService;
             _jwtTokenService = jwtTokenService;
             _configuration = configuration;
             _genericRepository = genericRepository;
+            _otpService = otpService;
         }
 
         public async Task<string?> LoginAsync(LoginDto loginDto)
         {
-            var users = await _genericRepository.FindAsync(u => u.Email == loginDto.Email);
-            var user = users.FirstOrDefault();
-
-            if (user == null)
-                return null;
+            var user = (await _genericRepository.FindAsync(u => u.Email == loginDto.Email)).FirstOrDefault();
+            if (user == null) return null;
 
             var isPasswordValid = _passwordHasherService.VerifyPassword(user.Password, loginDto.Password);
-            if (!isPasswordValid)
-                return null;
+            if (!isPasswordValid) return null;
 
             var token = _jwtTokenService.GenerateToken(user);
-
             return token;
         }
-
 
         public async Task<string?> ForgotPasswordAsync(ForgotPasswordDto dto)
         {
@@ -48,10 +49,14 @@ namespace WAH.BLL.Services.Implementations
             if (user == null) return null;
 
             var token = _jwtTokenService.GeneratePasswordResetToken(user);
+            var clientAppBaseUrl = _configuration["AppSettings:ClientAppBaseUrl"];
+            var resetLink = $"{clientAppBaseUrl}/reset-password?token={token}&email={dto.Email}";
 
-            // TODO: Send email here using email service (not included in this code)
+            var otp = _otpService.GenerateAndCacheOtp(dto.Email);
+            var subject = "Reset Your Password";
+            await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
 
-            return token; 
+            return token;
         }
 
         public async Task<bool> ResetPasswordAsync(ResetPasswordDto dto)
@@ -69,8 +74,8 @@ namespace WAH.BLL.Services.Implementations
             if (user == null) return false;
 
             user.Password = _passwordHasherService.HashPassword(dto.NewPassword);
-            user.ConfirmPassword = _passwordHasherService.HashPassword(dto.ConfirmPassword);
             _genericRepository.Update(user);
+
             return true;
         }
 
@@ -79,34 +84,44 @@ namespace WAH.BLL.Services.Implementations
             try
             {
                 var exists = (await _genericRepository.FindAsync(x => x.Email == model.Email)).Any();
-                if (exists)
-                    return false;
-
-                if (model.Password != model.ConfirmPassword)
+                if (exists || model.Password != model.ConfirmPassword)
                     return false;
 
                 var hashedPassword = _passwordHasherService.HashPassword(model.Password);
 
-                var registration = new UserEntity
+                var newUser = new UserEntity
                 {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        Password = hashedPassword,
-                        Email = model.Email,
-                        Gender = model.Gender,
-                        PhoneNumber = model.PhoneNumber,
-                        DOB = model.DOB,
-                        DeskNo = model.DeskNo,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Password = hashedPassword,
+                    Email = model.Email,
+                    Gender = model.Gender,
+                    PhoneNumber = model.PhoneNumber,
+                    DOB = model.DOB,
+                    DeskNo = model.DeskNo
+                    // Do not assign ConfirmPassword or UserProfile here
                 };
 
-                var response = await _genericRepository.AddAsync(registration);
-                return response != null;
+                var otp = _otpService.GenerateAndCacheOtp(model.Email);
+                await EmailHelper.SendOtpAsync(model.Email, otp);
+
+                var createdUser = await _genericRepository.AddAsync(newUser);
+                return createdUser != null;
             }
             catch (Exception ex)
             {
                 throw new Exception("An error occurred during registration.", ex);
             }
+        }
 
+        public async Task<bool> VerifyOtpAsync(VerifyOtpDto dto)
+        {
+            var isValidOtp = _otpService.ValidateOtp(dto.Email, dto.Otp);
+            if (!isValidOtp)
+                return false;
+
+            var user = (await _genericRepository.FindAsync(d => d.Email == dto.Email)).FirstOrDefault();
+            return user != null;
         }
     }
 }

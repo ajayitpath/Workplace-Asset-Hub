@@ -6,11 +6,11 @@ using Microsoft.IdentityModel.Tokens;
 using WAH.BLL.Services.Interfaces;
 using WAH.DAL.EntityModels.AuthEntities;
 
-namespace WAH.BLL.Services.Implementations
+namespace WAH.BLL.Services.Implementations.AuthServices
 {
-    public class JwtTokenService: IJwtTokenService
+    public class JwtTokenService : IJwtTokenService
     {
-       private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         public JwtTokenService(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -52,7 +52,7 @@ namespace WAH.BLL.Services.Implementations
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(15),
+                expires: DateTime.UtcNow.AddMinutes(5),
                 signingCredentials: creds
             );
 

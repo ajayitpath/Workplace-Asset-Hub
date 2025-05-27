@@ -1,5 +1,5 @@
 ﻿using System.Security.Cryptography;
-using WAH.BLL.Services.Interfaces;
+using WAH.BLL.Services.Interfaces.AuthInterface;
 
 public class PasswordHasherService : IPasswordHasherService
 {

@@ -1,9 +1,9 @@
-﻿using WAH.BLL.Services.Interfaces;
-using WAH.Common.DtoModels;
+﻿using WAH.BLL.Services.Interfaces.AuthInterface;
+using WAH.Common.DtoModels.AuthDtos;
 
-namespace WAH.BLL.Services.Implementations
+namespace WAH.BLL.Services.Implementations.AuthServices
 {
-    public class UserProfileService: IUserProfileService
+    public class UserProfileService : IUserProfileService
     {
         private readonly string[] _allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
         public async Task<string> SaveProfileImageAsync(UserProfileDto dto)

@@ -1,6 +1,6 @@
-﻿using WAH.Common.DtoModels;
+﻿using WAH.Common.DtoModels.AuthDtos;
 
-namespace WAH.BLL.Services.Interfaces
+namespace WAH.BLL.Services.Interfaces.AuthInterface
 {
     public interface IUserProfileService
     {

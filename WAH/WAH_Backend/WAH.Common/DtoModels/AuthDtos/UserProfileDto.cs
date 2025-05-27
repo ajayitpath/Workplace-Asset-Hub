@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace WAH.Common.DtoModels
+namespace WAH.Common.DtoModels.AuthDtos
 {
     public class UserProfileDto
     {

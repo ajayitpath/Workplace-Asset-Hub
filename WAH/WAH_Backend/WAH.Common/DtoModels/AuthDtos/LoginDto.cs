@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WAH_API.DTO
+namespace WAH.Common.DtoModels.AuthDtos
 {
     public class LoginDto
     {
