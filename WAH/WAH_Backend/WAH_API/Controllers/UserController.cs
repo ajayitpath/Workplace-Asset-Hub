@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WAH.BLL.Services.Interfaces;
-using WAH.Common.DtoModels;
+using WAH.BLL.Services.Interfaces.AuthInterface;
+using WAH.Common.DtoModels.AuthDtos;
 using WAH.DAL.EntityModels;
+using WAH.DAL.EntityModels.AuthEntities;
 using WAH.DAL.Repositories.Interfaces;
-using WAH_API.DTO;
 
 namespace WAH_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Consumes("multipart/form-data")]
     public class UserController : ControllerBase
     {
 
@@ -39,6 +40,7 @@ namespace WAH_API.Controllers
         {
             var token = await _userService.ForgotPasswordAsync(dto);
 
+        
             if (token == null)
                 return NotFound("User not found.");
 
@@ -46,7 +48,7 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+        public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto dto)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return BadRequest("Passwords do not match.");
@@ -104,6 +106,23 @@ namespace WAH_API.Controllers
             }
 
             return Ok(new { message = "Profile image updated", imagePath });
+        }
+
+        [HttpPost("otp-verify")]
+        public async Task<IActionResult> OtpVerify([FromForm] VerifyOtpDto dto)
+        {
+            if (dto == null || string.IsNullOrEmpty(dto.Email) || string.IsNullOrEmpty(dto.Otp))
+            {
+                return BadRequest("Invalid OTP or email.");
+            }
+
+            var isValid = await _userService.VerifyOtpAsync(dto);
+            if (!isValid)
+            {
+                return Unauthorized("Invalid OTP.");
+            }
+
+            return Ok(new { message = "OTP verified successfully." });
         }
     }
 }
