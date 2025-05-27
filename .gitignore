@@ -402,3 +402,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/WAH/WAH_Backend/.vs/Workplace_Asset_Hub/CopilotIndices/17.13.444.19527/CodeChunks.db
