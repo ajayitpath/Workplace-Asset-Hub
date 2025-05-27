@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using WAH.Common.Enums;
+﻿using WAH.Common.Enums;
 
 namespace WAH.DAL.EntityModels
 {
@@ -15,8 +14,6 @@ namespace WAH.DAL.EntityModels
 
         public string? ConfirmPassword { get; set; }
 
-        public string? ProfileImage { get; set; }  
-
         public string? PhoneNumber { get; set; }  
 
         public string Email { get; set; } = string.Empty;
@@ -25,6 +22,8 @@ namespace WAH.DAL.EntityModels
 
         public DateTime DOB { get; set; }
 
-        public string? DeskNo { get; set; } 
+        public string? DeskNo { get; set; }
+
+        public UserProfileEntity UserProfile { get; set; }
     }
 }

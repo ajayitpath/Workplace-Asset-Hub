@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WAH.BLL.Services.Interfaces;
 using WAH.Common.DtoModels;
+using WAH.DAL.EntityModels;
+using WAH.DAL.Repositories.Interfaces;
 using WAH_API.DTO;
 
 namespace WAH_API.Controllers
@@ -14,9 +14,14 @@ namespace WAH_API.Controllers
     {
 
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly IUserProfileService _profileService;
+        private readonly IGenericRepository<UserProfileEntity> _profileRepo;
+        public UserController(IUserService userService, IUserProfileService profileService,
+            IGenericRepository<UserProfileEntity> profileRepo)
         {
             _userService = userService;
+            _profileService = profileService;
+            _profileRepo = profileRepo;
         }
 
         [HttpPost("login")]
@@ -27,7 +32,7 @@ namespace WAH_API.Controllers
                 return Unauthorized("Invalid email or password");
 
             return Ok(new { token }); 
-            }
+        }
 
 
         [HttpPost("forgot-password")]
@@ -40,7 +45,7 @@ namespace WAH_API.Controllers
                 return NotFound("User not found.");
 
             return Ok(new { message = "Password reset token generated.", token = token });
-            }
+        }
 
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto dto)
@@ -56,13 +61,13 @@ namespace WAH_API.Controllers
             return Ok(new { message = "Password has been reset successfully." });
         }
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromForm] RegisterDto model)
+        //[Consumes("multipart/form-data")]
+        public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
 
             var result = await _userService.RegisterAsync(model);
             if (result)
@@ -70,6 +75,37 @@ namespace WAH_API.Controllers
                 return Ok(new { message = "User registered successfully" });
             }
             return StatusCode(500, "Failed to register user");
+        }
+
+
+        [HttpPost("upload/{userId}")]
+      
+        public async Task<IActionResult> Upload([FromRoute] Guid userId, [FromForm] UserProfileDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            dto.UserId = userId;
+
+            var imagePath = await _profileService.SaveProfileImageAsync(dto);
+
+            // Check if user profile already exists
+            var existing = (await _profileRepo.FindAsync(p => p.UserId == userId)).FirstOrDefault();
+            if (existing != null)
+            {
+                existing.ProfileImage = imagePath;
+                _profileRepo.Update(existing);
+            }
+            else
+            {
+                await _profileRepo.AddAsync(new UserProfileEntity
+                {
+                    UserId = userId,
+                    ProfileImage = imagePath
+                });
+            }
+
+            return Ok(new { message = "Profile image updated", imagePath });
         }
 
         [HttpPost("otp-verify")]

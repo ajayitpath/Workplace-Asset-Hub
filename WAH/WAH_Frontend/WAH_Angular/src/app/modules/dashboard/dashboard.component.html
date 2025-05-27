@@ -1,1 +1,119 @@
-<p>dashboard works!</p>
+<div class="app-container">
+  <!-- Sidebar -->
+  <div class="sidebar" [ngClass]="{ 'expanded': isExpanded }"
+       (mouseenter)="expandSidebar()" (mouseleave)="collapseSidebar()">
+    <div class="logo-container">
+      <div class="logo">
+        <img src="/assets/images/logo.jpg" class="logo-img" alt="Logo" />
+        <span class="logo-icon">Admin</span>
+        <span class="logo-text" *ngIf="isExpanded">Panel</span>
+      </div>
+      <div class="toggle-button" *ngIf="isExpanded">
+        <i class="chevron-icon">❯</i>
+      </div>
+    </div>
+
+    <div class="menu-items">
+      <div class="menu-item" *ngFor="let item of menuItems"
+           [ngClass]="{ 'active': activeMenuItem === item.key }"
+           (click)="setActive(item.key)">
+        <i class="icon" [ngClass]="item.icon"></i>
+        <span class="menu-text" *ngIf="isExpanded">{{ item.label }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header">
+      <h1>Admin Dashboard</h1>
+      <div class="header-actions">
+  
+        <div class="logout-container">
+  <p class="logout-button">Logout</p>
+</div>
+
+      </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+      <!-- Stats Grid -->
+      <div class="stats-row">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Total Assets</h3>
+            <p class="stat-number">{{ dashboardData.totalAssets }}</p>
+          </div>
+          <div class="stat-card">
+            <h3>Assets in use</h3>
+            <p class="stat-number">{{ dashboardData.assetsInUse }}</p>
+          </div>
+          <div class="stat-card">
+            <h3>Under Maintenance</h3>
+            <p class="stat-number">{{ dashboardData.underMaintenance }}</p>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Total Inventory Items</h3>
+            <p class="stat-number">{{ dashboardData.totalInventoryItems }}</p>
+          </div>
+          <div class="stat-card">
+            <h3>Pending Requests</h3>
+            <p class="stat-number">{{ dashboardData.pendingRequests }}</p>
+          </div>
+     
+        </div>
+      </div>
+
+      <!-- Charts and Quick Actions Section -->
+      <div class="bottom-section">
+        <!-- Charts -->
+        <div class="charts-section">
+          <div class="chart-card">
+            <h3>Pie Chart (Asset Allocation by Category)</h3>
+            <div class="chart-placeholder">
+              <p>Pie chart visualization will be displayed here</p>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3>Bar/Line Chart (Inventory Usage Trend)</h3>
+            <div class="chart-placeholder">
+              <p>Bar/Line chart visualization will be displayed here</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <h3 class="quick-actions-title">Quick Actions</h3>
+          <div class="action-buttons">
+            <button class="action-btn" (click)="addNewAsset()">
+              <i class="pi pi-plus"></i>
+              Add New Asset
+            </button>
+            <button class="action-btn" (click)="addInventory()">
+              <i class="pi pi-plus"></i>
+              Add Inventory
+            </button>
+            <button class="action-btn" (click)="viewPendingRequests()">
+              <i class="pi pi-eye"></i>
+              View Pending Requests
+            </button>
+            <button class="action-btn" (click)="generateReport()">
+              <i class="pi pi-file"></i>
+              Generate Report
+            </button>
+            <button class="action-btn" (click)="configureNotifications()">
+              <i class="pi pi-cog"></i>
+              Configure Notifications
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

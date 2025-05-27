@@ -99,20 +99,16 @@ namespace WAH.BLL.Services.Implementations
             try
             {
                 var exists = (await _genericRepository.FindAsync(x => x.Email == model.Email)).Any();
-                if (!exists)
+                if (exists)
+                    return false;
+
+                if (model.Password != model.ConfirmPassword)
+                    return false;
+
+                var hashedPassword = _passwordHasherService.HashPassword(model.Password);
+
+                var registration = new UserEntity
                 {
-                    string? profileImagePath = null;
-
-                    //  Save profile image and get path
-                    if (model.profileImageUrl != null)
-                    {
-                        profileImagePath = await SaveProfileImage(model.profileImageUrl);
-                    }
-                    // Hash the password before storing
-                    var hashedPassword = _passwordHasherService.HashPassword(model.Password);
-
-                    var registration = new UserEntity
-                    {
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         Password = hashedPassword,
@@ -121,8 +117,7 @@ namespace WAH.BLL.Services.Implementations
                         PhoneNumber = model.PhoneNumber,
                         DOB = model.DOB,
                         DeskNo = model.DeskNo,
-                        ProfileImage = profileImagePath
-                    };
+                };
 
                     string otp = _otpService.GenerateAndCacheOtp(model.Email);
                     await EmailHelper.SendOtpAsync(model.Email, otp);
@@ -141,28 +136,9 @@ namespace WAH.BLL.Services.Implementations
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                throw new Exception("An error occurred during registration.", ex);
             }
 
-        }
-        private async Task<string> SaveProfileImage(IFormFile file)
-        {
-            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-
-            if (!Directory.Exists(uploadsFolder))
-                Directory.CreateDirectory(uploadsFolder);
-
-            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-            var fullPath = Path.Combine(uploadsFolder, fileName);
-
-            using (var stream = new FileStream(fullPath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-
-            return Path.Combine("uploads", fileName).Replace("\\", "/");
         }
 
 
