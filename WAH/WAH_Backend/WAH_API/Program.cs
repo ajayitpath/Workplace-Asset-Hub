@@ -89,12 +89,9 @@ if (app.Environment.IsDevelopment())
 }
  
 app.UseHttpsRedirection();
-<<<<<<< HEAD
 app.UseRouting(); //AM Added
 
-=======
 app.UseAuthentication();
->>>>>>> origin/main
 app.UseAuthorization();
 
 app.MapControllers();
