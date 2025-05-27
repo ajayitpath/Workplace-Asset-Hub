@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using WAH.Common.Helpers;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace WAH.BLL.Services.Implementations
 {
@@ -19,13 +21,15 @@ namespace WAH.BLL.Services.Implementations
         private readonly IPasswordHasherService _passwordHasherService;
         private readonly IJwtTokenService _jwtTokenService;
         private readonly IConfiguration _configuration;
+        private readonly IMemoryCache _cache;
 
-        public UserService(IPasswordHasherService passwordHasherService, IJwtTokenService jwtTokenService, IConfiguration configuration, IGenericRepository<UserEntity> genericRepository)
+        public UserService(IPasswordHasherService passwordHasherService, IJwtTokenService jwtTokenService, IConfiguration configuration, IGenericRepository<UserEntity> genericRepository,IMemoryCache memoryCache)
         {
             _passwordHasherService = passwordHasherService;
             _jwtTokenService = jwtTokenService;
             _configuration = configuration;
             _genericRepository = genericRepository;
+            _cache = memoryCache;
         }
 
         public async Task<string?> LoginAsync(LoginDto loginDto)
@@ -109,9 +113,12 @@ namespace WAH.BLL.Services.Implementations
                     };
 
                     var response = await _genericRepository.AddAsync(registration);
+
                     if (response != null)
                     {
-
+                        var otp = new Random().Next(100000, 999999).ToString();
+                        _cache.Set($"OTP_{model.Email}", otp, TimeSpan.FromMinutes(5));
+                        await EmailHelper.SendOtpAsync(model.Email, otp);
                         return true;
                     }
 

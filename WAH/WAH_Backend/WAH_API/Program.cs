@@ -33,6 +33,10 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+//Add for email service - otp stored in cache
+builder.Services.AddMemoryCache();
+
+
 
 
 var app = builder.Build();
