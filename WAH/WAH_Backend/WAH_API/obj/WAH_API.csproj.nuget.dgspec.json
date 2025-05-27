@@ -54,6 +54,16 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.Extensions.Features": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -120,6 +130,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -257,9 +273,6 @@
             "projectReferences": {
               "E:\\WAH\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj": {
                 "projectPath": "E:\\WAH\\WAH\\WAH_Backend\\WAH.BLL\\WAH.BLL.csproj"
-              },
-              "E:\\WAH\\WAH\\WAH_Backend\\WAH.DAL\\WAH.DAL.csproj": {
-                "projectPath": "E:\\WAH\\WAH\\WAH_Backend\\WAH.DAL\\WAH.DAL.csproj"
               }
             }
           }
@@ -280,6 +293,12 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[9.0.5, )"
