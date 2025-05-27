@@ -1,14 +1,5 @@
 {
   "version": 2,
-<<<<<<< HEAD
-  "dgSpecHash": "peHqyUt52Uk=",
-  "success": true,
-  "projectFilePath": "D:\\WAH\\Workplace-Asset-Hub\\WAH\\WAH_Backend\\WAH.Common\\WAH.Common.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\IPS-014\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
-    "C:\\Users\\IPS-014\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
-    "C:\\Users\\IPS-014\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
-=======
   "dgSpecHash": "bbqt9Ub/C0U=",
   "success": true,
   "projectFilePath": "D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH.Common\\WAH.Common.csproj",
@@ -16,7 +7,13 @@
     "C:\\Users\\IPS-74\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
     "C:\\Users\\IPS-74\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
     "C:\\Users\\IPS-74\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
->>>>>>> 732a1fdbae241949342a4b2c2938664fec978259
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file D:\\Workplace Asset Hub\\WAH\\WAH_Backend\\WAH.Common\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

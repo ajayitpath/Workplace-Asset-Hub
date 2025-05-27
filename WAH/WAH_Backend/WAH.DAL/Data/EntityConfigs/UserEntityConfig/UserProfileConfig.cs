@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using WAH.DAL.EntityModels;
+using WAH.DAL.EntityModels.AuthEntities;
 
-namespace WAH.DAL.Data.EntityConfigs
+namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
 {
     public class UserProfileEntityConfig : IEntityTypeConfiguration<UserProfileEntity>
     {

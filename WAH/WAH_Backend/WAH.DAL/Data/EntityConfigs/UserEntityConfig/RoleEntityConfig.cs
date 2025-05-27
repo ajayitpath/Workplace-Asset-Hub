@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WAH.DAL.EntityModels.AuthEntities;
 
-namespace WAH.DAL.EntityConfigs
+namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
 {
     public class RoleEntityConfig : IEntityTypeConfiguration<RoleEntity>
     {

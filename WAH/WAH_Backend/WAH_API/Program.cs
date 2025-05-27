@@ -6,7 +6,7 @@ using WAH.BLL.DbSeeder;
 using WAH.BLL.Services.Implementations;
 using WAH.BLL.Services.Interfaces;
 using WAH.DAL.Data;
-using WAH.DAL.EntityModels;
+using WAH.DAL.EntityModels.AuthEntities;
 using WAH.DAL.Repositories.Implementations;
 using WAH.DAL.Repositories.Interfaces;
 

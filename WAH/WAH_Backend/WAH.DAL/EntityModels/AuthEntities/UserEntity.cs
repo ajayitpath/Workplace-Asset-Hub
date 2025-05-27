@@ -20,6 +20,7 @@ namespace WAH.DAL.EntityModels.AuthEntities
 
         public RoleEntity Role { get; set; } = null!;
 
+        public UserProfileEntity UserProfile { get; set; } = null!;
         public ICollection<AssetRequestEntity> AssetRequests { get; set; } = new List<AssetRequestEntity>();
         public ICollection<AssetAssignmentEntity> AssetAssignments { get; set; } = new List<AssetAssignmentEntity>();
     }

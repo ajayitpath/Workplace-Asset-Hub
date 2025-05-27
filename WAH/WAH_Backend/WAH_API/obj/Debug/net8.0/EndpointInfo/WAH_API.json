@@ -12,7 +12,17 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            },
+            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/LoginDto"
               }
@@ -33,7 +43,17 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordDto"
+              }
+            },
+            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ForgotPasswordDto"
               }
@@ -54,7 +74,17 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDto"
+              }
+            },
+            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ResetPasswordDto"
               }
@@ -75,87 +105,70 @@
         ],
         "requestBody": {
           "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/upload/{userId}": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
             "multipart/form-data": {
               "schema": {
                 "required": [
-                  "ConfirmPassword",
-                  "DOB",
-                  "Email",
-                  "FirstName",
-                  "LastName",
-                  "Password",
-                  "PhoneNumber"
+                  "File"
                 ],
                 "type": "object",
                 "properties": {
-                  "FirstName": {
-                    "maxLength": 50,
-                    "type": "string"
-                  },
-                  "LastName": {
-                    "maxLength": 50,
-                    "type": "string"
-                  },
-                  "Email": {
-                    "maxLength": 100,
+                  "UserId": {
                     "type": "string",
-                    "format": "email"
+                    "format": "uuid"
                   },
-                  "PhoneNumber": {
-                    "maxLength": 15,
-                    "type": "string"
-                  },
-                  "Password": {
-                    "type": "string"
-                  },
-                  "ConfirmPassword": {
-                    "type": "string"
-                  },
-                  "Gender": {
-                    "$ref": "#/components/schemas/Gender"
-                  },
-                  "profileImageUrl": {
+                  "File": {
                     "type": "string",
                     "format": "binary"
-                  },
-                  "DeskNo": {
-                    "type": "string"
-                  },
-                  "DOB": {
-                    "type": "string",
-                    "format": "date-time"
                   }
                 }
               },
               "encoding": {
-                "FirstName": {
+                "UserId": {
                   "style": "form"
                 },
-                "LastName": {
-                  "style": "form"
-                },
-                "Email": {
-                  "style": "form"
-                },
-                "PhoneNumber": {
-                  "style": "form"
-                },
-                "Password": {
-                  "style": "form"
-                },
-                "ConfirmPassword": {
-                  "style": "form"
-                },
-                "Gender": {
-                  "style": "form"
-                },
-                "profileImageUrl": {
-                  "style": "form"
-                },
-                "DeskNo": {
-                  "style": "form"
-                },
-                "DOB": {
+                "File": {
                   "style": "form"
                 }
               }
@@ -173,11 +186,16 @@
   "components": {
     "schemas": {
       "ForgotPasswordDto": {
+        "required": [
+          "email"
+        ],
         "type": "object",
         "properties": {
           "email": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 1,
+            "pattern": "^(?=.*@)(?=.*\\.).+$",
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -192,15 +210,84 @@
         "format": "int32"
       },
       "LoginDto": {
+        "required": [
+          "email",
+          "password"
+        ],
         "type": "object",
         "properties": {
           "email": {
+            "maxLength": 100,
+            "minLength": 1,
+            "pattern": "^(?=.*@)(?=.*\\.).+$",
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 100,
+            "minLength": 6,
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{6,100}$",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegisterDto": {
+        "required": [
+          "confirmPassword",
+          "dob",
+          "email",
+          "firstName",
+          "gender",
+          "lastName",
+          "password",
+          "phoneNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "lastName": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 100,
+            "minLength": 1,
+            "pattern": "^(?=.*@)(?=.*\\.).+$",
+            "type": "string"
+          },
+          "phoneNumber": {
+            "minLength": 1,
+            "pattern": "^\\d{10}$",
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 100,
+            "minLength": 6,
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{6,100}$",
+            "type": "string"
+          },
+          "confirmPassword": {
+            "maxLength": 100,
+            "minLength": 6,
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{6,100}$",
+            "type": "string"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/Gender"
+          },
+          "deskNo": {
+            "maxLength": 20,
             "type": "string",
             "nullable": true
           },
-          "password": {
+          "dob": {
             "type": "string",
-            "nullable": true
+            "format": "date"
           }
         },
         "additionalProperties": false

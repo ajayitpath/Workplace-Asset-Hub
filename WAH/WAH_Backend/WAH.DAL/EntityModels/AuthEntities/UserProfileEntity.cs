@@ -1,4 +1,4 @@
-﻿namespace WAH.DAL.EntityModels
+﻿namespace WAH.DAL.EntityModels.AuthEntities
 {
     public class UserProfileEntity
     {

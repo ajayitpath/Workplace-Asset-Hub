@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WAH.DAL.EntityModels;
 using WAH.DAL.EntityModels.AuthEntities;
 
-namespace WAH.DAL.EntityConfigs
+namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
 {
     public class UserEntityConfig : IEntityTypeConfiguration<UserEntity>
     {
@@ -45,11 +46,6 @@ namespace WAH.DAL.EntityConfigs
 
             builder.Property(u => u.DOB)
                    .IsRequired();
-
-            builder.HasOne(u => u.UserProfile)
-                .WithOne(p => p.User)
-                .HasForeignKey<UserProfileEntity>(p => p.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(u => u.DeskNo)
                    .HasMaxLength(20);
