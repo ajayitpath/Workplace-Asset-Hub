@@ -74,19 +74,31 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/ResetPasswordDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ResetPasswordDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ResetPasswordDto"
+                "type": "object",
+                "properties": {
+                  "Token": {
+                    "type": "string"
+                  },
+                  "NewPassword": {
+                    "type": "string"
+                  },
+                  "ConfirmPassword": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "Token": {
+                  "style": "form"
+                },
+                "NewPassword": {
+                  "style": "form"
+                },
+                "ConfirmPassword": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -181,17 +193,54 @@
           }
         }
       }
+    },
+    "/api/User/otp-verify": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Email": {
+                    "type": "string"
+                  },
+                  "Otp": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "Email": {
+                  "style": "form"
+                },
+                "Otp": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
       "ForgotPasswordDto": {
         "required": [
-          "email"
+          "Email"
         ],
         "type": "object",
         "properties": {
-          "email": {
+          "Email": {
             "maxLength": 100,
             "minLength": 1,
             "pattern": "^(?=.*@)(?=.*\\.).+$",
@@ -211,18 +260,18 @@
       },
       "LoginDto": {
         "required": [
-          "email",
-          "password"
+          "Email",
+          "Password"
         ],
         "type": "object",
         "properties": {
-          "email": {
+          "Email": {
             "maxLength": 100,
             "minLength": 1,
             "pattern": "^(?=.*@)(?=.*\\.).+$",
             "type": "string"
           },
-          "password": {
+          "Password": {
             "maxLength": 100,
             "minLength": 6,
             "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{6,100}$",
@@ -233,79 +282,66 @@
       },
       "RegisterDto": {
         "required": [
-          "confirmPassword",
-          "dob",
-          "email",
-          "firstName",
-          "gender",
-          "lastName",
-          "password",
-          "phoneNumber"
+          "ConfirmPassword",
+          "DOB",
+          "Email",
+          "FirstName",
+          "Gender",
+          "LastName",
+          "Password",
+          "PhoneNumber",
+          "RoleId"
         ],
         "type": "object",
         "properties": {
-          "firstName": {
+          "FirstName": {
             "maxLength": 50,
             "minLength": 1,
             "type": "string"
           },
-          "lastName": {
+          "LastName": {
             "maxLength": 50,
             "minLength": 1,
             "type": "string"
           },
-          "email": {
+          "Email": {
             "maxLength": 100,
             "minLength": 1,
             "pattern": "^(?=.*@)(?=.*\\.).+$",
             "type": "string"
           },
-          "phoneNumber": {
+          "PhoneNumber": {
             "minLength": 1,
             "pattern": "^\\d{10}$",
             "type": "string"
           },
-          "password": {
+          "Password": {
             "maxLength": 100,
             "minLength": 6,
             "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{6,100}$",
             "type": "string"
           },
-          "confirmPassword": {
+          "ConfirmPassword": {
             "maxLength": 100,
             "minLength": 6,
             "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{6,100}$",
             "type": "string"
           },
-          "gender": {
+          "Gender": {
             "$ref": "#/components/schemas/Gender"
           },
-          "deskNo": {
+          "DeskNo": {
             "maxLength": 20,
             "type": "string",
             "nullable": true
           },
-          "dob": {
+          "RoleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "DOB": {
             "type": "string",
             "format": "date"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ResetPasswordDto": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "nullable": true
-          },
-          "newPassword": {
-            "type": "string",
-            "nullable": true
-          },
-          "confirmPassword": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false

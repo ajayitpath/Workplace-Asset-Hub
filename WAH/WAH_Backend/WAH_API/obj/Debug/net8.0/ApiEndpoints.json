@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "WAH.Common.DtoModels.ForgotPasswordDto",
+        "Type": "WAH.Common.DtoModels.AuthDtos.ForgotPasswordDto",
         "IsRequired": true
       }
     ],
@@ -25,8 +25,29 @@
     "Parameters": [
       {
         "Name": "loginDto",
-        "Type": "WAH_API.DTO.LoginDto",
+        "Type": "WAH.Common.DtoModels.AuthDtos.LoginDto",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WAH_API.Controllers.UserController",
+    "Method": "OtpVerify",
+    "RelativePath": "api/User/otp-verify",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Otp",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -41,7 +62,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "WAH.Common.DtoModels.RegisterDto",
+        "Type": "WAH.Common.DtoModels.AuthDtos.RegisterDto",
         "IsRequired": true
       }
     ],
@@ -56,9 +77,19 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "WAH.Common.DtoModels.ResetPasswordDto",
-        "IsRequired": true
+        "Name": "Token",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "NewPassword",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ConfirmPassword",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
