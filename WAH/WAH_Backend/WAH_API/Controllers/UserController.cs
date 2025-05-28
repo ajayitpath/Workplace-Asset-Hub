@@ -109,7 +109,7 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("otp-verify")]
-        public async Task<IActionResult> OtpVerify([FromForm] VerifyOtpDto dto)
+        public async Task<IActionResult> OtpVerify([FromForm] VerifyOtpDto dto)             
         {
             if (dto == null || string.IsNullOrEmpty(dto.Email) || string.IsNullOrEmpty(dto.Otp))
             {
@@ -126,3 +126,4 @@ namespace WAH_API.Controllers
         }
     }
 }
+ 
