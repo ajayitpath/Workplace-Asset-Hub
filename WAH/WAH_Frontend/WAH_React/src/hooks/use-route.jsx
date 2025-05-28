@@ -1,13 +1,16 @@
 import { useMemo } from "react"
 import URLS from "../constants/urls"
+import Dashboard from "../components/Admin/Dashboard/Dashboard"
+import AssetManegement from "../components/Admin/AssetManegement/AssetManegement";
+import Home from "../components/Home/Home";
 
 const useRoutes = () => {
     const allRoutes = useMemo(() => [
         {
             id:"root",
             path:URLS.INITIAL,
-            element: <div>Initial</div>,
-            isPrivate:true,
+            element: <Home/>,
+            isAuth:true,
         },
         {
             id:"login",
@@ -42,8 +45,14 @@ const useRoutes = () => {
         {
             id:"dashboard",
             path:URLS.DASHBOARD,
-            element: <div>Dashboard</div>,
-            isPrivate:true,
+            element: <Dashboard/>,
+            isAuth:true,
+        },
+        {
+            id:"asset-management",
+            path:URLS.ASSETMANAGE,
+            element: <AssetManegement/>,
+            isAuth:true,
         },
         {
             id:"profile",
