@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../Services/auth.service';
 
 @Component({
   selector: 'app-login',
-  standalone: false, 
+  standalone: false,
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-loginForm!: FormGroup;
+  loginForm!: FormGroup;
   isSubmitting = false;
   errorMessage = '';
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -32,19 +33,28 @@ loginForm!: FormGroup;
 
     this.isSubmitting = true;
 
-    const { email, password } = this.loginForm.value;
-    console.log('Login data:', email, password);
-    this.router.navigate(['/dashboard'])
+    // const { email, password } = this.loginForm.value;
+    // console.log('Login data:', email, password);
+    // this.router.navigate(['/dashboard'])
 
-    setTimeout(() => {
-      this.isSubmitting = false;
-    }, 1500);
+    // setTimeout(() => {
+    //   this.isSubmitting = false;
+    // }, 1500);
 
-    // For real implementation:
-    // this.authService.login(this.loginForm.value).subscribe({
-    //   next: (response) => { ... },
-    //   error: (err) => { this.errorMessage = err.error.message; },
-    //   complete: () => { this.isSubmitting = false; }
-    // });
+    // Call the login service
+    const loginData = this.loginForm.value;
+    this.authService.login(loginData).subscribe({
+      next: (response) => {
+        localStorage.setItem('token', response.token); // Store token
+        this.router.navigate(['/dashboard']);           // Navigate to dashboard
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'Login failed. Please try again.';
+        this.isSubmitting = false;
+      },
+      complete: () => {
+        this.isSubmitting = false;
+      }
+    });
   }
 }

@@ -7,14 +7,8 @@
       <!-- Email -->
       <div class="form-group mb-3">
         <label for="email" class="form-label fw-medium text-secondary">Email</label>
-        <input 
-          pInputText 
-          id="email"
-          formControlName="email" 
-          placeholder="Enter email"
-          class="form-control bg-white"
-          [ngClass]="{'ng-invalid ng-dirty': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
-        />
+        <input pInputText id="email" formControlName="email" placeholder="Enter email" class="form-control bg-white"
+          [ngClass]="{'ng-invalid ng-dirty': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}" />
         <div class="text-danger mt-1" *ngIf="loginForm.get('email')?.touched">
           <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
           <div *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email.</div>
@@ -22,19 +16,12 @@
       </div>
 
       <!-- Password -->
-       
+
       <div class="form-group mb-3">
         <label for="password" class="form-label fw-medium text-secondary">Password</label>
-        <p-password
-          id="password"
-          formControlName="password"
-          [feedback]="false"
-
-          inputStyleClass="form-control bg-white"
-          toggleMask="true"
-          placeholder="Enter password"
-          [ngClass]="{'ng-invalid ng-dirty': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
-        ></p-password>
+        <p-password id="password" formControlName="password" [feedback]="false" inputStyleClass="form-control bg-white"
+          toggleMask="true" placeholder="Enter password"
+          [ngClass]="{'ng-invalid ng-dirty': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"></p-password>
         <div class="text-danger mt-1" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
           <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
           <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 4 characters.</div>
@@ -43,21 +30,11 @@
       </div>
 
       <!-- Message -->
-      <p-message 
-        *ngIf="errorMessage" 
-        severity="error" 
-        [text]="errorMessage"
-        class="mb-3"
-      ></p-message>
+      <p-message *ngIf="errorMessage" severity="error" [text]="errorMessage" class="mb-3"></p-message>
 
       <!-- Submit -->
-      <button 
-        pButton 
-        type="submit" 
-        label="{{ isSubmitting ? 'Logging in...' : 'Login' }}" 
-        [disabled]="loginForm.invalid || isSubmitting"
-        class="btn btn-primary w-100 mt-2"
-      ></button>
+      <button pButton type="submit" label="{{ isSubmitting ? 'Logging in...' : 'Login' }}"
+        [disabled]="loginForm.invalid || isSubmitting" class="btn btn-primary w-100 mt-2"></button>
     </form>
 
     <div class="form-footer mt-4 text-center small">

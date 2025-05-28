@@ -18,6 +18,7 @@ import { Calendar } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FileUploadModule } from 'primeng/fileupload';
+import { DatePickerModule } from 'primeng/datepicker';
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, ResetpasswordComponent, EmailVerifyComponent],
   imports: [
@@ -31,7 +32,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     MessageModule,
     MessagesModule,
     InputNumberModule,
-    Calendar,
+    DatePickerModule,
     DropdownModule,
     RadioButtonModule,
     FileUploadModule
