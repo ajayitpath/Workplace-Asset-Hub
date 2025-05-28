@@ -1,13 +1,13 @@
 import { useMemo } from "react"
 import URLS from "../constants/urls"
-import Login from "../containers/auth/login/Login"
+import Login from "../containers/auth/login"
 import Signup from "../pages/Signup"
-import ForgotPassword from "../containers/auth/ForgotPassword/ForgotPassword"
-import ResetPassword from "../containers/auth/ResetPassword/ResetPassword"
-import OtpVerification from "../containers/auth/OtpVerification/OtpVerification"
-import Dashboard from "../components/Admin/Dashboard/Dashboard"
-import AssetManegement from "../components/Admin/AssetManegement/AssetManegement";
-import Home from "../components/Home/Home";
+import ForgotPassword from "../containers/auth/ForgotPassword"
+import ResetPassword from "../containers/auth/ResetPassword"
+import OtpVerification from "../containers/auth/OtpVerification"
+import Dashboard from "../containers/Admin/Dashboard"
+import AssetManegement from "../containers/Admin/AssetManegement";
+import Home from "../components/Home";
 
 const useRoutes = () => {
     const allRoutes = useMemo(() => [

@@ -1,5 +1,5 @@
 import React from 'react'
-import SignupForm from '../containers/auth/signup/SignupForm'
+import SignupForm from '../containers/auth/signup'
 import { Container, Typography, Paper } from '@mui/material';
 
 const Signup = () => {
