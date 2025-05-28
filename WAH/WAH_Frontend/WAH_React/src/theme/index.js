@@ -3,18 +3,19 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      // main:'rgb(85, 108, 214)' ,  // Replace with color from Figma
-      main: '#556CD6',
+      main: 'rgb(89, 116, 252)',
+      dark: 'rgb(77, 104, 255)',
     },
     secondary: {
-      main:'#19857B' ,  // Replace with color from Figma
+      main: 'rgb(151, 98, 98)',
     },
     background: {
-      default:'#697581' ,  // Replace with color from Figma
+      default: '#F4F4F6',
+      paper: '#FFFFFF',
     },
     text: {
-      primary:'#754949' ,
-      secondary:'#A16C6C' ,  // Replace with color from Figma
+      primary: 'rgb(0, 0, 0)',
+      secondary: 'rgb(107, 114, 128)',
     },
   },
   typography: {

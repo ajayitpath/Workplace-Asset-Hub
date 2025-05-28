@@ -1,10 +1,10 @@
 import { useMemo } from "react"
 import URLS from "../constants/urls"
-import Login from "../containers/auth/login/Login"
-import Signup from "../pages/Signup"
-import ForgotPassword from "../containers/auth/ForgotPassword/ForgotPassword"
-import ResetPassword from "../containers/auth/ResetPassword/ResetPassword"
-import OtpVerification from "../containers/auth/OtpVerification/OtpVerification"
+import Login from "../containers/auth/login"
+import Signup from "../containers/auth/signup"
+import ForgotPassword from "../containers/auth/ForgotPassword"
+import ResetPassword from "../containers/auth/ResetPassword"
+import OtpVerification from "../containers/auth/OtpVerification"
 
 const useRoutes = () => {
     const allRoutes = useMemo(() => [
