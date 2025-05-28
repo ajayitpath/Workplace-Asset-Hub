@@ -116,7 +116,7 @@ namespace WAH_API.Controllers
                 return BadRequest("Invalid OTP or email.");
             }
 
-            var isValid = await _userService.VerifyOtpAsync(dto);
+            var isValid = await _userService.VerifyOtpAsync(dto.Email,dto.Otp);
             if (!isValid)
             {
                 return Unauthorized("Invalid OTP.");

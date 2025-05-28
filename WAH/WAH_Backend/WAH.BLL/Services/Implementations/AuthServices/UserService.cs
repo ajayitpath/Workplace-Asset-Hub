@@ -105,8 +105,13 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 var otp = _otpService.GenerateAndCacheOtp(model.Email);
                 await EmailHelper.SendOtpAsync(model.Email, otp);
 
+                var result = _otpService.ValidateOtp(model.Email,otp);
+                if (result)
+                {
                 var createdUser = await _genericRepository.AddAsync(newUser);
                 return createdUser != null;
+                }
+                return false;
             }
             catch (Exception ex)
             {
@@ -114,13 +119,13 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             }
         }
 
-        public async Task<bool> VerifyOtpAsync(VerifyOtpDto dto)
+        public async Task<bool> VerifyOtpAsync(string email, string otp)
         {
-            var isValidOtp = _otpService.ValidateOtp(dto.Email, dto.Otp);
+            var isValidOtp = _otpService.ValidateOtp(email, otp);
             if (!isValidOtp)
                 return false;
 
-            var user = (await _genericRepository.FindAsync(d => d.Email == dto.Email)).FirstOrDefault();
+            var user = (await _genericRepository.FindAsync(d => d.Email == email)).FirstOrDefault();
             return user != null;
         }
     }
