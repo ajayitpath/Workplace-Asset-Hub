@@ -6,6 +6,7 @@ const URLS = {
     RESET_PASSWORD: '/reset-password',
     VERIFY_EMAIL: '/verify-email',
     DASHBOARD: '/dashboard',
+    ASSETMANAGE: '/asset-management',
     PROFILE: '/profile',
     SETTINGS: '/settings',
     HELP: '/help',

@@ -3,7 +3,8 @@ import React from 'react';
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { forgotPasswordSchema } from './ForgotPassword.schema.js';
+import { forgotPasswordSchema } from '../../../schema/ForgotPassword.schema';
+import { Link } from 'react-router-dom';
 
 const ForgotPassword = () => {
   const {
@@ -20,7 +21,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-200 p-4 gap-4">
+    <div className="min-h-screen flex items-center justify-center p-4 gap-4">
       <Paper elevation={3} className="p-6 rounded-lg w-full max-w-md">
         <Typography variant="h5" className="text-center mb-4 text-primary-700 font-semibold">
           Forgot Password
@@ -43,6 +44,17 @@ const ForgotPassword = () => {
           >
             Send OTP
           </Button>
+          <div className="text-center mt-4">
+            <span className="text-sm text-gray-600">
+              Remember your password?{" "}
+              <Link
+                to="/login"
+                className="text-blue-600 hover:underline font-medium"
+              >
+                Login
+              </Link>
+            </span>
+          </div>
         </form>
       </Paper>
     </div>
