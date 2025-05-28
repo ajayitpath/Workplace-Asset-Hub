@@ -6,60 +6,22 @@ import { InventorymanagementComponent } from '../inventorymanagement/inventoryma
 import { RequestapprovalComponent } from '../requestapproval/requestapproval.component';
 import { ReportanalyticsComponent } from '../reportanalytics/reportanalytics.component';
 import { SupportfaqComponent } from '../supportfaq/supportfaq.component';
+import { MainLayoutComponent } from '../../shared/Layout/main-layout/main-layout.component';
 
 const routes: Routes = [
   {
     path: '',
-    component:DashboardComponent
-  },
-  {
-    path: 'asset-management',
-    component:AssetManagementComponent
-  },
-  // {
-  //   path: 'asset-management/add',
-
-  // },
-  // {
-  //   path: 'asset-management/edit/:id',
-  // },
-  // {
-  //   path: 'asset-management/delete/:id',
-  // },
-  {
-    path: 'inventory-management',
-    component:InventorymanagementComponent
-  },
-  // {
-  //   path: 'inventory-management/add',
-  // },
-  // {
-  //   path: 'inventory-management/edit/:id',
-  // },
-  // {
-  //   path: 'inventory-management/delete/:id',
-  // },
-  {
-    path: 'requests-approvals',
-    component: RequestapprovalComponent
-  },
-  // {
-  //   path: 'requests-approvals/add',
-  // },
-  // {
-  //   path: 'requests-approvals/edit/:id',
-  // },
-  // {
-  //   path: 'requests-approvals/delete/:id',
-  // },
-  {
-    path:'reports-analytics',
-    component: ReportanalyticsComponent
-  },
-{
-  path: 'support-faq',
-  component: SupportfaqComponent
-}
+    component: MainLayoutComponent,
+    children: [
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'asset-management', component: AssetManagementComponent },
+      { path: 'inventory-management', component: InventorymanagementComponent },
+      { path: 'requests-approvals', component: RequestapprovalComponent },
+      { path: 'reports-analytics', component: ReportanalyticsComponent },
+      { path: 'support-faq', component: SupportfaqComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+    ]
+  }
 ];
 
 @NgModule({

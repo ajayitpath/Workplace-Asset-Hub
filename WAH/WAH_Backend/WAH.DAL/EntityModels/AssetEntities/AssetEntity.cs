@@ -15,5 +15,4 @@
         public AssetCategoryEntity Category { get; set; }
         public ICollection<AssetItemEntity> AssetItems { get; set; }
     }
-
 }

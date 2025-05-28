@@ -17,5 +17,4 @@
         public AssetStatusEntity Status { get; set; }
         public LocationEntity Location { get; set; }
     }
-
 }
