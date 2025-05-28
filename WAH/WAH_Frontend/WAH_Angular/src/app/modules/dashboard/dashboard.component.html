@@ -1,28 +1,4 @@
 <div class="app-container">
-  <!-- Sidebar -->
-  <div class="sidebar" [ngClass]="{ 'expanded': isExpanded }"
-       (mouseenter)="expandSidebar()" (mouseleave)="collapseSidebar()">
-    <div class="logo-container">
-      <div class="logo">
-        <img src="/assets/images/logo.jpg" class="logo-img" alt="Logo" />
-        <span class="logo-icon">Admin</span>
-        <span class="logo-text" *ngIf="isExpanded">Panel</span>
-      </div>
-      <div class="toggle-button" *ngIf="isExpanded">
-        <i class="chevron-icon">❯</i>
-      </div>
-    </div>
-
-    <div class="menu-items">
-      <div class="menu-item" *ngFor="let item of menuItems"
-           [ngClass]="{ 'active': activeMenuItem === item.key }"
-           (click)="setActive(item.key)">
-        <i class="icon" [ngClass]="item.icon"></i>
-        <span class="menu-text" *ngIf="isExpanded">{{ item.label }}</span>
-      </div>
-    </div>
-  </div>
-
   <!-- Main Content -->
   <div class="main-content">
     <!-- Header -->

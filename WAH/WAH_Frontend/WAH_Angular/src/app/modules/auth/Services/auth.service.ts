@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-
+  
   constructor() { }
   // register , login , resetpassword, forgotpassword, emailverify(otp) , resetpassword link , gettoken , resetOTP, 
 }
