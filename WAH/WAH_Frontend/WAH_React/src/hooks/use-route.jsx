@@ -1,5 +1,10 @@
 import { useMemo } from "react"
 import URLS from "../constants/urls"
+import Login from "../containers/auth/login/Login"
+import Signup from "../pages/Signup"
+import ForgotPassword from "../containers/auth/ForgotPassword/ForgotPassword"
+import ResetPassword from "../containers/auth/ResetPassword/ResetPassword"
+import OtpVerification from "../containers/auth/OtpVerification/OtpVerification"
 import Dashboard from "../components/Admin/Dashboard/Dashboard"
 import AssetManegement from "../components/Admin/AssetManegement/AssetManegement";
 import Home from "../components/Home/Home";
@@ -15,31 +20,31 @@ const useRoutes = () => {
         {
             id:"login",
             path:URLS.LOGIN,
-            element: <div>Login</div>,
+            element: <Login />,
             isAuth:true,
         },
         {
             id:"signup",
             path:URLS.SIGNUP,
-            element: <div>Signup</div>,
+            element: <Signup />,
             isAuth:true,
         },
         {
             id:"forgotPassword",
             path:URLS.FORGOT_PASSWORD,
-            element: <div>Forgot Password</div>,
+            element: <ForgotPassword />,
             isAuth:true,
         },
         {
             id:"resetPassword",
             path:URLS.RESET_PASSWORD,
-            element: <div>Reset Password</div>,
+            element: <ResetPassword />,
             isAuth:true,
         },
         {
             id:"verifyEmail",
             path:URLS.VERIFY_EMAIL,
-            element: <div>Verify Email</div>,
+            element: <OtpVerification />,
             isAuth:true,
         },
         {
