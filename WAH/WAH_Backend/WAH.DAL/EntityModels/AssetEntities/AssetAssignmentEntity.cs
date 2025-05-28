@@ -15,5 +15,4 @@ namespace WAH.DAL.EntityModels.AssetEntities
         public AssetItemEntity AssetItem { get; set; } = null!;
         public UserEntity User { get; set; } = null!;
     }
-
 }

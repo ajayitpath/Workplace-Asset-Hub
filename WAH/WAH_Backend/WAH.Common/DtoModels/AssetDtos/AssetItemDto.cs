@@ -1,6 +1,12 @@
-﻿namespace WAH.DAL.EntityModels.AssetEntities
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WAH.Common.DtoModels.AssetDtos
 {
-    public class AssetItemEntity
+    public class AssetItemDto
     {
         public Guid AssetItemId { get; set; }
         public Guid AssetId { get; set; }
@@ -8,13 +14,6 @@
         public DateTime PurchaseDate { get; set; }
         public DateTime? WarrantyExpiryDate { get; set; }
         public Guid StatusId { get; set; }
-
-        // Optional location tracking
         public Guid? LocationId { get; set; }
-
-        // Navigation
-        public AssetEntity Asset { get; set; }
-        public AssetStatusEntity Status { get; set; }
-        public LocationEntity Location { get; set; }
     }
 }
