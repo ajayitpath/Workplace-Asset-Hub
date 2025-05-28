@@ -1,118 +1,20 @@
-.app-container {
+/* .app-container {
   display: flex;
   height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.sidebar {
-  background-color: #1c2a3a;
-  color: #cbd5e0;
-  width: 60px;
-  align-items: center ;
-  transition: width 0.3s ease;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar.expanded {
-  width: 270px;
-}
-
-.logo-img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  margin-right: 8px;
-  border-radius: 4px;
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 1px solid #2d3d50;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  font-size: 1.1rem;
-  color: white;
-  font-weight: bold;
-}
-
-.logo-icon {
-  font-size: 1.5rem;
-  color: #7289da;
-}
-
-.logo-text {
-  margin-left: 0.5rem;
-  color: #cbd5e0;
-}
-
-.toggle-button .chevron-icon {
-  font-size: 1rem;
-  cursor: pointer;
-  color: #7289da;
-  transition: transform 0.2s;
-}
-
-.toggle-button .chevron-icon:hover {
-  transform: scale(1.1);
-}
-
-.menu-items {
-  display: flex;
-  flex-direction: column;
-  margin-top: 1rem;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin: 2px 8px;
-  border-radius: 8px;
-}
-
-.menu-item:hover {
-  background-color: #2d3d50;
-  color: white;
-  transform: translateX(2px);
-}
-
-.menu-item.active {
-  background-color: #6c5ce7;
-  color: white;
-  box-shadow: 0 2px 4px rgba(108, 92, 231, 0.3);
-}
-
-.icon {
-  margin-right: 1rem;
-  font-size: 1.2rem;
-  width: 24px;
-  text-align: center;
-  color: inherit;
-}
-
-.menu-text {
-  margin-left: 1rem;
-  white-space: nowrap;
-  font-weight: 500;
-}
+} */
 
 /* Main Content Styles */
 .main-content {
-  flex-grow: 1;
+  display: flex ;
   background-color: #f8f9fa;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+flex-direction: column  ;
+  flex: 1; 
+ width: 100% !important; 
+  max-width: none !important;
+  height: 100%;
+
+ 
 }
 
 /* Header Styles */
@@ -139,64 +41,18 @@
   gap: 1.5rem;
 }
 
-.search-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-icon {
-  position: absolute;
-  left: 12px;
-  color: #6c757d;
-  z-index: 1;
-}
-
-.search-input {
-  padding: 8px 12px 8px 36px;
-  border: 1px solid #dee2e6;
-  border-radius: 20px;
-  background-color: #f8f9fa;
-  width: 200px;
-  font-size: 0.9rem;
-  transition: all 0.2s;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: #6c5ce7;
-  background-color: white;
-  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
-}
-
-/* .dropdown-container {
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  width: fit-content;
-  transition: background-color 0.3s ease;
-    background-color: #e53935;
-    color: var(--white);
-    text-align: center;
-}
-
-.dropdown-container:hover {
-  background-color: #f8f9fa;
-} */
-
 .logout-container {
   display: flex;
   justify-content: center;
   align-items: center;
-   padding: 10px 20px;
+  padding: 10px 20px;
   border-radius: 5px;
 }
 
 .logout-button {
-  background-color: var(--error-color); /* Red from your theme */
+  background-color: var(--error-color);
   color: white;
-    padding: 10px 20px;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
@@ -205,14 +61,15 @@
 }
 
 .logout-button:hover {
-  background-color: #b02a37; /* Slightly darker red on hover */
+  background-color: #b02a37;
 }
 
 /* Dashboard Content */
 .dashboard-content {
   flex: 1;
   padding: 2rem;
-  overflow-y: auto;
+  width: 100%;
+  max-width: none !important;
 }
 
 /* Stats Section */
@@ -357,7 +214,7 @@
   .bottom-section {
     grid-template-columns: 1fr;
   }
-  
+
   .charts-section {
     flex-direction: column;
   }
@@ -367,15 +224,11 @@
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .header {
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
-  }
-  
-  .search-input {
-    width: 150px;
   }
 }
 
@@ -383,7 +236,7 @@
   .stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .dashboard-content {
     padding: 1rem;
   }

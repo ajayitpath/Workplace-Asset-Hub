@@ -36,7 +36,7 @@ namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
                    .IsUnique();
 
             builder.Property(u => u.PhoneNumber)
-                   .HasMaxLength(15);
+                   .HasMaxLength(10);
 
             builder.HasIndex(u => u.PhoneNumber)
                    .IsUnique();

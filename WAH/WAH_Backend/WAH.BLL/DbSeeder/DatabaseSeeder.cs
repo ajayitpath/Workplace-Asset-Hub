@@ -50,7 +50,7 @@ namespace WAH.BLL.DbSeeder
                     Email = "admin@wah.com",
                     Password = _passwordHasher.HashPassword("Admin@123"),
                     Gender = Gender.Male,
-                    DOB = new DateTime(1990, 1, 1),
+                    DOB = new DateOnly(1990, 1, 1),
                     PhoneNumber = "1234567891",
                     DeskNo = "A-01",
                     Role = adminRole

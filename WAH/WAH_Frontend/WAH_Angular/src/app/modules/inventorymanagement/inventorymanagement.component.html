@@ -1,1 +1,48 @@
-<p>inventorymanagement works!</p>
+
+<div class="inventory-management-container">
+  <!-- Header -->
+  <div class="header">
+    <h2 class="title text-center">Inventory Management</h2>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="left">
+      <input
+        type="text"
+        pInputText
+        placeholder="Search Item"
+        [(ngModel)]="searchText"
+        (input)="onSearchChange()"
+      />
+      <button
+        pButton
+        type="button"
+        icon="pi pi-search"
+        class="p-button-sm p-button-secondary"
+        (click)="onSearchChange()"
+      ></button>
+    </div>
+
+    <div class="right">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-plus"
+        label="Add Inventory"
+        class="p-button-sm p-button-primary"
+        (click)="onAddInventory()"
+      ></button>
+    </div>
+  </div>
+
+  <!-- Reusable Table -->
+  <app-reusabletable
+    [columns]="columns"
+    [data]="filteredData"
+    [showActions]="true"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)"
+    (view)="onView($event)">
+  </app-reusabletable>
+</div>
