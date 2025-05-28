@@ -10,7 +10,7 @@ const theme = createTheme({
       main:'#19857B' ,  // Replace with color from Figma
     },
     background: {
-      default:'#697581' ,  // Replace with color from Figma
+      default:'#FFFFFF' ,  // Replace with color from Figma
     },
     text: {
       primary:'#754949' ,
