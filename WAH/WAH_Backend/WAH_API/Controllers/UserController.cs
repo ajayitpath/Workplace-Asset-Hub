@@ -48,7 +48,7 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto dto)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return BadRequest("Passwords do not match.");
@@ -109,7 +109,7 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("otp-verify")]
-        public async Task<IActionResult> OtpVerify([FromForm] VerifyOtpDto dto)             
+        public async Task<IActionResult> OtpVerify([FromBody] VerifyOtpDto dto)             
         {
             if (dto == null || string.IsNullOrEmpty(dto.Email) || string.IsNullOrEmpty(dto.Otp))
             {

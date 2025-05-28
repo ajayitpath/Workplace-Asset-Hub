@@ -94,7 +94,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
 
                 var hashedPassword = _passwordHasherService.HashPassword(model.Password);
 
-                var defaultUserRoleId = Guid.Parse("5877C91B-2DC4-41E6-B03D-7F568D4CB7D7");
+                var defaultUserRoleId = Guid.Parse("2CCA8509-93DC-4B47-A670-11576F21C90A");
 
                 var role = await _roleRepository.GetByIdAsync(defaultUserRoleId);
                 if (role == null)
