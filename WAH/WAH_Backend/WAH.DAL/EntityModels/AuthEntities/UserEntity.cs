@@ -15,13 +15,14 @@ namespace WAH.DAL.EntityModels.AuthEntities
         public string? PhoneNumber { get; set; }
         public string Email { get; set; } = string.Empty;
         public Gender Gender { get; set; }
-        public DateTime DOB { get; set; }
-        public string? DeskNo { get; set; }
+
+        public DateOnly DOB { get; set; }
 
         public RoleEntity Role { get; set; } = null!;
 
         public UserProfileEntity UserProfile { get; set; } = null!;
         public ICollection<AssetRequestEntity> AssetRequests { get; set; } = new List<AssetRequestEntity>();
         public ICollection<AssetAssignmentEntity> AssetAssignments { get; set; } = new List<AssetAssignmentEntity>();
+        public string? DeskNo { get; set; }
     }
 }

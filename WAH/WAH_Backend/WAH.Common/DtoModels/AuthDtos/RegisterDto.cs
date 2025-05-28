@@ -44,16 +44,24 @@ namespace WAH.Common.DtoModels.AuthDtos
         [MaxLength(20, ErrorMessage = "Desk number cannot exceed 20 characters.")]
         public string? DeskNo { get; set; }
 
+        [Required(ErrorMessage = "Role is required.")]
+        public Guid RoleId { get; set; }
+
         [Required(ErrorMessage = "Date of Birth is required.")]
         [DataType(DataType.Date)]
         [CustomValidation(typeof(RegisterDto), nameof(ValidateDOB))]
-        public DateTime DOB { get; set; }
+        public DateOnly DOB { get; set; }
 
-        public static ValidationResult? ValidateDOB(DateTime dob, ValidationContext context)
+        public static ValidationResult? ValidateDOB(DateOnly dob, ValidationContext context)
         {
-            if (dob > DateTime.Today)
+            var today = DateOnly.FromDateTime(DateTime.Today);
+
+            if (dob > today)
                 return new ValidationResult("Date of Birth cannot be in the future.");
-            if (DateTime.Today.Year - dob.Year < 18)
+            int age = today.Year - dob.Year;
+            if (dob > today.AddYears(-age)) age--;
+
+            if (age < 18)
                 return new ValidationResult("You must be at least 18 years old.");
             return ValidationResult.Success;
         }

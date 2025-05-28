@@ -12,6 +12,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
     public class UserService : IUserService
     {
         private readonly IGenericRepository<UserEntity> _genericRepository;
+        private readonly IGenericRepository<RoleEntity> _roleRepository;
         private readonly IPasswordHasherService _passwordHasherService;
         private readonly IJwtTokenService _jwtTokenService;
         private readonly IConfiguration _configuration;
@@ -22,6 +23,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             IJwtTokenService jwtTokenService,
             IConfiguration configuration,
             IGenericRepository<UserEntity> genericRepository,
+            IGenericRepository<RoleEntity> roleRepository,
             IOtpService otpService)
         {
             _passwordHasherService = passwordHasherService;
@@ -29,6 +31,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             _configuration = configuration;
             _genericRepository = genericRepository;
             _otpService = otpService;
+            _roleRepository = roleRepository;
         }
 
         public async Task<string?> LoginAsync(LoginDto loginDto)
@@ -87,7 +90,15 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 if (exists || model.Password != model.ConfirmPassword)
                     return false;
 
+                
+
                 var hashedPassword = _passwordHasherService.HashPassword(model.Password);
+
+                var defaultUserRoleId = Guid.Parse("5877C91B-2DC4-41E6-B03D-7F568D4CB7D7");
+
+                var role = await _roleRepository.GetByIdAsync(defaultUserRoleId);
+                if (role == null)
+                    throw new Exception("Default User role not found.");
 
                 var newUser = new UserEntity
                 {
@@ -98,9 +109,10 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                     Gender = model.Gender,
                     PhoneNumber = model.PhoneNumber,
                     DOB = model.DOB,
-                    DeskNo = model.DeskNo
-                    // Do not assign ConfirmPassword or UserProfile here
+                    DeskNo = model.DeskNo,
+                    Role = role, // assign the full RoleEntity
                 };
+
 
                 var otp = _otpService.GenerateAndCacheOtp(model.Email);
                 await EmailHelper.SendOtpAsync(model.Email, otp);
