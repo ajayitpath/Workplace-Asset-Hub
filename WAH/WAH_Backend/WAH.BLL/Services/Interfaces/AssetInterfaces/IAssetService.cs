@@ -9,6 +9,6 @@ namespace WAH.BLL.Services.Interfaces.AssetInterfaces
 {
     public interface IAssetService
     {
-        Task<AssetEntityDto> CreateAssetAsync(AssetEntityDto assetDto);
+        Task<AssetDto> CreateAssetAsync(AssetDto assetDto);
     }
 }

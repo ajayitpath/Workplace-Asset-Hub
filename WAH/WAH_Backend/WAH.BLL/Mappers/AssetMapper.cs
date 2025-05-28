@@ -11,7 +11,7 @@ namespace WAH.BLL.Mappers
     public static class AssetMapper
     {
         
-            public static AssetEntity ToEntity(AssetEntityDto dto)
+            public static AssetEntity ToEntity(AssetDto dto)
             {
                 return new AssetEntity
                 {
@@ -27,9 +27,9 @@ namespace WAH.BLL.Mappers
                 };
             }
 
-            public static AssetEntityDto ToDto(AssetEntity entity)
+            public static AssetDto ToDto(AssetEntity entity)
             {
-                return new AssetEntityDto
+                return new AssetDto
                 {
                     AssetId = entity.AssetId,
                     AssetName = entity.AssetName,

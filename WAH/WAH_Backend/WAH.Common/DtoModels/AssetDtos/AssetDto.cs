@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using Org.BouncyCastle.Tls;
 
 namespace WAH.Common.DtoModels.AssetDtos
 {
-    public class AssetEntityDto
+    public class AssetDto
     {
         [Required]
         public Guid AssetId { get; set; }

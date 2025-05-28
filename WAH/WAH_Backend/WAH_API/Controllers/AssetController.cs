@@ -16,7 +16,7 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsset([FromBody] AssetEntityDto assetDto)
+        public async Task<IActionResult> CreateAsset([FromBody] AssetDto assetDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

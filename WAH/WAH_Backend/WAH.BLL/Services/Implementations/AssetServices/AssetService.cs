@@ -25,7 +25,7 @@ namespace WAH.BLL.Services.Implementations.AssetServices
             _assetcategoryRepository = assetCategoryRepository;
           
         }
-        public async Task<AssetEntityDto> CreateAssetAsync(AssetEntityDto assetDto)
+        public async Task<AssetDto> CreateAssetAsync(AssetDto assetDto)
         {
        
 
