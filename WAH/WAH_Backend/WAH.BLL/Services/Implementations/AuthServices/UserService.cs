@@ -90,15 +90,24 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 if (exists || model.Password != model.ConfirmPassword)
                     return false;
 
-                
-
                 var hashedPassword = _passwordHasherService.HashPassword(model.Password);
 
-                var defaultUserRoleId = Guid.Parse("5877C91B-2DC4-41E6-B03D-7F568D4CB7D7");
+                // Step 1: Determine Role
+                RoleEntity? role;
 
-                var role = await _roleRepository.GetByIdAsync(defaultUserRoleId);
+                if (model.RoleId == 0 || model.RoleId == null)
+                {
+                    // Assign default "User" role if RoleId is not provided
+                    role = (await _roleRepository.FindAsync(r => r.Name == "User")).FirstOrDefault();
+                }
+                else
+                {
+                    // Admin/Manager provided a specific role
+                    role = await _roleRepository.GetByIdAsync(model.RoleId);
+                }
+
                 if (role == null)
-                    throw new Exception("Default User role not found.");
+                    throw new Exception("Role not found.");
 
                 var newUser = new UserEntity
                 {
@@ -131,14 +140,9 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             }
         }
 
-        public async Task<bool> VerifyOtpAsync(string email, string otp)
+        public Task<bool> VerifyOtpAsync(string email, string otp)
         {
-            var isValidOtp = _otpService.ValidateOtp(email, otp);
-            if (!isValidOtp)
-                return false;
-
-            var user = (await _genericRepository.FindAsync(d => d.Email == email)).FirstOrDefault();
-            return user != null;
+            throw new NotImplementedException();
         }
     }
 }

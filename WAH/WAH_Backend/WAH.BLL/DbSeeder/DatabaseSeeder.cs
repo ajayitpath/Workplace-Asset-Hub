@@ -28,7 +28,7 @@ namespace WAH.BLL.DbSeeder
                 {
                     _context.Roles.Add(new RoleEntity
                     {
-                        Id = Guid.NewGuid(),
+                       
                         Name = roleName,
                         isActive = true
                     });

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.DtoModels.AuthDtos;
 using WAH.DAL.EntityModels;
@@ -9,7 +10,6 @@ namespace WAH_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Consumes("multipart/form-data")]
     public class UserController : ControllerBase
     {
 
@@ -60,8 +60,8 @@ namespace WAH_API.Controllers
 
             return Ok(new { message = "Password has been reset successfully." });
         }
+        //[Authorize(Roles = "Admin,Manager")]
         [HttpPost("register")]
-        //[Consumes("multipart/form-data")]
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
             if (!ModelState.IsValid)

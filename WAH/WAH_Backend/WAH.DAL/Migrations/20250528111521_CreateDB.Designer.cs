@@ -12,8 +12,8 @@ using WAH.DAL.Data;
 namespace WAH.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250528065308_Createmigration")]
-    partial class Createmigration
+    [Migration("20250528111521_CreateDB")]
+    partial class CreateDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -217,10 +217,11 @@ namespace WAH.DAL.Migrations
 
             modelBuilder.Entity("WAH.DAL.EntityModels.AuthEntities.RoleEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -247,8 +248,8 @@ namespace WAH.DAL.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWSEQUENTIALID()");
 
-                    b.Property<DateTime>("DOB")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("DOB")
+                        .HasColumnType("date");
 
                     b.Property<string>("DeskNo")
                         .HasMaxLength(20)
@@ -277,14 +278,14 @@ namespace WAH.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("ProfileImage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
