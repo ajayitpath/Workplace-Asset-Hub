@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import URLS from "../constants/urls"
 import Login from "../containers/auth/login"
-import Signup from "../pages/Signup"
+import Signup from "../containers/auth/signup"
 import ForgotPassword from "../containers/auth/ForgotPassword"
 import ResetPassword from "../containers/auth/ResetPassword"
 import OtpVerification from "../containers/auth/OtpVerification"
