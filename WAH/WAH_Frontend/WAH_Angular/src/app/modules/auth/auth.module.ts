@@ -11,14 +11,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { Calendar } from 'primeng/calendar';
+import { DatePickerModule } from 'primeng/datepicker';
 import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FileUploadModule } from 'primeng/fileupload';
-import { DatePickerModule } from 'primeng/datepicker';
+
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, ResetpasswordComponent, EmailVerifyComponent],
   imports: [
