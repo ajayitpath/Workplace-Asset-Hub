@@ -25,7 +25,7 @@ namespace WAH.Common.Helpers
         public static async Task SendUserEmailAsync(string toEmail, string subject, string body)
         {
             var email = new MimeMessage(); 
-            email.From.Add(new MailboxAddress("Reser Password:", "ajaym.itpath@gmail.com"));  
+            email.From.Add(new MailboxAddress("Reset Password:", "ajaym.itpath@gmail.com"));  
 
             email.To.Add(MailboxAddress.Parse(toEmail));
             email.Subject = subject;
