@@ -11,7 +11,6 @@ namespace WAH.DAL.EntityModels.AuthEntities
         public string LastName { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string? ConfirmPassword { get; set; }
-        public string? ProfileImage { get; set; }
         public string? PhoneNumber { get; set; }
         public string Email { get; set; } = string.Empty;
         public Gender Gender { get; set; }
@@ -19,6 +18,9 @@ namespace WAH.DAL.EntityModels.AuthEntities
         public DateOnly DOB { get; set; }
 
         public RoleEntity Role { get; set; } = null!;
+        public UserAuditEntity UserAudit { get; set; } = null!;
+
+        public bool IsActive { get; set; } = true;
 
         public UserProfileEntity UserProfile { get; set; } = null!;
         public ICollection<AssetRequestEntity> AssetRequests { get; set; } = new List<AssetRequestEntity>();
