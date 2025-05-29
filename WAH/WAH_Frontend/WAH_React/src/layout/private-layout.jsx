@@ -3,9 +3,9 @@ import { Outlet } from 'react-router-dom';
 import withUser from '../hoc/with-user';
 
 const NewOutlet = withUser(Outlet);
-const AuthLayout = () => {
+const PrivateLayout = () => {
     return (
         <NewOutlet />
     );
 }
-export default AuthLayout;
+export default PrivateLayout;

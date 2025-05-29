@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WAH.DAL.EntityModels;
+using WAH.DAL.EntityModels.AuthEntities;
+using WAH.DAL.EntityModels.AssetEntities;
 
 namespace WAH.DAL.Data
 {
@@ -10,11 +11,25 @@ namespace WAH.DAL.Data
         {
         }
 
+        // Auth Entities
         public DbSet<UserEntity> Users { get; set; }
+        public DbSet<RoleEntity> Roles { get; set; }
+
+        public DbSet<AssetEntity> Assets { get; set; }
+        public DbSet<AssetItemEntity> AssetItems { get; set; }
+        public DbSet<AssetCategoryEntity> AssetCategories { get; set; }
+        public DbSet<AssetStatusEntity> AssetStatuses { get; set; }
+        public DbSet<LocationEntity> Locations { get; set; }
+        public DbSet<AssetAssignmentEntity> AssetAssignments { get; set; }
+        public DbSet<AssetRequestEntity> AssetRequests { get; set; }
+
+        public DbSet<UserProfileEntity> UserProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Applies all IEntityTypeConfiguration<T> from current assembly
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
     }
