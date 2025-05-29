@@ -1,9 +1,11 @@
 import axiosInstance from '../../api/axios';
 import ENDPOINTS from '../../api/endpoints';
 
-const loginUser = async (payload) => {
-  const res = await axiosInstance.post(ENDPOINTS.LOGIN, payload);
-  return { token: res.data.token };
+const loginUser = async (credentials) => {
+  const { data } = await axiosInstance.post(ENDPOINTS.LOGIN,credentials)
+  return data;
+  // const res = await axiosInstance.post(ENDPOINTS.LOGIN, payload);
+  // return { token: res.data.token };
 };
 
 const registerUser = async (formData) => {
@@ -25,6 +27,7 @@ const verifyOtp = async (payload) => {
   const res = await axiosInstance.post(ENDPOINTS.VERIFY_OTP, payload);
   return res.data;
 };
+
 
 export { loginUser, registerUser, forgotPassword, resetPassword, verifyOtp };
 

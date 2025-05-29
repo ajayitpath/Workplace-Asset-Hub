@@ -3,7 +3,6 @@ import store from "../redux/store";
 import { logout } from "../redux/slices/authSlice";
 import URLS from "../constants/urls";
 import { toast } from "react-toastify";
-import { Navigate } from "react-router-dom";
 
 const axiosInstance = axios.create({
   baseURL: "https://localhost:7126/api", // Replace with your API base URL
@@ -29,17 +28,25 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    const { status } = error.response || {};
-    if (status === 401 || status === 403) {
-      store.dispatch(logout());
-      toast.error("Session expired. Please log in again.");
-      return (window.location.href = URLS.LOGIN);
-    } else if (status >= 500) {
-      toast.error("Server error. Please try again later.");
-    } else if (status >= 400) {
-      toast.error("An error occurred. Please check your request.");
-    }
+  const status = error?.response?.status;
+
+  if (!status) {
+    toast.error("Network error. Please check your connection.");
     return Promise.reject(error);
   }
+
+  if (status === 401 || status === 403) {
+    store.dispatch(logout());
+    toast.error("Session expired. Please log in again.");
+    window.location.href = URLS.LOGIN;
+  } else if (status >= 500) {
+    toast.error("Server error. Please try again later.");
+  } else if (status >= 400) {
+    toast.error("An error occurred. Please check your request.");
+  }
+
+  return Promise.reject(error);
+}
+
 );
 export default axiosInstance;

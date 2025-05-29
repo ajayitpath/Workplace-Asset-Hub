@@ -51,13 +51,13 @@ const useRoutes = () => {
             id:"dashboard",
             path:URLS.DASHBOARD,
             element: <Dashboard/>,
-            isAuth:true,
+            isPrivate:true,
         },
         {
             id:"asset-management",
             path:URLS.ASSETMANAGE,
             element: <AssetManegement/>,
-            isAuth:true,
+            isPrivate:true,
         },
         {
             id:"profile",

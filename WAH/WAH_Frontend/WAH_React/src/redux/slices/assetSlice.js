@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAssets } from '../thunks/assetThunks';
 
+
 const assetSlice = createSlice({
   name: 'asset',
   initialState: {
