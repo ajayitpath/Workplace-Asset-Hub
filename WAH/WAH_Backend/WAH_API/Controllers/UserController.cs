@@ -90,7 +90,7 @@ namespace WAH_API.Controllers
             var imagePath = await _profileService.SaveProfileImageAsync(dto);
 
             // Check if user profile already exists
-            var existing = (await _profileRepo.FindAsync(p => p.UserId == userId)).FirstOrDefault();
+            var existing = (await _profileRepo.FindAsync(p => p.UserId == userId)).FirstOrDefault(); 
             if (existing != null)
             {
                 existing.ProfileImage = imagePath;
@@ -109,7 +109,7 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("otp-verify")]
-        public async Task<IActionResult> OtpVerify([FromForm] VerifyOtpDto dto)
+        public async Task<IActionResult> OtpVerify([FromBody] VerifyOtpDto dto)
         {
             if (dto == null || string.IsNullOrEmpty(dto.Email) || string.IsNullOrEmpty(dto.Otp))
             {

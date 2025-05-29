@@ -140,9 +140,14 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             }
         }
 
-        public Task<bool> VerifyOtpAsync(string email, string otp)
+        public async Task<bool> VerifyOtpAsync(string email,string otp)
         {
-            throw new NotImplementedException();
+            var isValidOtp = _otpService.ValidateOtp(email, otp);
+            if (!isValidOtp)
+                return false;
+
+            var user = (await _genericRepository.FindAsync(d => d.Email == email)).FirstOrDefault();
+            return user != null;
         }
     }
 }
