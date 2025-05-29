@@ -12,8 +12,13 @@ using WAH.DAL.Data;
 namespace WAH.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
+<<<<<<<< HEAD:WAH/WAH_Backend/WAH.DAL/Migrations/20250529090808_AngularAuthTesting.Designer.cs
     [Migration("20250529090808_AngularAuthTesting")]
     partial class AngularAuthTesting
+========
+    [Migration("20250529084047_Initialcreate")]
+    partial class Initialcreate
+>>>>>>>> origin/main:WAH/WAH_Backend/WAH.DAL/Migrations/20250529084047_Initialcreate.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
