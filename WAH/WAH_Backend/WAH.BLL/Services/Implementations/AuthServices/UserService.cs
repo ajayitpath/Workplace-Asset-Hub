@@ -57,17 +57,17 @@ namespace WAH.BLL.Services.Implementations.AuthServices
 
             var otp = _otpService.GenerateAndCacheOtp(dto.Email);
             var subject = "Reset Your Password";
-            await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
+          //  await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
 
             return token;
         }
 
-        public async Task<bool> ResetPasswordAsync(ResetPasswordDto dto)
+        public async Task<bool> ResetPasswordAsync(ResetPasswordDto dto, string token, string email)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return false;
 
-            var principal = _jwtTokenService.GetPrincipalFromToken(dto.Token);
+            var principal = _jwtTokenService.GetPrincipalFromToken(token);
             if (principal == null) return false;
 
             var emailClaim = principal.FindFirst(ClaimTypes.Email);
@@ -78,6 +78,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
 
             user.Password = _passwordHasherService.HashPassword(dto.NewPassword);
             _userRepository.Update(user);
+           await _userRepository.SaveChangesAsync();
 
             return true;
         }
@@ -150,5 +151,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             var user = (await _userRepository.FindAsync(d => d.Email == email)).FirstOrDefault();
             return user != null;
         }
+
+
     }
 }

@@ -48,12 +48,13 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, [FromQuery] string token,
+    [FromQuery] string email)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return BadRequest("Passwords do not match.");
 
-            var result = await _userService.ResetPasswordAsync(dto);
+            var result = await _userService.ResetPasswordAsync(dto, token, email);
 
             if (!result)
                 return BadRequest("Invalid or expired token.");
