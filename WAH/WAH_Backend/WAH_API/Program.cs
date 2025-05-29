@@ -71,7 +71,17 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Add for email service - otp stored in cache
 builder.Services.AddMemoryCache();
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontendDev",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // frontend origin
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials(); // If using cookies/auth headers
+        });
+});
 
 
 var app = builder.Build();
@@ -89,9 +99,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
- 
+app.UseCors("AllowFrontendDev");
+
 app.UseHttpsRedirection();
 app.UseRouting(); //AM Added
+
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
