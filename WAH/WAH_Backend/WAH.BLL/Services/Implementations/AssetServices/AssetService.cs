@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Org.BouncyCastle.Crypto;
-using WAH.BLL.Mappers;
+﻿using WAH.BLL.Mappers;
 using WAH.BLL.Services.Interfaces.AssetInterfaces;
 using WAH.Common.DtoModels.AssetDtos;
 using WAH.DAL.EntityModels.AssetEntities;
-using WAH.DAL.Repositories.Implementations;
 using WAH.DAL.Repositories.Interfaces;
 
 namespace WAH.BLL.Services.Implementations.AssetServices
@@ -68,6 +59,34 @@ namespace WAH.BLL.Services.Implementations.AssetServices
             var category = await _assetcategoryRepository.GetById(asset.CategoryId);
             assetDto.CategoryId = category.CategoryId;
             return assetDto;
+        }
+
+        public async Task<AssetDto?> UpdateAssetAsync(Guid assetId, AssetDto assetDto)
+        {
+            if (assetDto == null)
+                throw new ArgumentNullException(nameof(assetDto));
+
+            var existingAsset = await _assetRepository.GetById(assetId);
+            if (existingAsset == null)
+                return null;
+
+            var categories = await _assetcategoryRepository.FindAsync(c => c.CategoryId == assetDto.CategoryId);
+            if (!categories.Any())
+                throw new ArgumentException("The specified category does not exist.", nameof(assetDto.CategoryId));
+
+            // Update fields
+            existingAsset.AssetName = assetDto.AssetName;
+            existingAsset.AssetCode = assetDto.AssetCode;
+            existingAsset.CategoryId = assetDto.CategoryId;
+            existingAsset.Brand = assetDto.Brand;
+            existingAsset.Model = assetDto.Model;
+            existingAsset.Specification = assetDto.Specification;
+            existingAsset.QuantityTotal = assetDto.QuantityTotal;
+
+            _assetRepository.Update(existingAsset);
+            await _assetRepository.SaveChangesAsync();
+
+            return AssetMapper.ToDto(existingAsset);
         }
 
     }
