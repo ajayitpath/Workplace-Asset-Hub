@@ -3,11 +3,11 @@ import ENDPOINTS from '../../api/endpoints';
 
 const loginUser = async (payload) => {
   const res = await axiosInstance.post(ENDPOINTS.LOGIN, payload);
-  return { token: res.data.token }; // Match the backend response structure
+  return { token: res.data.token };
 };
 
-const registerUser = async (payload) => {
-  const res = await axiosInstance.post(ENDPOINTS.REGISTER, payload);
+const registerUser = async (formData) => {
+  const res = await axiosInstance.post(ENDPOINTS.REGISTER, formData);
   return res.data;
 };
 
