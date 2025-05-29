@@ -2,6 +2,7 @@ import {Icon} from '../../../constants/icons';
 import { Pie, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
 import { Link, NavLink } from 'react-router-dom';
+import AdminSidebar from '../../../components/AdminSidebar';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -40,20 +41,7 @@ function Dashboard() {
 
       <div className='flex flex-wrap w-full min-h-screen'>
         {/* Sidebar */}
-        <div className='bg-[#006EC433] w-full lg:max-w-sm h-auto lg:h-screen'>
-          <ul className='space-y-10 max-w-sm p-5 text-xl flex flex-col overflow-x-auto lg:overflow-visible'>
-            <li><NavLink to="/dashboard" className={({isActive}) => `flex gap-5 items-center ${isActive ? "bg-[#00559C33]" : "bg-none"}`}><Icon name="dashboard" size={26} /> Dashboard </NavLink></li>
-            <li><NavLink to="/asset-management" className={({isActive}) => `flex gap-5 items-center ${isActive ? "bg-[#00559C33]" : "bg-none"}` }><Icon name="assetManage" size={26} /> Asset Management </NavLink></li>
-            <li><NavLink to="/inventory-management" className={({isActive}) => `flex gap-5 items-center ${isActive ? "bg-[#00559C33] p-3" : "bg-none"}`}><Icon name="inventory" size={26} /> Inventory Management </NavLink></li>
-            <li><NavLink to="/req-and-approvals" className={({isActive}) => `flex gap-5 items-center ${isActive ? "bg-[#00559C33] p-3" : "bg-none"}`}><Icon name="reqApproval" size={26} /> Request & Approvals </NavLink></li>
-            <li><NavLink to="/notification" className={({isActive}) => `flex gap-5 items-center ${isActive ? "bg-[#00559C33] p-3" : "bg-none"}`}><Icon name="notification" size={26} /> Notifications & Reminders </NavLink></li>
-            <li><NavLink to="/reports-and-analysis" className={({isActive}) => `flex gap-5 items-center ${isActive ? "bg-[#00559C33] p-3" : "bg-none"}`}><Icon name="reports" size={26} /> Reports and Analysis </NavLink></li>
-            <li><NavLink to="/audit-logs" className={({isActive}) => `flex gap-5 items-center ${isActive ? "bg-[#00559C33] p-3" : "bg-none"}`}><Icon name="auditLog" size={26} /> Audit Logs </NavLink></li>
-            <li><NavLink to="/support" className={({isActive}) => `flex gap-5 items-center ${isActive ? "bg-[#00559C33] p-3" : "bg-none"}`}><Icon name="supportFAQ" size={26} /> Support and FAQ </NavLink></li>
-            <li><NavLink to="/user-management" className={({isActive}) => `flex gap-5 items-center ${isActive ? "bg-[#00559C33] p-3" : "bg-none"}`}><Icon name="userManage" size={26} /> User Management </NavLink></li>
-            <li><NavLink to="/settings" className={({isActive}) => `flex gap-5 items-center ${isActive ? "bg-[#00559C33] p-3" : "bg-none"}`}><Icon name="setting" size={26} /> Settings </NavLink></li>
-          </ul>
-        </div>
+       <AdminSidebar/>
 
         {/* Main Content */}
         <div className='flex-1 max-w-full h-auto lg:h-screen p-4 md:p-8 lg:p-10 space-y-6 md:space-y-10 overflow-auto border-r border-gray-400'>

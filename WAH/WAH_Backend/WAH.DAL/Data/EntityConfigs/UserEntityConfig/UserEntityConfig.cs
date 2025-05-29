@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WAH.DAL.EntityModels;
 using WAH.DAL.EntityModels.AuthEntities;
 
 namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
@@ -9,15 +8,17 @@ namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
     {
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
-            builder.ToTable("Users"); // optional
-         
+            builder.ToTable("Users");
+
+            builder.HasQueryFilter(u => u.IsActive);
+
             builder.HasKey(u => u.Id);
 
             builder.Property(u => u.Id)
                    .HasDefaultValueSql("NEWSEQUENTIALID()")
                    .ValueGeneratedOnAdd();
 
-            builder.Property(u => u.FirstName)  
+            builder.Property(u => u.FirstName)
                    .IsRequired()
                    .HasMaxLength(50);
 
@@ -54,6 +55,10 @@ namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
             builder.Property(u => u.DeskNo)
                    .HasMaxLength(20);
 
+            builder.Property(u => u.IsActive)
+                   .IsRequired()
+                   .HasDefaultValue(true);
+
             builder.Ignore(u => u.ConfirmPassword);
 
             builder.HasOne(u => u.Role)
@@ -62,6 +67,5 @@ namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
                    .IsRequired()
                    .OnDelete(DeleteBehavior.Restrict);
         }
-
     }
 }
