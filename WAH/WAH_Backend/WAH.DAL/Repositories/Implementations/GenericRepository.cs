@@ -111,5 +111,9 @@ namespace WAH.DAL.Repositories.Implementations
             await _context.SaveChangesAsync();
         }
 
+        public async Task<T?> GetById(Guid id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
     }
 }

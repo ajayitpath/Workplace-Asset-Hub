@@ -23,5 +23,6 @@ namespace WAH.DAL.Repositories.Interfaces
             int pageNumber, int pageSize,
             Expression<Func<T, bool>>? filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null);
+        Task<T?> GetById(Guid id);
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Org.BouncyCastle.Crypto;
 using WAH.BLL.Mappers;
 using WAH.BLL.Services.Interfaces.AssetInterfaces;
@@ -58,13 +59,13 @@ namespace WAH.BLL.Services.Implementations.AssetServices
                 throw new Exception("An error occurred while creating the asset", ex);
             }
         }
-        public async Task<AssetDto?> GetAssetByIdAsync(Guid assetId)
+        public async Task<AssetDto?> GetAssetByIdAsync(Guid id)
         {
-            var asset = await _assetRepository.GetByIdAsync(assetId);
+            var asset = await _assetRepository.GetById(id);
             if (asset == null)
                 return null;
             var assetDto = AssetMapper.ToDto(asset);
-            var category = await _assetcategoryRepository.GetByIdAsync(asset.CategoryId);
+            var category = await _assetcategoryRepository.GetById(asset.CategoryId);
             assetDto.CategoryId = category.CategoryId;
             return assetDto;
         }
