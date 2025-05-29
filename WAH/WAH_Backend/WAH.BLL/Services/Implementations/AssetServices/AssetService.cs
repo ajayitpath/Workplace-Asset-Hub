@@ -58,5 +58,16 @@ namespace WAH.BLL.Services.Implementations.AssetServices
                 throw new Exception("An error occurred while creating the asset", ex);
             }
         }
+        public async Task<AssetDto?> GetAssetByIdAsync(Guid assetId)
+        {
+            var asset = await _assetRepository.GetByIdAsync(assetId);
+            if (asset == null)
+                return null;
+            var assetDto = AssetMapper.ToDto(asset);
+            var category = await _assetcategoryRepository.GetByIdAsync(asset.CategoryId);
+            assetDto.CategoryId = category.CategoryId;
+            return assetDto;
+        }
+
     }
 }

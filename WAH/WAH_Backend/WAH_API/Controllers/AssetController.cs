@@ -25,11 +25,17 @@ namespace WAH_API.Controllers
             return CreatedAtAction(nameof(GetAssetById), new { id = result.AssetId }, result);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAssetById(Guid id)
-        {
-            //  Add logic to retrieve a single asset
-            return Ok(); 
-        }
+     
+            [HttpGet("{id}")]
+            public async Task<IActionResult> GetAssetById(Guid id)
+            {
+                var asset = await _assetService.GetAssetByIdAsync(id);
+                if (asset == null)
+                    return NotFound();
+
+                return Ok(asset);
+            }
+
+      
     }
 }
