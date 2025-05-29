@@ -27,15 +27,16 @@ export class RegisterComponent {
   constructor(private formBuilder: FormBuilder, private router: Router, private formDataService: FormdataService, private authService: AuthService) { }
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
-      confirmPassword: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]], // 10-digit phone number
-      gender: ['', Validators.required], // assuming a dropdown or radio
+      firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(100), Validators.pattern(/^(?=.*@)(?=.*\.).+$/)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,100}$/)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,100}$/)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      gender: ['', Validators.required],
       dob: [''], // date of birth
-      deskNo: ['', [Validators.required, Validators.pattern(/^[0-9]{1,4}$/)]], // 1-4 digit desk number
+      deskNo: ['', [Validators.pattern(/^[0-9]{1,4}$/), Validators.maxLength(20)]], // 1-4 digit desk number
+      roleId: ['', Validators.required], // Assuming roleId is a string
       profileImage: [null],
     }, { validators: this.passwordMatchValidator });
 

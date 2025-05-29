@@ -10,8 +10,12 @@
         <input pInputText id="email" formControlName="email" placeholder="Enter email" class="form-control bg-white"
           [ngClass]="{'ng-invalid ng-dirty': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}" />
         <div class="text-danger mt-1" *ngIf="loginForm.get('email')?.touched">
-          <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
-          <div *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email.</div>
+          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+            <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
+            <!-- <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small> -->
+            <small *ngIf="loginForm.get('email')?.errors?.['maxlength']">Max 100 characters allowed.</small>
+            <small *ngIf="loginForm.get('email')?.errors?.['pattern']">Email must be in this 'username&#64;domain.com' format.</small>
+          </div>
         </div>
       </div>
 
@@ -23,9 +27,12 @@
           toggleMask="true" placeholder="Enter password"
           [ngClass]="{'ng-invalid ng-dirty': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"></p-password>
         <div class="text-danger mt-1" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
-          <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
-          <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 4 characters.</div>
-          <div *ngIf="loginForm.get('password')?.errors?.['maxlength']">Password must not exceed 15 characters.</div>
+          <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+          <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Min 6 characters required.</small>
+          <small *ngIf="loginForm.get('password')?.errors?.['maxlength']">Max 100 characters allowed.</small>
+          <small *ngIf="loginForm.get('password')?.errors?.['pattern']">
+            Must include uppercase, lowercase, number & special character.
+          </small>
         </div>
       </div>
 

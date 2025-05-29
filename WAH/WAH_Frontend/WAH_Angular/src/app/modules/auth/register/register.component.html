@@ -12,8 +12,8 @@
             [ngClass]="{'ng-invalid ng-dirty': registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched}" />
           <div class="text-danger mt-1" *ngIf="registerForm.get('firstName')?.touched">
             <div *ngIf="registerForm.get('firstName')?.errors?.['required']">First name is required.</div>
-            <div *ngIf="registerForm.get('firstName')?.errors?.['minlength']">First name must be at least 2 characters.
-            </div>
+            <div *ngIf="registerForm.get('firstName')?.errors?.['minlength']">Minimum 2 characters required.</div>
+            <div *ngIf="registerForm.get('firstName')?.errors?.['maxlength']">Cannot exceed 50 characters.</div>
           </div>
         </div>
 
@@ -34,31 +34,16 @@
           <label for="email" class="form-label">Email</label>
           <div class="input-group">
             <input pInputText id="email" formControlName="email" placeholder="Enter Email" class="form-control"
-              [ngClass]="{
-        'ng-invalid ng-dirty':
-          registerForm.get('email')?.invalid && registerForm.get('email')?.touched
-      }" />
-            <!-- <a
-      routerLink="/auth/emailverify"
-      (click)="onNavigateAway()"
-      class="input-group-text verify-link"
-    >
-      Verify
-    </a> -->
+              [ngClass]="{'ng-invalid ng-dirty':registerForm.get('email')?.invalid && registerForm.get('email')?.touched}" />
           </div>
-
-          <!-- Validation message -->
           <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
-            <small class="text-danger" *ngIf="registerForm.get('email')?.errors?.['required']">
-              Email is required.
-            </small>
-            <small class="text-danger" *ngIf="registerForm.get('email')?.errors?.['email']">
-              Please enter a valid email address.
-            </small>
+            <!-- <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</div> -->
+            <div *ngIf="registerForm.get('email')?.errors?.['email']">Must be a valid email.</div>
+            <div *ngIf="registerForm.get('email')?.errors?.['maxlength']">Cannot exceed 100 characters.</div>
+            <small *ngIf="registerForm.get('email')?.errors?.['pattern']">Email must be valid and in this
+              'username&#64;domain.com' format. </small>
           </div>
         </div>
-
-
 
         <div class="col-md-6 mb-3">
           <label for="phoneNumber" class="form-label">Phone Number</label>
@@ -67,7 +52,7 @@
             [ngClass]="{'ng-invalid ng-dirty': registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched}" />
           <div class="text-danger mt-1" *ngIf="registerForm.get('phoneNumber')?.touched">
             <div *ngIf="registerForm.get('phoneNumber')?.errors?.['required']">Phone number is required.</div>
-            <div *ngIf="registerForm.get('phoneNumber')?.errors?.['pattern']">Enter a valid 10-digit phone number.</div>
+            <div *ngIf="registerForm.get('phoneNumber')?.errors?.['pattern']">Must be a 10-digit number.</div>
           </div>
         </div>
       </div>
@@ -93,7 +78,7 @@
           </p-datepicker>
           <div class="invalid-feedback d-block"
             *ngIf="registerForm.get('dob')?.touched && registerForm.get('dob')?.invalid">
-            DOB is required.
+            Date of birth is required.
           </div>
         </div>
 
@@ -136,6 +121,18 @@
           <div class="text-danger mt-1" *ngIf="registerForm.get('confirmPassword')?.touched">
             <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm password is required.</div>
             <div *ngIf="registerForm.hasError('passwordMismatch')">Passwords do not match.</div>
+          </div>
+        </div>
+
+        <!-- Role ID (If applicable) -->
+        <div class="col-md-6 mb-3">
+          <label for="roleId" class="form-label">Role</label>
+          <select class="form-select" formControlName="roleId">
+            <option value="">-- Select Role --</option>
+            <!-- Dynamically fill options -->
+          </select>
+          <div *ngIf="registerForm.get('roleId')?.touched && registerForm.get('roleId')?.invalid" class="text-danger">
+            Role is required.
           </div>
         </div>
 

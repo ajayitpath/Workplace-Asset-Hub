@@ -18,8 +18,20 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(15)]]
+      email: ['', [
+      Validators.required,
+      Validators.email,
+      Validators.maxLength(100),
+      Validators.pattern(/^(?=.*@)(?=.*\.).+$/) // Must contain '@' and '.'
+    ]],
+      password: ['', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(100),
+      Validators.pattern(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,100}$/
+      ) // Complex password rule
+    ]]
     });
   }
 
