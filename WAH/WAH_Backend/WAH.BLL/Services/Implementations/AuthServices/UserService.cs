@@ -90,15 +90,24 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 if (exists || model.Password != model.ConfirmPassword)
                     return false;
 
-                
-
                 var hashedPassword = _passwordHasherService.HashPassword(model.Password);
 
-                var defaultUserRoleId = Guid.Parse("2CCA8509-93DC-4B47-A670-11576F21C90A");
+                // Step 1: Determine Role
+                RoleEntity? role;
 
-                var role = await _roleRepository.GetByIdAsync(defaultUserRoleId);
+                if (model.RoleId == 0 || model.RoleId == null)
+                {
+                    // Assign default "User" role if RoleId is not provided
+                    role = (await _roleRepository.FindAsync(r => r.Name == "User")).FirstOrDefault();
+                }
+                else
+                {
+                    // Admin/Manager provided a specific role
+                    role = await _roleRepository.GetByIdAsync(model.RoleId);
+                }
+
                 if (role == null)
-                    throw new Exception("Default User role not found.");
+                    throw new Exception("Role not found.");
 
                 var newUser = new UserEntity
                 {
@@ -111,14 +120,20 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                     DOB = model.DOB,
                     DeskNo = model.DeskNo,
                     Role = role, // assign the full RoleEntity
+                    IsActive = true
                 };
 
 
-                var otp = _otpService.GenerateAndCacheOtp(model.Email);
-                await EmailHelper.SendOtpAsync(model.Email, otp);
+                //var otp = _otpService.GenerateAndCacheOtp(model.Email);
+                //await EmailHelper.SendOtpAsync(model.Email, otp);
 
-                var createdUser = await _userRepository.AddAsync(newUser);
+                //var result = _otpService.ValidateOtp(model.Email,otp);
+                //if (result)
+                //{
+                var createdUser = await _genericRepository.AddAsync(newUser);
                 return createdUser != null;
+                //}
+                //return false;
             }
             catch (Exception ex)
             {
@@ -126,13 +141,13 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             }
         }
 
-        public async Task<bool> VerifyOtpAsync(VerifyOtpDto dto)
+        public async Task<bool> VerifyOtpAsync(string email,string otp)
         {
-            var isValidOtp = _otpService.ValidateOtp(dto.Email, dto.Otp);
+            var isValidOtp = _otpService.ValidateOtp(email, otp);
             if (!isValidOtp)
                 return false;
 
-            var user = (await _userRepository.FindAsync(d => d.Email == dto.Email)).FirstOrDefault();
+            var user = (await _genericRepository.FindAsync(d => d.Email == email)).FirstOrDefault();
             return user != null;
         }
     }
