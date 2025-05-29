@@ -14,7 +14,8 @@
             <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
             <!-- <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small> -->
             <small *ngIf="loginForm.get('email')?.errors?.['maxlength']">Max 100 characters allowed.</small>
-            <small *ngIf="loginForm.get('email')?.errors?.['pattern']">Email must be in this 'username&#64;domain.com' format.</small>
+            <small *ngIf="loginForm.get('email')?.errors?.['pattern']">Email must be valid and in this
+              'username&#64;domain.com' format. </small>
           </div>
         </div>
       </div>
