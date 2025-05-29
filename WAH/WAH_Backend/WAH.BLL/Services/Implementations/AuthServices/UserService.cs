@@ -120,19 +120,20 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                     DOB = model.DOB,
                     DeskNo = model.DeskNo,
                     Role = role, // assign the full RoleEntity
+                    IsActive = true
                 };
 
 
-                var otp = _otpService.GenerateAndCacheOtp(model.Email);
-                await EmailHelper.SendOtpAsync(model.Email, otp);
+                //var otp = _otpService.GenerateAndCacheOtp(model.Email);
+                //await EmailHelper.SendOtpAsync(model.Email, otp);
 
-                var result = _otpService.ValidateOtp(model.Email,otp);
-                if (result)
-                {
+                //var result = _otpService.ValidateOtp(model.Email,otp);
+                //if (result)
+                //{
                 var createdUser = await _genericRepository.AddAsync(newUser);
                 return createdUser != null;
-                }
-                return false;
+                //}
+                //return false;
             }
             catch (Exception ex)
             {
