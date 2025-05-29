@@ -237,6 +237,35 @@ namespace WAH.DAL.Migrations
                     b.ToTable("Roles", (string)null);
                 });
 
+            modelBuilder.Entity("WAH.DAL.EntityModels.AuthEntities.UserAuditEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserAudit", (string)null);
+                });
+
             modelBuilder.Entity("WAH.DAL.EntityModels.AuthEntities.UserEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -264,6 +293,11 @@ namespace WAH.DAL.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -276,9 +310,6 @@ namespace WAH.DAL.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("ProfileImage")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
@@ -393,6 +424,17 @@ namespace WAH.DAL.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("WAH.DAL.EntityModels.AuthEntities.UserAuditEntity", b =>
+                {
+                    b.HasOne("WAH.DAL.EntityModels.AuthEntities.UserEntity", "User")
+                        .WithOne("UserAudit")
+                        .HasForeignKey("WAH.DAL.EntityModels.AuthEntities.UserAuditEntity", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WAH.DAL.EntityModels.AuthEntities.UserEntity", b =>
                 {
                     b.HasOne("WAH.DAL.EntityModels.AuthEntities.RoleEntity", "Role")
@@ -445,6 +487,9 @@ namespace WAH.DAL.Migrations
                     b.Navigation("AssetAssignments");
 
                     b.Navigation("AssetRequests");
+
+                    b.Navigation("UserAudit")
+                        .IsRequired();
 
                     b.Navigation("UserProfile")
                         .IsRequired();
