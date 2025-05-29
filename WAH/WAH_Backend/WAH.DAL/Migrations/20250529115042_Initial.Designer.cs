@@ -12,8 +12,8 @@ using WAH.DAL.Data;
 namespace WAH.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250529084047_Initialcreate")]
-    partial class Initialcreate
+    [Migration("20250529115042_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,10 +166,8 @@ namespace WAH.DAL.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
