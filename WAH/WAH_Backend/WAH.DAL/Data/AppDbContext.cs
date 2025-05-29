@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WAH.DAL.EntityModels.AuthEntities;
-using WAH.DAL.EntityModels.AssetEntities;
+using WAH.DAL.EntityModels.AssetEntities;// <-- Make sure this is correct or adjust accordingly
 
 namespace WAH.DAL.Data
 {
@@ -14,7 +14,12 @@ namespace WAH.DAL.Data
         // Auth Entities
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<RoleEntity> Roles { get; set; }
+        public DbSet<UserProfileEntity> UserProfiles { get; set; }
 
+        // Audit Entities
+        public DbSet<UserAuditEntity> UserAudits { get; set; }
+
+        // Asset Entities
         public DbSet<AssetEntity> Assets { get; set; }
         public DbSet<AssetItemEntity> AssetItems { get; set; }
         public DbSet<AssetCategoryEntity> AssetCategories { get; set; }
@@ -22,8 +27,6 @@ namespace WAH.DAL.Data
         public DbSet<LocationEntity> Locations { get; set; }
         public DbSet<AssetAssignmentEntity> AssetAssignments { get; set; }
         public DbSet<AssetRequestEntity> AssetRequests { get; set; }
-
-        public DbSet<UserProfileEntity> UserProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
