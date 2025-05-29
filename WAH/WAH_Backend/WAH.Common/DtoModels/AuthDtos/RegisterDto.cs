@@ -45,7 +45,7 @@ namespace WAH.Common.DtoModels.AuthDtos
         public string? DeskNo { get; set; }
 
         [Required(ErrorMessage = "Role is required.")]
-        public Guid RoleId { get; set; }
+        public int RoleId { get; set; }
 
         [Required(ErrorMessage = "Date of Birth is required.")]
         [DataType(DataType.Date)]
