@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WAH.DAL.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:WAH/WAH_Backend/WAH.DAL/Migrations/20250528111521_CreateDB.cs
-    public partial class CreateDB : Migration
-========
-    public partial class InitialCreate : Migration
->>>>>>>> origin/main:WAH/WAH_Backend/WAH.DAL/Migrations/20250529071959_InitialCreate.cs
+    public partial class CreateTempUserEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -90,6 +86,34 @@ namespace WAH.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TemporaryUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    DOB = table.Column<DateTime>(type: "datetime", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    OTP = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    ExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeskNo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemporaryUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TemporaryUsers_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -100,13 +124,9 @@ namespace WAH.DAL.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
-                    DOB = table.Column<DateOnly>(type: "date", nullable: false),
-<<<<<<<< HEAD:WAH/WAH_Backend/WAH.DAL/Migrations/20250528111521_CreateDB.cs
+                    DOB = table.Column<DateTime>(type: "datetime", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
-========
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
->>>>>>>> origin/main:WAH/WAH_Backend/WAH.DAL/Migrations/20250529071959_InitialCreate.cs
                     DeskNo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
                 },
                 constraints: table =>
@@ -298,6 +318,17 @@ namespace WAH.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_TemporaryUsers_Email",
+                table: "TemporaryUsers",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemporaryUsers_RoleId",
+                table: "TemporaryUsers",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserAudit_UserId",
                 table: "UserAudit",
                 column: "UserId",
@@ -336,6 +367,9 @@ namespace WAH.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AssetRequests");
+
+            migrationBuilder.DropTable(
+                name: "TemporaryUsers");
 
             migrationBuilder.DropTable(
                 name: "UserAudit");
