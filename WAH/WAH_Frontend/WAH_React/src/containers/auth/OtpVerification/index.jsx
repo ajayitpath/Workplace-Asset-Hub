@@ -4,8 +4,29 @@ import { TextField, Button, Typography, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { otpSchema } from '../../../schema/OtpVerification.schema';
+import { verifyOtp } from '../../../services/Auth/AuthService';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import URLS from '../../../constants/urls';
 
 const OtpVerification = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const email = location.state?.email;
+
+  const onSubmit = async (data) => {
+    try {
+      await verifyOtp({
+        email,
+        otp: data.otp
+      });
+      toast.success('Email verified successfully');
+      navigate(URLS.LOGIN);
+    } catch (error) {
+      toast.error(error.response?.data || 'Invalid OTP');
+    }
+  };
+
   const {
     register,
     handleSubmit,
@@ -13,11 +34,6 @@ const OtpVerification = () => {
   } = useForm({
     resolver: yupResolver(otpSchema),
   });
-
-  const onSubmit = async (data) => {
-    console.log('OTP Verification Request:', data);
-    // TODO: Call API to verify OTP
-  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 gap-4">
