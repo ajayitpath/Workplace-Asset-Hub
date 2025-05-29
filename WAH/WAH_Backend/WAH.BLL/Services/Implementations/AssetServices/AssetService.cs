@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Org.BouncyCastle.Crypto;
-using WAH.BLL.Mappers;
+﻿using WAH.BLL.Mappers;
 using WAH.BLL.Services.Interfaces.AssetInterfaces;
 using WAH.Common.DtoModels.AssetDtos;
 using WAH.DAL.EntityModels.AssetEntities;
-using WAH.DAL.Repositories.Implementations;
 using WAH.DAL.Repositories.Interfaces;
 
 namespace WAH.BLL.Services.Implementations.AssetServices
