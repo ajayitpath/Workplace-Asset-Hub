@@ -130,7 +130,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 //var result = _otpService.ValidateOtp(model.Email,otp);
                 //if (result)
                 //{
-                var createdUser = await _genericRepository.AddAsync(newUser);
+                var createdUser = await _userRepository.AddAsync(newUser);
                 return createdUser != null;
                 //}
                 //return false;
@@ -147,7 +147,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             if (!isValidOtp)
                 return false;
 
-            var user = (await _genericRepository.FindAsync(d => d.Email == email)).FirstOrDefault();
+            var user = (await _userRepository.FindAsync(d => d.Email == email)).FirstOrDefault();
             return user != null;
         }
     }
