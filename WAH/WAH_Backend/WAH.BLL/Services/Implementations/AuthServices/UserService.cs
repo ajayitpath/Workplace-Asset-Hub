@@ -11,7 +11,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
 {
     public class UserService : IUserService
     {
-        private readonly IGenericRepository<UserEntity> _genericRepository;
+        private readonly IGenericRepository<UserEntity> _userRepository;
         private readonly IGenericRepository<RoleEntity> _roleRepository;
         private readonly IPasswordHasherService _passwordHasherService;
         private readonly IJwtTokenService _jwtTokenService;
@@ -22,21 +22,21 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             IPasswordHasherService passwordHasherService,
             IJwtTokenService jwtTokenService,
             IConfiguration configuration,
-            IGenericRepository<UserEntity> genericRepository,
+            IGenericRepository<UserEntity> userRepository,
             IGenericRepository<RoleEntity> roleRepository,
             IOtpService otpService)
         {
             _passwordHasherService = passwordHasherService;
             _jwtTokenService = jwtTokenService;
             _configuration = configuration;
-            _genericRepository = genericRepository;
+            _userRepository = userRepository;
             _otpService = otpService;
             _roleRepository = roleRepository;
         }
 
         public async Task<string?> LoginAsync(LoginDto loginDto)
         {
-            var user = (await _genericRepository.FindAsync(u => u.Email == loginDto.Email)).FirstOrDefault();
+            var user = (await _userRepository.FindAsync(u => u.Email == loginDto.Email)).FirstOrDefault();
             if (user == null) return null;
 
             var isPasswordValid = _passwordHasherService.VerifyPassword(user.Password, loginDto.Password);
@@ -48,7 +48,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
 
         public async Task<string?> ForgotPasswordAsync(ForgotPasswordDto dto)
         {
-            var user = (await _genericRepository.FindAsync(u => u.Email == dto.Email)).FirstOrDefault();
+            var user = (await _userRepository.FindAsync(u => u.Email == dto.Email)).FirstOrDefault();
             if (user == null) return null;
 
             var token = _jwtTokenService.GeneratePasswordResetToken(user);
@@ -73,11 +73,11 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             var emailClaim = principal.FindFirst(ClaimTypes.Email);
             if (emailClaim == null) return false;
 
-            var user = (await _genericRepository.FindAsync(u => u.Email == emailClaim.Value)).FirstOrDefault();
+            var user = (await _userRepository.FindAsync(u => u.Email == emailClaim.Value)).FirstOrDefault();
             if (user == null) return false;
 
             user.Password = _passwordHasherService.HashPassword(dto.NewPassword);
-            _genericRepository.Update(user);
+            _userRepository.Update(user);
 
             return true;
         }
@@ -86,7 +86,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
         {
             try
             {
-                var exists = (await _genericRepository.FindAsync(x => x.Email == model.Email)).Any();
+                var exists = (await _userRepository.FindAsync(x => x.Email == model.Email)).Any();
                 if (exists || model.Password != model.ConfirmPassword)
                     return false;
 

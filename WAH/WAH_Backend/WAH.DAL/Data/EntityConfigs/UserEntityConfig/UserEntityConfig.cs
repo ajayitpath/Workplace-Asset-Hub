@@ -46,7 +46,11 @@ namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
                    .IsRequired();
 
             builder.Property(u => u.DOB)
-                   .IsRequired();
+        .IsRequired()
+        .HasConversion(
+            v => v.ToDateTime(TimeOnly.MinValue),   // Convert DateOnly to DateTime
+            v => DateOnly.FromDateTime(v))          // Convert DateTime to DateOnly
+        .HasColumnType("datetime");
 
             builder.Property(u => u.DeskNo)
                    .HasMaxLength(20);
