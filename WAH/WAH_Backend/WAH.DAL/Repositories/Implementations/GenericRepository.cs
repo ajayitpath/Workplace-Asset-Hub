@@ -26,6 +26,11 @@ namespace WAH.DAL.Repositories.Implementations
             return await _dbSet.FindAsync(id);
         }
 
+        public async Task<T?> GetByGuidAsync(Guid id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
         public async Task<T?> GetWithIncludeAsync(
         Expression<Func<T, bool>> predicate,
         params Expression<Func<T, object>>[] includes)
@@ -110,10 +115,9 @@ namespace WAH.DAL.Repositories.Implementations
         {
             await _context.SaveChangesAsync();
         }
-
-        public async Task<T?> GetById(Guid id)
+        public IQueryable<T> GetAllQueryable()
         {
-            return await _dbSet.FindAsync(id);
+            return _dbSet.AsQueryable();
         }
     }
 }

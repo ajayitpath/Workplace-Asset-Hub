@@ -6,6 +6,7 @@ namespace WAH.DAL.Repositories.Interfaces
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T?> GetByIdAsync(int id);
+        Task<T?> GetByGuidAsync(Guid id);
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
         Task<T> AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
@@ -23,6 +24,7 @@ namespace WAH.DAL.Repositories.Interfaces
             int pageNumber, int pageSize,
             Expression<Func<T, bool>>? filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null);
-        Task<T?> GetById(Guid id);
+
+        IQueryable<T> GetAllQueryable();
     }
 }

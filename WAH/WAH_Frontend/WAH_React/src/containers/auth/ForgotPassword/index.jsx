@@ -5,6 +5,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { forgotPasswordSchema } from '../../../schema/ForgotPassword.schema';
 import { Link } from 'react-router-dom';
+import { forgotPassword } from '../../../services/Auth/AuthService';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import URLS from '../../../constants/URLS';
 
 const ForgotPassword = () => {
   const {
@@ -16,8 +20,13 @@ const ForgotPassword = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log('Forgot Password Request:', data);
-    // TODO: Call API here
+    try {
+      const response = await forgotPassword(data);
+      toast.success('Password reset link has been sent to your email');
+      navigate(URLS.RESET_PASSWORD, { state: { token: response.token } });
+    } catch (error) {
+      toast.error(error.response?.data || 'Failed to process request');
+    }
   };
 
   return (

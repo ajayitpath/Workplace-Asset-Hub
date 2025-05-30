@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Org.BouncyCastle.Crypto;
-using WAH.BLL.Mappers;
+﻿using WAH.BLL.Mappers;
 using WAH.BLL.Services.Interfaces.AssetInterfaces;
 using WAH.Common.DtoModels.AssetDtos;
 using WAH.DAL.EntityModels.AssetEntities;
-using WAH.DAL.Repositories.Implementations;
 using WAH.DAL.Repositories.Interfaces;
 
 namespace WAH.BLL.Services.Implementations.AssetServices
@@ -24,7 +15,7 @@ namespace WAH.BLL.Services.Implementations.AssetServices
         {
             _assetRepository = assetRepository;
             _assetcategoryRepository = assetCategoryRepository;
-          
+            
         }
         public async Task<AssetDto> CreateAssetAsync(AssetDto assetDto)
         {
@@ -61,14 +52,13 @@ namespace WAH.BLL.Services.Implementations.AssetServices
         }
         public async Task<AssetDto?> GetAssetByIdAsync(Guid id)
         {
-            var asset = await _assetRepository.GetById(id);
+            var asset = await _assetRepository.GetByGuidAsync(id);
             if (asset == null)
                 return null;
             var assetDto = AssetMapper.ToDto(asset);
-            var category = await _assetcategoryRepository.GetById(asset.CategoryId);
+            var category = await _assetcategoryRepository.GetByGuidAsync(asset.CategoryId);
             assetDto.CategoryId = category.CategoryId;
             return assetDto;
         }
-
     }
 }
