@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using WAH.BLL.Services.Implementations.AuthServices;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.DtoModels.AuthDtos;
 using WAH.DAL.EntityModels.AuthEntities;
@@ -13,14 +14,14 @@ namespace WAH_API.Controllers
     {
 
         private readonly IUserService _userService;
-        private readonly IUserProfileService _profileService;
-        private readonly IGenericRepository<UserProfileEntity> _profileRepo;
-        public UserController(IUserService userService, IUserProfileService profileService,
-            IGenericRepository<UserProfileEntity> profileRepo)
+        private readonly IUserProfileService _userProfileService;
+
+        public UserController(IUserService userService, IUserProfileService userProfileService)
+            
         {
             _userService = userService;
-            _profileService = profileService;
-            _profileRepo = profileRepo;
+            _userProfileService = userProfileService;
+           
         }
 
         [HttpPost("login")]
@@ -48,7 +49,7 @@ namespace WAH_API.Controllers
 
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, [FromQuery] string token,
-    [FromQuery] string email)
+        [FromQuery] string email)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return BadRequest("Passwords do not match.");
@@ -80,32 +81,17 @@ namespace WAH_API.Controllers
 
         [HttpPost("upload/{userId}")]
       
-        public async Task<IActionResult> Upload([FromRoute] Guid userId, [FromForm] UserProfileDto dto)
+        public async Task<IActionResult> Upload ([FromRoute] Guid userId, [FromForm] UserProfileDto dto)
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             dto.UserId = userId;
+            var result = await _userProfileService.UpdateUserProfileImageAsync(dto);
+            if (!result.Success)
+                return BadRequest(result.Message);
 
-            var imagePath = await _profileService.SaveProfileImageAsync(dto);
-
-            // Check if user profile already exists
-            var existing = (await _profileRepo.FindAsync(p => p.UserId == userId)).FirstOrDefault(); 
-            if (existing != null)
-            {
-                existing.ProfileImage = imagePath;
-                _profileRepo.Update(existing);
-            }
-            else
-            {
-                await _profileRepo.AddAsync(new UserProfileEntity
-                {
-                    UserId = userId,
-                    ProfileImage = imagePath
-                });
-            }
-
-            return Ok(new { message = "Profile image updated", imagePath });
+            return Ok(new { message = result.Message, imagePath = result.ImagePath });
         }
 
         [HttpPost("otp-verify")]
