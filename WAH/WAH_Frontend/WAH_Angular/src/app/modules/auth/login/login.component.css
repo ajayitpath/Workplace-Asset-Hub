@@ -8,11 +8,12 @@
 }
 
 .login-card {
+
   background-color: var(--card-background);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
   border: none;
-  width: 800px;
-  height: 460px;
+  width: 460px ;
+  height: 560px !important;
   transition: all 0.3s ease-in-out;
 }
 

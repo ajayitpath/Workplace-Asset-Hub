@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { InventoryItem } from '../../shared/Model/inventory';
+import { InventoryItemModel } from '../../shared/Model/inventory.model';
+
+
 
 @Component({
   selector: 'app-inventorymanagement',
@@ -8,8 +10,8 @@ import { InventoryItem } from '../../shared/Model/inventory';
   styleUrl: './inventorymanagement.component.css'
 })
 export class InventorymanagementComponent {
- public inventoryItems: InventoryItem[] = [];
-  filteredData: InventoryItem[] = [];
+ public inventoryItems: InventoryItemModel[] = [];
+  filteredData: InventoryItemModel[] = [];
   searchText = '';
 
   columns = [

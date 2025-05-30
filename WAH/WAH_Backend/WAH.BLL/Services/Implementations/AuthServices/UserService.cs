@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Data;
 using System.Security.Claims;
+using WAH.BLL.Mappers.AuthMappers;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.DtoModels.AuthDtos;
 using WAH.Common.Helpers;
@@ -17,6 +19,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
         private readonly IJwtTokenService _jwtTokenService;
         private readonly IConfiguration _configuration;
         private readonly IOtpService _otpService;
+        private readonly IGenericRepository<TemporaryUserEntity> _tempUserRepository;
 
         public UserService(
             IPasswordHasherService passwordHasherService,
@@ -24,7 +27,8 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             IConfiguration configuration,
             IGenericRepository<UserEntity> userRepository,
             IGenericRepository<RoleEntity> roleRepository,
-            IOtpService otpService)
+            IOtpService otpService,
+            IGenericRepository<TemporaryUserEntity> temporaryUserRepository)
         {
             _passwordHasherService = passwordHasherService;
             _jwtTokenService = jwtTokenService;
@@ -32,6 +36,8 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             _userRepository = userRepository;
             _otpService = otpService;
             _roleRepository = roleRepository;
+            _tempUserRepository = temporaryUserRepository;
+
         }
 
         public async Task<string?> LoginAsync(LoginDto loginDto)
@@ -53,11 +59,13 @@ namespace WAH.BLL.Services.Implementations.AuthServices
 
             var token = _jwtTokenService.GeneratePasswordResetToken(user);
             var clientAppBaseUrl = _configuration["AppSettings:ClientAppBaseUrl"];
-            var resetLink = $"{clientAppBaseUrl}/reset-password?token={token}&email={dto.Email}";
+            //var resetLink = $"{clientAppBaseUrl}/reset-password?token={token}&email={dto.Email}";
+            var resetLink = $"{clientAppBaseUrl}reset-password";
+
 
             var otp = _otpService.GenerateAndCacheOtp(dto.Email);
             var subject = "Reset Your Password";
-          //  await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
+            await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
 
             return token;
         }
@@ -87,54 +95,54 @@ namespace WAH.BLL.Services.Implementations.AuthServices
         {
             try
             {
+                // Step 1: Check if user already exists
                 var exists = (await _userRepository.FindAsync(x => x.Email == model.Email)).Any();
                 if (exists || model.Password != model.ConfirmPassword)
                     return false;
 
+                // Step 2: Hash password
                 var hashedPassword = _passwordHasherService.HashPassword(model.Password);
 
-                // Step 1: Determine Role
+                // Step 3: Determine Role
                 RoleEntity? role;
-
                 if (model.RoleId == 0 || model.RoleId == null)
                 {
-                    // Assign default "User" role if RoleId is not provided
                     role = (await _roleRepository.FindAsync(r => r.Name == "User")).FirstOrDefault();
                 }
                 else
                 {
-                    // Admin/Manager provided a specific role
                     role = await _roleRepository.GetByIdAsync(model.RoleId);
                 }
 
                 if (role == null)
                     throw new Exception("Role not found.");
 
-                var newUser = new UserEntity
+                // Step 4: Generate OTP and store in TemporaryUserEntity
+                var otp = _otpService.GenerateAndCacheOtp(model.Email);
+                await EmailHelper.SendOtpAsync(model.Email, otp);
+
+                var tempUser = new TemporaryUserEntity
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    Password = hashedPassword,
                     Email = model.Email,
-                    Gender = model.Gender,
+                    Password = hashedPassword,
                     PhoneNumber = model.PhoneNumber,
+                    Gender = model.Gender,
                     DOB = model.DOB,
                     DeskNo = model.DeskNo,
-                    Role = role, // assign the full RoleEntity
-                    IsActive = true
+                    RoleId = role.Id,
+                    Role = role,
+                    OTP = otp,
+                    ExpiryTime = DateTime.UtcNow.AddMinutes(5)
                 };
 
+                // Map DTO to TemporaryUserEntity
+               // var expiryTime = DateTime.UtcNow.AddMinutes(5);
+               // var tempUser = UserMapper.MapToTemporaryUserEntity(model, role, hashedPassword, otp, expiryTime);
 
-                //var otp = _otpService.GenerateAndCacheOtp(model.Email);
-                //await EmailHelper.SendOtpAsync(model.Email, otp);
-
-                //var result = _otpService.ValidateOtp(model.Email,otp);
-                //if (result)
-                //{
-                var createdUser = await _userRepository.AddAsync(newUser);
-                return createdUser != null;
-                //}
-                //return false;
+                var created = await _tempUserRepository.AddAsync(tempUser); // Use temp repo
+                return created != null;
             }
             catch (Exception ex)
             {
@@ -142,14 +150,61 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             }
         }
 
-        public async Task<bool> VerifyOtpAsync(string email,string otp)
+
+        public async Task<bool> VerifyOtpAsync(string email, string inputOtp, Guid? creatorId = null)
         {
-            var isValidOtp = _otpService.ValidateOtp(email, otp);
-            if (!isValidOtp)
+            var tempUser = (await _tempUserRepository.FindAsync(u => u.Email == email)).FirstOrDefault();
+
+            if (tempUser == null || tempUser.OTP != inputOtp || tempUser.ExpiryTime < DateTime.UtcNow)
+                return false;
+            RoleEntity? role;
+            role = await _roleRepository.GetByIdAsync(tempUser.RoleId);
+
+            var user = new UserEntity
+            {
+                FirstName = tempUser.FirstName,
+                LastName = tempUser.LastName,
+                Email = tempUser.Email,
+                Password = tempUser.Password,
+                PhoneNumber = tempUser.PhoneNumber,
+                Gender = tempUser.Gender,
+                DOB = tempUser.DOB,
+                DeskNo = tempUser.DeskNo,
+                Role = tempUser.Role,
+                IsActive = true,
+                UserAudit = new UserAuditEntity
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.UtcNow,
+                    CreatedBy = creatorId ?? tempUser.Id, // Set self if created by self
+                    UserId = tempUser.Id
+                },
+            };
+           // var user = UserMapper.MapToUserEntity(tempUser, creatorId);
+            var res = await _userRepository.AddAsync(user);
+            if(res != null)
+            {
+                return true;
+            }
+            _tempUserRepository.Remove(tempUser);
+
+            return false;
+        }
+
+        public async Task<bool> ResendOtpAsync(string email)
+        {
+            var tempUser = (await _tempUserRepository.FindAsync(u => u.Email == email)).FirstOrDefault();
+            if (tempUser == null)
                 return false;
 
-            var user = (await _userRepository.FindAsync(d => d.Email == email)).FirstOrDefault();
-            return user != null;
+            var newOtp = _otpService.GenerateAndCacheOtp(email);
+            tempUser.OTP = newOtp;
+            tempUser.ExpiryTime = DateTime.UtcNow.AddMinutes(5);
+
+            _tempUserRepository.Update(tempUser);
+            await EmailHelper.SendOtpAsync(email, newOtp);
+
+            return true;
         }
 
 
