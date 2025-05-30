@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Security.Claims;
+using WAH.BLL.Mappers.AuthMappers;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.DtoModels.AuthDtos;
 using WAH.Common.Helpers;
@@ -58,11 +59,13 @@ namespace WAH.BLL.Services.Implementations.AuthServices
 
             var token = _jwtTokenService.GeneratePasswordResetToken(user);
             var clientAppBaseUrl = _configuration["AppSettings:ClientAppBaseUrl"];
-            var resetLink = $"{clientAppBaseUrl}/reset-password?token={token}&email={dto.Email}";
+            //var resetLink = $"{clientAppBaseUrl}/reset-password?token={token}&email={dto.Email}";
+            var resetLink = $"{clientAppBaseUrl}reset-password";
+
 
             var otp = _otpService.GenerateAndCacheOtp(dto.Email);
             var subject = "Reset Your Password";
-          //  await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
+            await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
 
             return token;
         }
@@ -129,9 +132,14 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                     DOB = model.DOB,
                     DeskNo = model.DeskNo,
                     RoleId = role.Id,
+                    Role = role,
                     OTP = otp,
                     ExpiryTime = DateTime.UtcNow.AddMinutes(5)
                 };
+
+                // Map DTO to TemporaryUserEntity
+               // var expiryTime = DateTime.UtcNow.AddMinutes(5);
+               // var tempUser = UserMapper.MapToTemporaryUserEntity(model, role, hashedPassword, otp, expiryTime);
 
                 var created = await _tempUserRepository.AddAsync(tempUser); // Use temp repo
                 return created != null;
@@ -143,7 +151,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
         }
 
 
-        public async Task<bool> VerifyOtpAsync(string email, string inputOtp)
+        public async Task<bool> VerifyOtpAsync(string email, string inputOtp, Guid? creatorId = null)
         {
             var tempUser = (await _tempUserRepository.FindAsync(u => u.Email == email)).FirstOrDefault();
 
@@ -162,23 +170,23 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 Gender = tempUser.Gender,
                 DOB = tempUser.DOB,
                 DeskNo = tempUser.DeskNo,
-                Role = role,
+                Role = tempUser.Role,
                 IsActive = true,
                 UserAudit = new UserAuditEntity
                 {
                     Id = Guid.NewGuid(),
                     CreateDate = DateTime.UtcNow,
-                    CreatedBy = tempUser.Id, // Set self if created by self
+                    CreatedBy = creatorId ?? tempUser.Id, // Set self if created by self
                     UserId = tempUser.Id
                 },
             };
-
+           // var user = UserMapper.MapToUserEntity(tempUser, creatorId);
             var res = await _userRepository.AddAsync(user);
             if(res != null)
             {
                 return true;
             }
-            //_tempUserRepository.Remove(tempUser);
+            _tempUserRepository.Remove(tempUser);
 
             return false;
         }
@@ -193,7 +201,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             tempUser.OTP = newOtp;
             tempUser.ExpiryTime = DateTime.UtcNow.AddMinutes(5);
 
-            _tempUserRepository.Remove(tempUser);
+            _tempUserRepository.Update(tempUser);
             await EmailHelper.SendOtpAsync(email, newOtp);
 
             return true;

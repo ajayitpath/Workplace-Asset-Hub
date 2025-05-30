@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.DtoModels.AuthDtos;
 using WAH.DAL.EntityModels;
@@ -110,6 +111,7 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("otp-verify")]
+        //[Authorize]
         public async Task<IActionResult> OtpVerify([FromBody] VerifyOtpDto dto)
         {
             if (dto == null || string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Otp))
@@ -119,7 +121,10 @@ namespace WAH_API.Controllers
 
             try
             {
-                var isValid = await _userService.VerifyOtpAsync(dto.Email, dto.Otp);
+                var creatorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                Guid? creatorId = creatorIdClaim != null ? Guid.Parse(creatorIdClaim.Value) : null;
+
+                var isValid = await _userService.VerifyOtpAsync(dto.Email, dto.Otp, creatorId);
                 if (!isValid)
                 {
                     return Unauthorized(new { message = "Invalid or expired OTP." });
