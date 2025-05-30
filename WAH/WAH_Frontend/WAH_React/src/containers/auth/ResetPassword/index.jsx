@@ -5,8 +5,29 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import resetPasswordSchema from '../../../schema/ResetPassword.schema.js';
 import { Link } from 'react-router-dom';
+import { resetPassword } from '../../../services/Auth/AuthService';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import URLS from '../../../constants/URLS';
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const token = location.state?.token;
+
+  const onSubmit = async (data) => {
+    try {
+      await resetPassword({
+        token,
+        newPassword: data.newPassword,
+        confirmPassword: data.confirmPassword
+      });
+      toast.success('Password reset successful');
+      navigate(URLS.LOGIN);
+    } catch (error) {
+      toast.error(error.response?.data || 'Failed to reset password');
+    }
+  };
   const {
     register,
     handleSubmit,
@@ -14,11 +35,6 @@ const ResetPassword = () => {
   } = useForm({
     resolver: yupResolver(resetPasswordSchema),
   });
-
-  const onSubmit = async (data) => {
-    console.log('Reset Password Data:', data);
-    // TODO: Call API to reset password
-  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 gap-4">

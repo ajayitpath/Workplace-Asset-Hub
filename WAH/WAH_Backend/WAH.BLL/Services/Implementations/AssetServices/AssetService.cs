@@ -15,7 +15,7 @@ namespace WAH.BLL.Services.Implementations.AssetServices
         {
             _assetRepository = assetRepository;
             _assetcategoryRepository = assetCategoryRepository;
-          
+            
         }
         public async Task<AssetDto> CreateAssetAsync(AssetDto assetDto)
         {
@@ -52,11 +52,11 @@ namespace WAH.BLL.Services.Implementations.AssetServices
         }
         public async Task<AssetDto?> GetAssetByIdAsync(Guid id)
         {
-            var asset = await _assetRepository.GetById(id);
+            var asset = await _assetRepository.GetByGuidAsync(id);
             if (asset == null)
                 return null;
             var assetDto = AssetMapper.ToDto(asset);
-            var category = await _assetcategoryRepository.GetById(asset.CategoryId);
+            var category = await _assetcategoryRepository.GetByGuidAsync(asset.CategoryId);
             assetDto.CategoryId = category.CategoryId;
             return assetDto;
         }
@@ -66,7 +66,7 @@ namespace WAH.BLL.Services.Implementations.AssetServices
             if (assetDto == null)
                 throw new ArgumentNullException(nameof(assetDto));
 
-            var existingAsset = await _assetRepository.GetById(assetId);
+            var existingAsset = await _assetRepository.GetByGuidAsync(assetId);
             if (existingAsset == null)
                 return null;
 
