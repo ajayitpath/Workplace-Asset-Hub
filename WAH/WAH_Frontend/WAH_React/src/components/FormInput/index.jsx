@@ -7,32 +7,34 @@ const FormInput = ({
   label,
   type = "text",
   name,
-  register,
-  error,
+  value,
+  onChange,
+  placeholder,
   className,
 }) => {
   return (
-    <div className={clsx("w-full", className)}>
+    <div className={clsx("mb-4 w-full", className)}>
       <TextField
         className={clsx("form-input")}
         label={label}
         type={type}
-        error={!!error}
-        helperText={error}
-        {...register(name)}
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
         variant="outlined"
         fullWidth
       />
     </div>
   );
 };
-
 FormInput.propTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.string,
   name: PropTypes.string.isRequired,
-  register: PropTypes.func.isRequired,
-  error: PropTypes.string,
+  value: PropTypes.any.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
   className: PropTypes.string,
 };
 

@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.DtoModels.AuthDtos;
-using WAH.DAL.EntityModels;
 using WAH.DAL.EntityModels.AuthEntities;
 using WAH.DAL.Repositories.Interfaces;
 
@@ -73,7 +72,7 @@ namespace WAH_API.Controllers
             var result = await _userService.RegisterAsync(model);
             if (result)
             {
-                return Ok(new { message = "User registered successfully" });
+                return Ok(new { message = "Temporary User registered.Please Verify the OTP" });
             }
             return StatusCode(500, "Failed to register user");
         }
@@ -110,21 +109,53 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("otp-verify")]
+        //[Authorize]
         public async Task<IActionResult> OtpVerify([FromBody] VerifyOtpDto dto)
         {
-            if (dto == null || string.IsNullOrEmpty(dto.Email) || string.IsNullOrEmpty(dto.Otp))
+            if (dto == null || string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Otp))
             {
-                return BadRequest("Invalid OTP or email.");
+                return BadRequest(new { message = "Email and OTP are required." });
             }
 
-            var isValid = await _userService.VerifyOtpAsync(dto.Email,dto.Otp);
-            if (!isValid)
+            try
             {
-                return Unauthorized("Invalid OTP.");
-            }
+                var creatorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                Guid? creatorId = creatorIdClaim != null ? Guid.Parse(creatorIdClaim.Value) : null;
 
-            return Ok(new { message = "OTP verified successfully." });
+                var isValid = await _userService.VerifyOtpAsync(dto.Email, dto.Otp, creatorId);
+                if (!isValid)
+                {
+                    return Unauthorized(new { message = "Invalid or expired OTP." });
+                }
+
+                return Ok(new { message = "OTP verified successfully. Registration complete." });
+            }
+            catch (Exception ex)
+            {
+                // Optional: log ex.Message
+                return StatusCode(500, new { message = "Something went wrong during OTP verification." });
+            }
         }
+
+        [HttpPost("resend-otp")]
+        public async Task<IActionResult> ResendOtp([FromBody] ResendOtpDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Email))
+            {
+                return BadRequest(new { message = "Email is required." });
+            }
+
+            var result = await _userService.ResendOtpAsync(dto.Email);
+
+            if (!result)
+            {
+                return NotFound(new { message = "No registration found for this email or already verified." });
+            }
+
+            return Ok(new { message = "OTP resent successfully." });
+        }
+
+
     }
 }
  

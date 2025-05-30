@@ -7,84 +7,53 @@
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="firstName" class="form-label">First Name</label>
-          <input
-            pInputText
-            id="firstName"
-            formControlName="firstName"
-            placeholder="Enter First Name"
+          <input pInputText id="firstName" formControlName="firstName" placeholder="Enter First Name"
             class="form-control"
             [ngClass]="{'ng-invalid ng-dirty': registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched}" />
           <div class="text-danger mt-1" *ngIf="registerForm.get('firstName')?.touched">
             <div *ngIf="registerForm.get('firstName')?.errors?.['required']">First name is required.</div>
-            <div *ngIf="registerForm.get('firstName')?.errors?.['minlength']">First name must be at least 2 characters.</div>
+            <div *ngIf="registerForm.get('firstName')?.errors?.['minlength']">Minimum 2 characters required.</div>
+            <div *ngIf="registerForm.get('firstName')?.errors?.['maxlength']">Cannot exceed 50 characters.</div>
           </div>
         </div>
 
         <div class="col-md-6 mb-3">
           <label for="lastName" class="form-label">Last Name</label>
-          <input
-            pInputText
-            id="lastName"
-            formControlName="lastName"
-            placeholder="Enter Last Name"
-            class="form-control"
+          <input pInputText id="lastName" formControlName="lastName" placeholder="Enter Last Name" class="form-control"
             [ngClass]="{'ng-invalid ng-dirty': registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched}" />
           <div class="text-danger mt-1" *ngIf="registerForm.get('lastName')?.touched">
             <div *ngIf="registerForm.get('lastName')?.errors?.['required']">Last name is required.</div>
-            <div *ngIf="registerForm.get('lastName')?.errors?.['minlength']">Last name must be at least 2 characters.</div>
+            <div *ngIf="registerForm.get('lastName')?.errors?.['minlength']">Minimum 2 characters required.</div>
+            <div *ngIf="registerForm.get('lastName')?.errors?.['maxlength']">Cannot exceed 50 characters.</div>
           </div>
         </div>
       </div>
 
       <div class="row">
-      <div class="col-md-6 mb-3">
-  <label for="email" class="form-label">Email</label>
-  <div class="input-group">
-    <input
-      pInputText
-      id="email"
-      formControlName="email"
-      placeholder="Enter Email"
-      class="form-control"
-      [ngClass]="{
-        'ng-invalid ng-dirty':
-          registerForm.get('email')?.invalid && registerForm.get('email')?.touched
-      }"
-    />
-    <!-- <a
-      routerLink="/auth/emailverify"
-      (click)="onNavigateAway()"
-      class="input-group-text verify-link"
-    >
-      Verify
-    </a> -->
-  </div>
+        <div class="col-md-6 mb-3">
+          <label for="email" class="form-label">Email</label>
+          <div class="input-group">
+            <input pInputText id="email" formControlName="email" placeholder="Enter Email" class="form-control"
+              [ngClass]="{'ng-invalid ng-dirty':registerForm.get('email')?.invalid && registerForm.get('email')?.touched}" />
+          </div>
+          <div class="text-danger mt-1"
+            *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+            <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</div>
+            <div *ngIf="registerForm.get('email')?.errors?.['email']">Must be a valid email and in this
+              'username&#64;domain.com' format..</div>
+            <div *ngIf="registerForm.get('email')?.errors?.['maxlength']">Cannot exceed 100 characters.</div>
 
-  <!-- Validation message -->
-  <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
-    <small class="text-danger" *ngIf="registerForm.get('email')?.errors?.['required']">
-      Email is required.
-    </small>
-    <small class="text-danger" *ngIf="registerForm.get('email')?.errors?.['email']">
-      Please enter a valid email address.
-    </small>
-  </div>
-</div>
-
-
+          </div>
+        </div>
 
         <div class="col-md-6 mb-3">
           <label for="phoneNumber" class="form-label">Phone Number</label>
-          <input
-            pInputText
-            id="phoneNumber"
-            formControlName="phoneNumber"
-            placeholder="Enter Phone Number"
-            class="form-control"
+          <input pInputText id="phoneNumber" formControlName="phoneNumber" placeholder="Enter Phone Number"
+            class="form-control" (keypress)="allowOnlyNumbers($event)"
             [ngClass]="{'ng-invalid ng-dirty': registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched}" />
           <div class="text-danger mt-1" *ngIf="registerForm.get('phoneNumber')?.touched">
             <div *ngIf="registerForm.get('phoneNumber')?.errors?.['required']">Phone number is required.</div>
-            <div *ngIf="registerForm.get('phoneNumber')?.errors?.['pattern']">Enter a valid 10-digit phone number.</div>
+            <div *ngIf="registerForm.get('phoneNumber')?.errors?.['pattern']">Must be a 10-digit number.</div>
           </div>
         </div>
       </div>
@@ -92,67 +61,62 @@
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="gender" class="form-label">Gender</label>
-          <p-dropdown 
-            id="gender"
-            formControlName="gender"
-            [options]="genderOptions"
-            placeholder="Select Gender"
-            optionLabel="label"
-            class="w-100"
+          <p-dropdown id="gender" formControlName="gender" [options]="genderOptions" placeholder="Select Gender"
+            optionLabel="label" class="w-100"
             [ngClass]="{'ng-invalid ng-dirty': registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched}">
           </p-dropdown>
-          <div class="text-danger mt-1" *ngIf="registerForm.get('gender')?.touched && registerForm.get('gender')?.invalid">
+          <div class="text-danger mt-1"
+            *ngIf="registerForm.get('gender')?.touched && registerForm.get('gender')?.invalid">
             Gender is required.
           </div>
         </div>
 
         <div class="col-md-6 mb-3">
           <label for="dob" class="form-label">Date of Birth</label>
-          <p-calendar 
-            id="dob" 
-            formControlName="dob" 
-            placeholder="Select DOB"
-            showIcon="true"
-            class="w-100"
-            [ngClass]="{'ng-invalid ng-dirty': registerForm.get('dob')?.invalid && registerForm.get('dob')?.touched}">
-          </p-calendar>
-          <div class="text-danger mt-1" *ngIf="registerForm.get('dob')?.touched && registerForm.get('dob')?.invalid">
-            DOB is required.
+          <p-datepicker id="dob" formControlName="dob" placeholder="Select DOB" showIcon="true" inputId="dobInput"
+            class="w-100" [showButtonBar]="true" dateFormat="mm/dd/yy"
+            [ngClass]="{'is-invalid': registerForm.get('dob')?.invalid && registerForm.get('dob')?.touched}">
+          </p-datepicker>
+          <div class="invalid-feedback d-block"
+            *ngIf="registerForm.get('dob')?.touched && registerForm.get('dob')?.errors">
+            <div *ngIf="registerForm.get('dob')?.errors?.['required']">
+              Date of birth is required.
+            </div>
+            <div *ngIf="registerForm.get('dob')?.errors?.['futureDate']">
+              Date of birth cannot be in the future.
+            </div>
+            <div *ngIf="registerForm.get('dob')?.errors?.['underage']">
+              You must be at least 18 years old.
+            </div>
           </div>
         </div>
+
       </div>
 
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="deskNo" class="form-label">Desk No.</label>
-          <input
-            pInputText
-            id="deskNo"
-            formControlName="deskNo"
-            placeholder="Enter Desk Number"
-            class="form-control"
+          <input pInputText id="deskNo" formControlName="deskNo" placeholder="Enter Desk Number" class="form-control"
             [ngClass]="{'ng-invalid ng-dirty': registerForm.get('deskNo')?.invalid && registerForm.get('deskNo')?.touched}" />
           <div class="text-danger mt-1" *ngIf="registerForm.get('deskNo')?.touched">
             <div *ngIf="registerForm.get('deskNo')?.errors?.['required']">Desk number is required.</div>
-            <div *ngIf="registerForm.get('deskNo')?.errors?.['pattern']">Enter a valid desk number (1 to 4 digits).</div>
+            <div *ngIf="registerForm.get('deskNo')?.errors?.['pattern']">Enter a valid desk number (1 to 4 digits).
+            </div>
           </div>
         </div>
 
         <div class="col-md-6 mb-3">
           <label for="password" class="form-label">Password</label>
-          <p-password
-            id="password"
-            formControlName="password"
-            toggleMask="true"
-            [feedback]="false"
-            inputStyleClass="form-control"
-            placeholder="Enter Password"
+          <p-password id="password" formControlName="password" toggleMask="true" [feedback]="false"
+            inputStyleClass="form-control" placeholder="Enter Password"
             [ngClass]="{'ng-invalid ng-dirty': registerForm.get('password')?.invalid && registerForm.get('password')?.touched}">
           </p-password>
           <div class="text-danger mt-1" *ngIf="registerForm.get('password')?.touched">
             <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</div>
-            <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 4 characters.</div>
-            <div *ngIf="registerForm.get('password')?.errors?.['maxlength']">Password cannot exceed 15 characters.</div>
+            <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Min 6 characters.</div>
+            <div *ngIf="registerForm.get('password')?.errors?.['maxlength']">Max 100 characters.</div>
+            <div *ngIf="registerForm.get('password')?.errors?.['pattern']">Must include uppercase, lowercase, number,
+              special character.</div>
           </div>
         </div>
       </div>
@@ -160,42 +124,50 @@
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="confirmPassword" class="form-label">Confirm Password</label>
-          <p-password
-            id="confirmPassword"
-            formControlName="confirmPassword"
-            toggleMask="true"
-            [feedback]="false"
-            inputStyleClass="form-control"
-            placeholder="Confirm Password"
+          <p-password id="confirmPassword" formControlName="confirmPassword" toggleMask="true" [feedback]="false"
+            inputStyleClass="form-control" placeholder="Confirm Password"
             [ngClass]="{'ng-invalid ng-dirty': (registerForm.get('confirmPassword')?.invalid || registerForm.hasError('passwordMismatch')) && registerForm.get('confirmPassword')?.touched}">
           </p-password>
           <div class="text-danger mt-1" *ngIf="registerForm.get('confirmPassword')?.touched">
+            div *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid"
+            class="text-danger">
             <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm password is required.</div>
-            <div *ngIf="registerForm.hasError('passwordMismatch')">Passwords do not match.</div>
+            <div *ngIf="registerForm.get('confirmPassword')?.errors?.['pattern']">Must match password requirements.
+            </div>
+          </div>
+          <div *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched"
+            class="text-danger">
+            Passwords do not match.
           </div>
         </div>
 
-        <div class="col-md-6 mb-3 d-flex flex-column">
-          <label class="form-label">Upload Profile Image</label>
-          <p-fileUpload
-            mode="basic"
-            name="profileImage"
-            accept="image/*"
-            auto="true"
-            (onSelect)="onImageUpload($event)"
-            chooseLabel="Upload Image"
-            class="w-100"
-          ></p-fileUpload>
-          <div class="text-danger mt-1" *ngIf="imageRequired && !profileImage">
-            Profile image is required.
+        <!-- Role ID (If applicable) -->
+        <div class="col-md-6 mb-3">
+          <label for="roleId" class="form-label">Role</label>
+          <p-dropdown id="roleId" formControlName="roleId" [options]="roleOptions" placeholder="Select Role"
+            optionLabel="label" class="w-100"
+            [ngClass]="{'ng-invalid ng-dirty': registerForm.get('roleId')?.invalid && registerForm.get('roleId')?.touched}">
+          </p-dropdown>
+          <div class="text-danger mt-1"
+            *ngIf="registerForm.get('roleId')?.touched && registerForm.get('roleId')?.invalid">
+            Role is required.
           </div>
         </div>
       </div>
 
-      <button 
-        pButton 
-        type="submit" 
-        label="{{ isSubmitting ? 'Signing Up...' : 'Sign Up' }}" 
+
+      <div class="col-md-6 mb-3 d-flex flex-column">
+        <label class="form-label">Upload Profile Image</label>
+        <p-fileUpload mode="basic" name="profileImage" accept="image/*" auto="true" (onSelect)="onImageUpload($event)"
+          chooseLabel="Upload Image" class="w-100"></p-fileUpload>
+        <div class="text-danger mt-1" *ngIf="imageRequired && !profileImage">
+          Profile image is required.
+        </div>
+      </div>
+
+
+
+      <button pButton type="submit" label="{{ isSubmitting ? 'Signing Up...' : 'Sign Up' }}"
         [disabled]="registerForm.invalid || isSubmitting || !profileImage"
         class="btn btn-primary w-100 mt-2 text-align-center">
       </button>
@@ -206,4 +178,3 @@
 
     </form>
   </div>
-</div>

@@ -21,7 +21,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
        {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
-            //new Claim(ClaimTypes.Role,user.Role.Name.ToString()), //AM added 28-05
+            new Claim(ClaimTypes.Role,user.Role.Name.ToString()), //AM added 28-05
             // You can add more claims if needed like roles, name, etc.
         };
 

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Asset } from '../../shared/Model/asset';
+import { AssetModel } from '../../shared/Model/asset.model';
+
+
 
 @Component({
   selector: 'app-asset-management',
@@ -8,8 +10,8 @@ import { Asset } from '../../shared/Model/asset';
   styleUrl: './asset-management.component.css'
 })
 export class AssetManagementComponent {
-public assets : Asset[] = [];
-filteredData: Asset[] = [];
+public assets : AssetModel[] = [];
+filteredData: AssetModel[] = [];
 searchText = '';
 
 ngOnInit() {
@@ -35,17 +37,17 @@ onAddAsset()
 {
   
 }
-onEdit(item: Asset) {
+onEdit(item: AssetModel) {
     console.log('Edit asset:', item);
     // Implement edit logic
   }
 
-onDelete(item: Asset) {
+onDelete(item: AssetModel) {
     console.log('Delete asset:', item);
     // Implement delete logic
   }
 
-onView(item: Asset) {
+onView(item: AssetModel) {
     console.log('View asset:', item);
     // Implement view logic
   }
