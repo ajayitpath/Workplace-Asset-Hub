@@ -54,7 +54,7 @@ namespace WAH.DAL.Repositories.Implementations
         public async Task<T> AddAsync(T entity)
         {
             var response = await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(); // Optional: depends on your design
             return response.Entity;
         }
 
@@ -118,6 +118,11 @@ namespace WAH.DAL.Repositories.Implementations
         public IQueryable<T> GetAllQueryable()
         {
             return _dbSet.AsQueryable();
+        }
+
+        public Task<T?> GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

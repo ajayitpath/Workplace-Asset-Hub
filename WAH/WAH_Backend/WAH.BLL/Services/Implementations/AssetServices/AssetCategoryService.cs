@@ -25,7 +25,7 @@ namespace WAH.BLL.Services
 
         public async Task<AssetCategoryDto?> GetByIdAsync(Guid id)
         {
-            var entity = await _repo.GetByIdAsync(id);
+            var entity = await _repo.GetByGuidAsync(id);
             if (entity == null) return null;
             return new AssetCategoryDto
             {
@@ -58,7 +58,7 @@ namespace WAH.BLL.Services
 
         public async Task<bool> UpdateAsync(AssetCategoryDto dto)
         {
-            var entity = await _repo.GetByIdAsync(dto.CategoryId);
+            var entity = await _repo.GetByGuidAsync(dto.CategoryId);
             if (entity == null) return false;
             entity.CategoryName = dto.CategoryName;
             _repo.Update(entity);
@@ -68,7 +68,7 @@ namespace WAH.BLL.Services
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            var entity = await _repo.GetByIdAsync(id);
+            var entity = await _repo.GetByGuidAsync(id);
             if (entity == null) return false;
             _repo.Remove(entity);
             await _repo.SaveChangesAsync();
