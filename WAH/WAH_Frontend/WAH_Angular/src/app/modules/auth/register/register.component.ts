@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { FormdataService } from '../Services/formdata.service';
 import { AuthService } from '../Services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -24,6 +24,11 @@ export class RegisterComponent {
     { label: 'Female', value: 1 },
     { label: 'Other', value: 2 }
   ];
+  roleOptions = [
+    { label: 'Admin', value: 0 },
+    { label: 'User', value: 1 },
+    { label: 'Manager', value: 2 }
+  ];
   constructor(private formBuilder: FormBuilder, private router: Router, private formDataService: FormdataService, private authService: AuthService) { }
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
@@ -34,7 +39,7 @@ export class RegisterComponent {
       confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,100}$/)]],
       phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       gender: ['', Validators.required],
-      dob: [''], // date of birth
+      dob: ['', [Validators.required, dobValidator()]], // date of birth
       deskNo: ['', [Validators.pattern(/^[0-9]{1,4}$/), Validators.maxLength(20)]], // 1-4 digit desk number
       roleId: ['', Validators.required], // Assuming roleId is a string
       profileImage: [null],
@@ -60,6 +65,22 @@ export class RegisterComponent {
       this.imageRequired = false;
     }
   }
+allowOnlyNumbers(event: KeyboardEvent): void {
+  const input = event.target as HTMLInputElement;
+
+  // Allow only 10 digits
+  if (input.value.length >= 10) {
+    event.preventDefault();
+    return;
+  }
+
+  const charCode = event.charCode;
+  // Block anything that's not a number (0–9)
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+}
+
 
   onNavigateAway(): void {
     debugger
@@ -141,4 +162,28 @@ export class RegisterComponent {
     return d.toISOString().split('T')[0]; // "YYYY-MM-DD"
   }
 
+}
+export function dobValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const dob = new Date(control.value);
+    const today = new Date();
+
+    if (!control.value || isNaN(dob.getTime())) return null;
+
+    if (dob > today) {
+      return { futureDate: true };
+    }
+
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+
+    if (age < 18) {
+      return { underage: true };
+    }
+
+    return null;
+  };
 }
