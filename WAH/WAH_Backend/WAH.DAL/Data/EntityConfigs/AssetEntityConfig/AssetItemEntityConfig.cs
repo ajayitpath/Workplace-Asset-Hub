@@ -23,10 +23,7 @@ namespace WAH.DAL.Data.EntityConfigs.AssetEntities
                 .HasForeignKey(ai => ai.AssetId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(ai => ai.Status)
-                .WithMany(s => s.AssetItems)
-                .HasForeignKey(ai => ai.StatusId)
-                .OnDelete(DeleteBehavior.Restrict);
+          
 
             builder.HasOne(ai => ai.Location)
                 .WithMany(l => l.AssetItems)
