@@ -9,7 +9,7 @@
         public string Brand { get; set; }
         public string Model { get; set; }
         public string Specification { get; set; }
-        public int QuantityTotal { get; set; }
+        public int QuantityTotal { get; set; }  
 
         // Navigation
         public AssetCategoryEntity Category { get; set; }
