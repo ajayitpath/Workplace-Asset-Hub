@@ -402,4 +402,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/WAH/WAH_Backend/WAH.DAL/Migrations/AppDbContextModelSnapshot.cs

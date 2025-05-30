@@ -8,15 +8,15 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './shared/Interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes),  provideAnimationsAsync(),provideHttpClient(withInterceptors([authInterceptor])), 
-        providePrimeNG({
-            theme: {
-                preset: Aura,
-                    options: 
-                {
+    providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideAnimationsAsync(), provideHttpClient(withInterceptors([authInterceptor])),
+    providePrimeNG({
+        theme: {
+            preset: Aura,
+            options:
+            {
                 darkModeSelector: '.light-mode',
                 lightModeSelector: '.dark-mode',
             }
-            }
-        })]
+        }
+    })]
 };
