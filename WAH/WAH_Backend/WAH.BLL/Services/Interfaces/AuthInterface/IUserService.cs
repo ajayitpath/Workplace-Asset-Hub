@@ -7,7 +7,7 @@ namespace WAH.BLL.Services.Interfaces.AuthInterface
         Task<bool> RegisterAsync(RegisterDto model);
         Task<string?> LoginAsync(LoginDto loginDto);
         Task<string?> ForgotPasswordAsync(ForgotPasswordDto dto);
-        Task<bool> ResetPasswordAsync(ResetPasswordDto dto);
+        Task<bool> ResetPasswordAsync(ResetPasswordDto dto, string token , string email);
         Task<bool> VerifyOtpAsync(string email,string otp);
 
         Task<bool> ResendOtpAsync(string email);

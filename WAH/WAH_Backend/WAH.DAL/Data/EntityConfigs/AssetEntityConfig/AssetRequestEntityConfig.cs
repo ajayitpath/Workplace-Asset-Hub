@@ -15,8 +15,7 @@ namespace WAH.DAL.Data.EntityConfigs.AssetEntities
             builder.Property(ar => ar.QuantityRequested).IsRequired();
 
             builder.Property(ar => ar.Status)
-                .IsRequired()
-                .HasMaxLength(50);
+                .IsRequired();
 
             builder.Property(ar => ar.RequestedAt)
                 .HasDefaultValueSql("GETUTCDATE()");

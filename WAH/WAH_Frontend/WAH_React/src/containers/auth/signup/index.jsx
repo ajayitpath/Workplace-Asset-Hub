@@ -24,6 +24,9 @@ import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import defaultAvatar from '../../../assets/Avtar.png';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import URLS from '../../../constants/urls';
 
 const genders = ["Male", "Female", "Other"];
 const roles = ["Admin", "Manager", "Employee"];
@@ -63,27 +66,26 @@ const Signup = () => {
     }
   });
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data) => {
-    const formData = new FormData();
-
-    Object.entries(data).forEach(([key, value]) => {
-      if (key === "profileImage") {
-        formData.append("profileImageUrl", value[0]); // backend expects `profileImageUrl`
-      } else {
-        formData.append(key, value);
-      }
-    });
-
     try {
-      const response = await registerUser(formData);
-      console.log("Registered:", response);
-      alert("User registered successfully!");
-      reset();
-      setImagePreview(null);
-    } catch (err) {
-      console.error(err);
+      const formData = new FormData();
+      
+      // Add all form fields to FormData
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === 'profileImage' && value[0]) {
+          formData.append('File', value[0]);
+        } else {
+          formData.append(key, value);
+        }
+      });
 
-      alert("Registration failed.");
+      const response = await registerUser(formData);
+      toast.success('Registration successful! Please check your email for OTP verification.');
+      navigate(URLS.OTP_VERIFICATION, { state: { email: data.email } });
+    } catch (error) {
+      toast.error(error.response?.data || 'Registration failed');
     }
   };
 
