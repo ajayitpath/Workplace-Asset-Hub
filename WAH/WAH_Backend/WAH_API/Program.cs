@@ -7,6 +7,7 @@ using WAH.BLL.Interfaces;
 using WAH.BLL.Services;
 using WAH.BLL.Services.Implementations.AssetServices;
 using WAH.BLL.Services.Implementations.AuthServices;
+using WAH.BLL.Services.Interfaces;
 using WAH.BLL.Services.Interfaces.AssetInterfaces;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.DAL.Data;
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IOtpService, OtpService>();
 builder.Services.AddScoped<IAssetService, AssetService>();
 builder.Services.AddScoped<IAssetRequestService, AssetRequestService>();
+builder.Services.AddScoped<IAssetCategoryService, AssetCategoryService>();
 
 builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<DatabaseSeeder>();
