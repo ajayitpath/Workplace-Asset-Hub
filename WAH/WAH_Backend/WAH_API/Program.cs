@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore; // Ensure this using directive is present
 using Microsoft.IdentityModel.Tokens;
 using WAH.BLL.DbSeeder;
+using WAH.BLL.Interfaces;
+using WAH.BLL.Services;
 using WAH.BLL.Services.Implementations.AssetServices;
 using WAH.BLL.Services.Implementations.AuthServices;
 using WAH.BLL.Services.Interfaces.AssetInterfaces;
@@ -26,6 +28,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IOtpService, OtpService>();
 builder.Services.AddScoped<IAssetService, AssetService>();
+builder.Services.AddScoped<IAssetRequestService, AssetRequestService>();
 
 builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<DatabaseSeeder>();
