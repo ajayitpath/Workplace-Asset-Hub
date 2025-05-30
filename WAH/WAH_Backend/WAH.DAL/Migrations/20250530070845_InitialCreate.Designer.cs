@@ -12,13 +12,8 @@ using WAH.DAL.Data;
 namespace WAH.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-<<<<<<<< HEAD:WAH/WAH_Backend/WAH.DAL/Migrations/20250529090808_AngularAuthTesting.Designer.cs
-    [Migration("20250529090808_AngularAuthTesting")]
-    partial class AngularAuthTesting
-========
-    [Migration("20250529084047_Initialcreate")]
-    partial class Initialcreate
->>>>>>>> origin/main:WAH/WAH_Backend/WAH.DAL/Migrations/20250529084047_Initialcreate.Designer.cs
+    [Migration("20250530070845_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,6 +92,9 @@ namespace WAH.DAL.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -171,10 +169,8 @@ namespace WAH.DAL.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");

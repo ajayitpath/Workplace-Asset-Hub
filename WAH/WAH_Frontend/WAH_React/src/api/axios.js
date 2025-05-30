@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
 
 const axiosInstance = axios.create({
-  baseURL: "https://api.example.com", // Replace with your API base URL
+  baseURL: "https://localhost:7126/api", // Replace with your API base URL
   headers: {
     "Content-Type": "application/json",
   },
