@@ -10,6 +10,7 @@
         public string Model { get; set; }
         public string Specification { get; set; }
         public int QuantityTotal { get; set; }
+        public bool IsActive { get; set; } = true;
 
         // Navigation
         public AssetCategoryEntity Category { get; set; }
