@@ -94,7 +94,8 @@ namespace WAH.BLL.Services.Implementations.AssetServices
             var entity = await _assetRepository.GetByGuidAsync(id);
             if (entity == null)
                 return false;
-
+            if (!entity.IsActive)
+                return false;
             entity.IsActive = false;
             _assetRepository.Update(entity);
             await _assetRepository.SaveChangesAsync();
