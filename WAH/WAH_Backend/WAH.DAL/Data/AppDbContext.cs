@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WAH.DAL.EntityModels.AuthEntities;
-using WAH.DAL.EntityModels.AssetEntities;// <-- Make sure this is correct or adjust accordingly
+using WAH.DAL.EntityModels.AssetEntities;
 
 namespace WAH.DAL.Data
 {
@@ -18,6 +18,10 @@ namespace WAH.DAL.Data
 
         // Audit Entities
         public DbSet<UserAuditEntity> UserAudits { get; set; }
+
+        //Temporary User Entity with OTP
+        public DbSet<TemporaryUserEntity> TemporaryUsers { get; set; }
+
 
         // Asset Entities
         public DbSet<AssetEntity> Assets { get; set; }
