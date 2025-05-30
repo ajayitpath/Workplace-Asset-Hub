@@ -42,7 +42,11 @@ namespace WAH.BLL.Services.Implementations.AuthServices
 
         public async Task<string?> LoginAsync(LoginDto loginDto)
         {
-            var user = (await _userRepository.FindAsync(u => u.Email == loginDto.Email)).FirstOrDefault();
+            var user = await _userRepository.GetWithIncludeAsync(
+                u => u.Email == loginDto.Email,
+                u => u.Role // Include the Role navigation property
+            );
+
             if (user == null) return null;
 
             var isPasswordValid = _passwordHasherService.VerifyPassword(user.Password, loginDto.Password);
@@ -51,6 +55,8 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             var token = _jwtTokenService.GenerateToken(user);
             return token;
         }
+
+
 
         public async Task<string?> ForgotPasswordAsync(ForgotPasswordDto dto)
         {
