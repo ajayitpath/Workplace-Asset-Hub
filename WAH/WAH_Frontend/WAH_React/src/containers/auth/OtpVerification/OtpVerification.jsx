@@ -3,9 +3,30 @@ import React from 'react';
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { otpSchema } from './OtpVerification.schema';
+import { otpSchema } from '../../../schema/OtpVerification.schema';
+import { verifyOtp } from '../../../services/Auth/AuthService';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import URLS from '../../../constants/urls';
 
 const OtpVerification = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const email = location.state?.email;
+
+  const onSubmit = async (data) => {
+    try {
+      await verifyOtp({
+        email,
+        otp: data.otp
+      });
+      toast.success('Email verified successfully');
+      navigate(URLS.LOGIN);
+    } catch (error) {
+      toast.error(error.response?.data || 'Invalid OTP');
+    }
+  };
+
   const {
     register,
     handleSubmit,
@@ -14,16 +35,11 @@ const OtpVerification = () => {
     resolver: yupResolver(otpSchema),
   });
 
-  const onSubmit = async (data) => {
-    console.log('OTP Verification Request:', data);
-    // TODO: Call API to verify OTP
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-purple-200 p-4 gap-4">
+    <div className="min-h-screen flex items-center justify-center p-4 gap-4">
       <Paper elevation={3} className="p-6 rounded-lg w-full max-w-md">
         <Typography variant="h5" className="text-center mb-4 text-primary-700 font-semibold p-2 gap-2">
-          OTP Verification
+          Verify Email
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} noValidate className="p-4 flex flex-col gap-4">
           <TextField

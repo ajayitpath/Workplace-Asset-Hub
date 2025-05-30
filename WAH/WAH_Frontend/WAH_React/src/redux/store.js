@@ -5,14 +5,14 @@ import assetReducer from './slices/assetSlice';
 import requestReducer from './slices/requestSlice';
 import uiReducer from './slices/uiSlice';
 
-const store = {
-  reducers: {
+const store = configureStore({
+  reducer: {
     auth: authReducer,
     user: userReducer,
     asset: assetReducer,
     request: requestReducer,
     ui: uiReducer,
   },
-};
+});
 
 export default store;
