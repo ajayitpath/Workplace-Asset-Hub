@@ -1,37 +1,35 @@
-// File: src/redux/slices/assetSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-
-const initialState = {
-  assets: [],
-  loading: false,
-  error: null,
-};
+import { fetchAssets } from '../thunks/assetThunks';
 
 const assetSlice = createSlice({
   name: 'asset',
-  initialState,
+  initialState: {
+    assets: [],
+    loading: false,
+    error: null,
+  },
   reducers: {
-    fetchAssetsStart: (state) => {
-        
-      state.loading = true;
-      state.error = null;
-    },
-    fetchAssetsSuccess: (state, action) => {
-      state.loading = false;
-      state.assets = action.payload;
-    },
-    fetchAssetsFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
     addAsset: (state, action) => {
       state.assets.push(action.payload);
     },
     removeAsset: (state, action) => {
-      state.assets = state.assets.filter(asset => asset.id !== action.payload);
+      state.assets = state.assets.filter(a => a.id !== action.payload);
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAssets.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchAssets.fulfilled, (state, action) => {
+        state.loading = false;
+        state.assets = action.payload;
+      })
+      .addCase(fetchAssets.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
 });
-
-export const { fetchAssetsStart, fetchAssetsSuccess, fetchAssetsFailure, addAsset, removeAsset } = assetSlice.actions;
-export default assetSlice.reducer;
+export default assetSlice;

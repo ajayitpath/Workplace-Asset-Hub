@@ -8,8 +8,6 @@
         public DateTime PurchaseDate { get; set; }
         public DateTime? WarrantyExpiryDate { get; set; }
         public Guid StatusId { get; set; }
-
-        // Optional location tracking
         public Guid? LocationId { get; set; }
 
         // Navigation

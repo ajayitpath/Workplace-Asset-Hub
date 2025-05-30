@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.DtoModels.AuthDtos;
-using WAH.DAL.EntityModels;
 using WAH.DAL.EntityModels.AuthEntities;
 using WAH.DAL.Repositories.Interfaces;
 
@@ -9,7 +8,6 @@ namespace WAH_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Consumes("multipart/form-data")]
     public class UserController : ControllerBase
     {
 
@@ -48,20 +46,21 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, [FromQuery] string token,
+    [FromQuery] string email)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return BadRequest("Passwords do not match.");
 
-            var result = await _userService.ResetPasswordAsync(dto);
+            var result = await _userService.ResetPasswordAsync(dto, token, email);
 
             if (!result)
                 return BadRequest("Invalid or expired token.");
 
             return Ok(new { message = "Password has been reset successfully." });
         }
+        //[Authorize(Roles = "Admin,Manager")]
         [HttpPost("register")]
-        //[Consumes("multipart/form-data")]
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
             if (!ModelState.IsValid)
@@ -90,7 +89,7 @@ namespace WAH_API.Controllers
             var imagePath = await _profileService.SaveProfileImageAsync(dto);
 
             // Check if user profile already exists
-            var existing = (await _profileRepo.FindAsync(p => p.UserId == userId)).FirstOrDefault();
+            var existing = (await _profileRepo.FindAsync(p => p.UserId == userId)).FirstOrDefault(); 
             if (existing != null)
             {
                 existing.ProfileImage = imagePath;
@@ -109,14 +108,14 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("otp-verify")]
-        public async Task<IActionResult> OtpVerify([FromBody] VerifyOtpDto dto)             
+        public async Task<IActionResult> OtpVerify([FromBody] VerifyOtpDto dto)
         {
             if (dto == null || string.IsNullOrEmpty(dto.Email) || string.IsNullOrEmpty(dto.Otp))
             {
                 return BadRequest("Invalid OTP or email.");
             }
 
-            var isValid = await _userService.VerifyOtpAsync(dto);
+            var isValid = await _userService.VerifyOtpAsync(dto.Email,dto.Otp);
             if (!isValid)
             {
                 return Unauthorized("Invalid OTP.");

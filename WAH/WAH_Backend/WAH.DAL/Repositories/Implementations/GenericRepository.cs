@@ -21,7 +21,12 @@ namespace WAH.DAL.Repositories.Implementations
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<T?> GetByIdAsync(Guid id)
+        public async Task<T?> GetByIdAsync(int id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
+        public async Task<T?> GetByGuidAsync(Guid id)
         {
             return await _dbSet.FindAsync(id);
         }
@@ -110,7 +115,9 @@ namespace WAH.DAL.Repositories.Implementations
         {
             await _context.SaveChangesAsync();
         }
-
-        
+        public IQueryable<T> GetAllQueryable()
+        {
+            return _dbSet.AsQueryable();
+        }
     }
 }

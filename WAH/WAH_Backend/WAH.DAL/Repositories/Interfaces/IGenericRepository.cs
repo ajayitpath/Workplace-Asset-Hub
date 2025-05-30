@@ -5,8 +5,8 @@ namespace WAH.DAL.Repositories.Interfaces
     public interface IGenericRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T?> GetByIdAsync(Guid id);
-       
+        Task<T?> GetByIdAsync(int id);
+        Task<T?> GetByGuidAsync(Guid id);
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
         Task<T> AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
@@ -24,5 +24,7 @@ namespace WAH.DAL.Repositories.Interfaces
             int pageNumber, int pageSize,
             Expression<Func<T, bool>>? filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null);
+
+        IQueryable<T> GetAllQueryable();
     }
 }

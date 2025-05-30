@@ -57,17 +57,17 @@ namespace WAH.BLL.Services.Implementations.AuthServices
 
             var otp = _otpService.GenerateAndCacheOtp(dto.Email);
             var subject = "Reset Your Password";
-            await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
+          //  await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
 
             return token;
         }
 
-        public async Task<bool> ResetPasswordAsync(ResetPasswordDto dto)
+        public async Task<bool> ResetPasswordAsync(ResetPasswordDto dto, string token, string email)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return false;
 
-            var principal = _jwtTokenService.GetPrincipalFromToken(dto.Token);
+            var principal = _jwtTokenService.GetPrincipalFromToken(token);
             if (principal == null) return false;
 
             var emailClaim = principal.FindFirst(ClaimTypes.Email);
@@ -78,6 +78,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
 
             user.Password = _passwordHasherService.HashPassword(dto.NewPassword);
             _userRepository.Update(user);
+           await _userRepository.SaveChangesAsync();
 
             return true;
         }
@@ -90,15 +91,24 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 if (exists || model.Password != model.ConfirmPassword)
                     return false;
 
-                
-
                 var hashedPassword = _passwordHasherService.HashPassword(model.Password);
 
-                var defaultUserRoleId = Guid.Parse("2CCA8509-93DC-4B47-A670-11576F21C90A");
+                // Step 1: Determine Role
+                RoleEntity? role;
 
-                var role = await _roleRepository.GetByIdAsync(defaultUserRoleId);
+                if (model.RoleId == 0 || model.RoleId == null)
+                {
+                    // Assign default "User" role if RoleId is not provided
+                    role = (await _roleRepository.FindAsync(r => r.Name == "User")).FirstOrDefault();
+                }
+                else
+                {
+                    // Admin/Manager provided a specific role
+                    role = await _roleRepository.GetByIdAsync(model.RoleId);
+                }
+
                 if (role == null)
-                    throw new Exception("Default User role not found.");
+                    throw new Exception("Role not found.");
 
                 var newUser = new UserEntity
                 {
@@ -111,14 +121,20 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                     DOB = model.DOB,
                     DeskNo = model.DeskNo,
                     Role = role, // assign the full RoleEntity
+                    IsActive = true
                 };
 
 
-                var otp = _otpService.GenerateAndCacheOtp(model.Email);
-                await EmailHelper.SendOtpAsync(model.Email, otp);
+                //var otp = _otpService.GenerateAndCacheOtp(model.Email);
+                //await EmailHelper.SendOtpAsync(model.Email, otp);
 
+                //var result = _otpService.ValidateOtp(model.Email,otp);
+                //if (result)
+                //{
                 var createdUser = await _userRepository.AddAsync(newUser);
                 return createdUser != null;
+                //}
+                //return false;
             }
             catch (Exception ex)
             {
@@ -126,14 +142,16 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             }
         }
 
-        public async Task<bool> VerifyOtpAsync(VerifyOtpDto dto)
+        public async Task<bool> VerifyOtpAsync(string email,string otp)
         {
-            var isValidOtp = _otpService.ValidateOtp(dto.Email, dto.Otp);
+            var isValidOtp = _otpService.ValidateOtp(email, otp);
             if (!isValidOtp)
                 return false;
 
-            var user = (await _userRepository.FindAsync(d => d.Email == dto.Email)).FirstOrDefault();
+            var user = (await _userRepository.FindAsync(d => d.Email == email)).FirstOrDefault();
             return user != null;
         }
+
+
     }
 }
