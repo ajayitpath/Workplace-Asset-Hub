@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WAH.BLL.Services.Interfaces.AssetInterfaces;
 using WAH.Common.DtoModels.AssetDtos;
 
@@ -25,11 +24,30 @@ namespace WAH_API.Controllers
             return CreatedAtAction(nameof(GetAssetById), new { id = result.AssetId }, result);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAssetById(Guid id)
+     
+            [HttpGet("{id}")]
+            public async Task<IActionResult> GetAssetById(Guid id)
+            {
+                var asset = await _assetService.GetAssetByIdAsync(id);
+                if (asset == null)
+                    return NotFound();
+
+                return Ok(asset);
+            }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsset(Guid id, [FromBody] AssetDto assetDto)
         {
-            //  Add logic to retrieve a single asset
-            return Ok(); 
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var updatedAsset = await _assetService.UpdateAssetAsync(id, assetDto);
+            if (updatedAsset == null)
+                return NotFound();
+
+            return Ok(updatedAsset);
         }
+
+
     }
 }

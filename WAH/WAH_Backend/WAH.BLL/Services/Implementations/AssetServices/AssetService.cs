@@ -50,5 +50,44 @@ namespace WAH.BLL.Services.Implementations.AssetServices
                 throw new Exception("An error occurred while creating the asset", ex);
             }
         }
+        public async Task<AssetDto?> GetAssetByIdAsync(Guid id)
+        {
+            var asset = await _assetRepository.GetByGuidAsync(id);
+            if (asset == null)
+                return null;
+            var assetDto = AssetMapper.ToDto(asset);
+            var category = await _assetcategoryRepository.GetByGuidAsync(asset.CategoryId);
+            assetDto.CategoryId = category.CategoryId;
+            return assetDto;
+        }
+
+        public async Task<AssetDto?> UpdateAssetAsync(Guid assetId, AssetDto assetDto)
+        {
+            if (assetDto == null)
+                throw new ArgumentNullException(nameof(assetDto));
+
+            var existingAsset = await _assetRepository.GetByGuidAsync(assetId);
+            if (existingAsset == null)
+                return null;
+
+            var categories = await _assetcategoryRepository.FindAsync(c => c.CategoryId == assetDto.CategoryId);
+            if (!categories.Any())
+                throw new ArgumentException("The specified category does not exist.", nameof(assetDto.CategoryId));
+
+            // Update fields
+            existingAsset.AssetName = assetDto.AssetName;
+            existingAsset.AssetCode = assetDto.AssetCode;
+            existingAsset.CategoryId = assetDto.CategoryId;
+            existingAsset.Brand = assetDto.Brand;
+            existingAsset.Model = assetDto.Model;
+            existingAsset.Specification = assetDto.Specification;
+            existingAsset.QuantityTotal = assetDto.QuantityTotal;
+
+            _assetRepository.Update(existingAsset);
+            await _assetRepository.SaveChangesAsync();
+
+            return AssetMapper.ToDto(existingAsset);
+        }
+
     }
 }
