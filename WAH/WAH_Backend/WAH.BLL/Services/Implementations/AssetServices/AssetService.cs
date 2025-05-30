@@ -1,4 +1,5 @@
-﻿using WAH.BLL.Mappers;
+﻿using Microsoft.EntityFrameworkCore;
+using WAH.BLL.Mappers;
 using WAH.BLL.Services.Interfaces.AssetInterfaces;
 using WAH.Common.DtoModels.AssetDtos;
 using WAH.DAL.EntityModels.AssetEntities;
@@ -88,6 +89,27 @@ namespace WAH.BLL.Services.Implementations.AssetServices
 
             return AssetMapper.ToDto(existingAsset);
         }
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var entity = await _assetRepository.GetByGuidAsync(id);
+            if (entity == null)
+                return false;
+            if (!entity.IsActive)
+                return false;
+            entity.IsActive = false;
+            _assetRepository.Update(entity);
+            await _assetRepository.SaveChangesAsync();
+            return true;
+        }
 
+        public async Task<IEnumerable<AssetDto>> GetAllAssetsAsync()
+        {
+            var assets = await _assetRepository.GetAllQueryable()
+                 .Where(a => a.IsActive)
+                .Include(a => a.Category)
+                .ToListAsync();
+
+            return assets.Select(AssetMapper.ToDto);
+        }
     }
 }

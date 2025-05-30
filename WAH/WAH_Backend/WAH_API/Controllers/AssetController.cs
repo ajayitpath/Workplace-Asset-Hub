@@ -49,5 +49,21 @@ namespace WAH_API.Controllers
         }
 
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _assetService.DeleteAsync(id);
+            if (!result)
+                return NotFound(new { message = "AssetItem not found" });
+
+            return NoContent(); 
+        }
+
+        [HttpGet("list")]
+        public async Task<IActionResult> GetAllAssets()
+        {
+            var assets = await _assetService.GetAllAssetsAsync();
+            return Ok(assets);
+        }
     }
 }
