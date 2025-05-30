@@ -6,14 +6,13 @@ import PrivateLayout from '../layout/private-layout';
 
 
 const Routing = () => {
-  const { authRoutes, privateRoutes } = useRoutes();
-  return (
-    <Routes>
-      {/* Auth routes */}
+const { authRoutes, privateRoutes } = useRoutes();
+    return (
+        <Routes>
+            {/* Auth routes */}
       <Route element={<AuthLayout />}>
         {authRoutes.map(({ id, element, path, ...otherData }) => (
-         <Route key={id} path={path} element={element} {...otherData} />
-              
+          <Route key={id} path={path} element={element} {...otherData} />
         ))}
       </Route>
 
@@ -26,7 +25,7 @@ const Routing = () => {
 
       {/* 404 route */}
       <Route path="*" element={<p>404 | Not Found</p>} />
-    </Routes>
-  );
+        </Routes>
+    );
 };
 export default Routing;
