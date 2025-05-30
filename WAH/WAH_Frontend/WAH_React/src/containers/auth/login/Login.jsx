@@ -98,24 +98,19 @@ const Login = () => {
             {...register("password")}
             error={Boolean(errors.password)}
             helperText={errors.password?.message}
-<<<<<<< HEAD:WAH/WAH_Frontend/WAH_React/src/containers/auth/login/index.jsx
             InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
-                    onClick={() => setShowPassword((show) => !show)}
-                    edge="end"
+              endAdornment:(
+                <InputAdornment position='end'>
+                  <IconButton 
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  onClick={() => setShowPassword((show) => !show)}
+                  edge="end"
                   >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
+{showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
-              ),
+              )
             }}
-=======
->>>>>>> f5e2a2af06e3a435817e731a41f64da394e3e9b9:WAH/WAH_Frontend/WAH_React/src/containers/auth/login/Login.jsx
           />
 
           <Button
