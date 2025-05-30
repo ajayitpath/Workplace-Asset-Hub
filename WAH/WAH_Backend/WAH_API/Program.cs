@@ -69,8 +69,6 @@ builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddScoped<IGenericRepository<UserProfileEntity>, GenericRepository<UserProfileEntity>>();
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Add for email service - otp stored in cache
 builder.Services.AddMemoryCache();
 
