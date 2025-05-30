@@ -99,17 +99,19 @@ const Login = () => {
             error={Boolean(errors.password)}
             helperText={errors.password?.message}
             InputProps={{
-              endAdornment:(
-                <InputAdornment position='end'>
-                  <IconButton 
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
-                  onClick={() => setShowPassword((show) => !show)}
-                  edge="end"
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
+                    onClick={() => setShowPassword((show) => !show)}
+                    edge="end"
                   >
-{showPassword ? <VisibilityOff /> : <Visibility />}
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
-              )
+              ),
             }}
           />
 

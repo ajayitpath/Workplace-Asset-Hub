@@ -9,7 +9,7 @@ const initialState = {
   error: null,
 };
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     loginStart(state) {
@@ -23,7 +23,7 @@ const authSlice = createSlice({
       localStorage.setItem('token',action.payload.token);
     },
     loginFailure(state, action) {
-        state.loading = false;
+      state.loading = false;
       state.error = action.payload.error;
     },
     logout(state) {
