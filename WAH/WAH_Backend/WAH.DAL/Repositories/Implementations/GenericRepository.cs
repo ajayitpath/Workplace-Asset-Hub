@@ -49,7 +49,7 @@ namespace WAH.DAL.Repositories.Implementations
         public async Task<T> AddAsync(T entity)
         {
             var response = await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync(); // Optional: depends on your design
+            await _context.SaveChangesAsync();
             return response.Entity;
         }
 
@@ -111,5 +111,6 @@ namespace WAH.DAL.Repositories.Implementations
             await _context.SaveChangesAsync();
         }
 
+        
     }
 }
