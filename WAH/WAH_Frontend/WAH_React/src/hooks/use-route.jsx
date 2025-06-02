@@ -1,18 +1,22 @@
 import { useMemo } from "react"
 import URLS from "../constants/urls"
-import Login from "../containers/auth/login/Login"
+import Login from "../containers/auth/login"
 import Signup from "../pages/Signup"
-import ForgotPassword from "../containers/auth/ForgotPassword/ForgotPassword"
-import ResetPassword from "../containers/auth/ResetPassword/ResetPassword"
-import OtpVerification from "../containers/auth/OtpVerification/OtpVerification"
+import ForgotPassword from "../containers/auth/ForgotPassword"
+import ResetPassword from "../containers/auth/ResetPassword"
+import OtpVerification from "../containers/auth/OtpVerification"
+import Dashboard from "../containers/Admin/Dashboard"
+import AssetManegement from "../containers/Admin/AssetManegement";
+import InventoryManagement from "../containers/Admin/InventoryManagement"
+import Home from "../components/Home";
 
 const useRoutes = () => {
     const allRoutes = useMemo(() => [
         {
             id:"root",
             path:URLS.INITIAL,
-            element: <div>Initial</div>,
-            isPrivate:true,
+            element: <Home/>,
+            isAuth:true,
         },
         {
             id:"login",
@@ -47,8 +51,20 @@ const useRoutes = () => {
         {
             id:"dashboard",
             path:URLS.DASHBOARD,
-            element: <div>Dashboard</div>,
-            isPrivate:true,
+            element: <Dashboard/>,
+            isAuth:true,
+        },
+        {
+            id:"asset-management",
+            path:URLS.ASSETMANAGE,
+            element: <AssetManegement/>,
+            isAuth:true,
+        },
+        {
+            id:"inventory-management",
+            path:URLS.INVENTORYMANAGE,
+            element: <InventoryManagement/>,
+            isAuth:true,
         },
         {
             id:"profile",
