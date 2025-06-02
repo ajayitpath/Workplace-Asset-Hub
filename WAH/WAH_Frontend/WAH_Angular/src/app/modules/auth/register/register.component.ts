@@ -65,32 +65,29 @@ export class RegisterComponent {
       this.imageRequired = false;
     }
   }
-  allowOnlyNumbers(event: KeyboardEvent): void {
-    const input = event.target as HTMLInputElement;
+allowOnlyNumbers(event: KeyboardEvent): void {
+  const input = event.target as HTMLInputElement;
 
-    // Allow only 10 digits
-    if (input.value.length >= 10) {
-      event.preventDefault();
-      return;
-    }
-
-    const charCode = event.charCode;
-    // Block anything that's not a number (0–9)
-    if (charCode < 48 || charCode > 57) {
-      event.preventDefault();
-    }
+  // Allow only 10 digits
+  if (input.value.length >= 10) {
+    event.preventDefault();
+    return;
   }
+
+  const charCode = event.charCode;
+  // Block anything that's not a number (0–9)
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+}
 
 
   onNavigateAway(): void {
-    debugger
+    
     this.formDataService.setFormData(this.registerForm.value);
     this.router.navigate(['/auth/emailverify']);
   }
   onSubmit(): void {
-    console.log('Form submitted:', this.registerForm.value);
-    // this.registerForm.email = localStorage.getItem('email') || '';
-
     this.submitted = true;
     this.errorMessage = '';
     this.successMessage = '';
@@ -128,7 +125,6 @@ export class RegisterComponent {
     this.authService.register(registerData).subscribe({
       next: (res) => {
         const userId = res.userId;
-        localStorage.setItem('email', formValue.email);
         if (this.profileImage && userId) {
           // Upload image with real userId
           this.authService.uploadProfileImage(userId, this.profileImage).subscribe({
