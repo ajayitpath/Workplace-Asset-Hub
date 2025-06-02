@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using WAH.BLL.Services.Interfaces;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.DAL.EntityModels.AuthEntities;
 
@@ -22,7 +21,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
        {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
-            //new Claim(ClaimTypes.Role,user.Role.Name.ToString()), //AM added 28-05
+            new Claim(ClaimTypes.Role,user.Role.Name.ToString()), //AM added 28-05
             // You can add more claims if needed like roles, name, etc.
         };
 
@@ -43,9 +42,9 @@ namespace WAH.BLL.Services.Implementations.AuthServices
         {
             var claims = new[]
             {
-        new Claim(ClaimTypes.Email, user.Email),
-        new Claim("Reset", "true")
-    };
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim("Reset", "true")
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

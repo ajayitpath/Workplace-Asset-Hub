@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import loginSchema from '../../../schema/login.schema';
+import loginSchema from './login.schema';
 import { useNavigate } from 'react-router-dom';
 import URLS from '../../../constants/urls';
+<<<<<<< HEAD:WAH/WAH_Frontend/WAH_React/src/containers/auth/login/Login.jsx
 <<<<<<< HEAD
 <<<<<<< HEAD:WAH/WAH_Frontend/WAH_React/src/containers/auth/login/Login.jsx
 import { Button, TextField, Typography, Box, Paper } from '@mui/material';
@@ -30,47 +31,41 @@ const Login = () => {
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26:WAH/WAH_Frontend/WAH_React/src/containers/auth/login/index.jsx
 =======
 >>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
+=======
+import { Button, TextField, Typography, Box, Paper } from '@mui/material';
+
+const Login = () => {
+  const navigate = useNavigate();
+
+>>>>>>> be956539dad1298027f4584fd080631709eed677:WAH/WAH_Frontend/WAH_React/src/containers/auth/login/index.jsx
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors }
   } = useForm({
     resolver: yupResolver(loginSchema)
   });
 
   const onSubmit = async (data) => {
-    try {
-      const response = await loginUser(data);
-      dispatch(loginSuccess({ token: response.token }));
-      toast.success('Login successful!');
-      navigate(URLS.DASHBOARD);
-    } catch (error) {
-      toast.error(error.response?.data || 'Login failed');
-    }
+    console.log('Login form data:', data);
+    // await login(data);
+    // setToken(response.token);
+    // navigate(URLS.DASHBOARD);
   };
 
   return (
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundColor: (theme) => theme.palette.background.default,
+        backgroundColor: '#F4F4F6',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         p: 2
       }}
     >
-      <Paper 
-        elevation={1} 
-        sx={{ 
-          p: 4, 
-          borderRadius: 4, 
-          width: '100%', 
-          maxWidth: 400,
-          backgroundColor: (theme) => theme.palette.background.paper
-        }}
-      >
-        <Typography variant="h5" fontWeight="bold" textAlign="center" mb={3} color="rgb(0, 0, 0)">
+      <Paper elevation={6} sx={{ p: 4, borderRadius: 4, width: '100%', maxWidth: 400 }}>
+        <Typography variant="h5" fontWeight="bold" textAlign="center" mb={3} color="#2F52FF">
           Login
         </Typography>
 
@@ -88,7 +83,7 @@ const Login = () => {
           <TextField
             label="Password"
             variant="outlined"
-            type={showPassword? 'text' : 'password'}
+            type="password"
             fullWidth
             margin="normal"
             {...register('password')}
@@ -103,10 +98,10 @@ const Login = () => {
             sx={{
               mt: 2,
               mb: 1,
-              backgroundColor: (theme) => theme.palette.primary.main,
+              backgroundColor: '#2F52FF',
               textTransform: 'none',
               '&:hover': {
-                backgroundColor: (theme) => theme.palette.primary.dark,
+                backgroundColor: '#1C3AEF'
               }
             }}
           >

@@ -1,10 +1,6 @@
 const ENDPOINTS = {
-  LOGIN: '/user/login',
-  REGISTER: '/user/register',
-  FORGOT_PASSWORD: '/user/forgot-password',
-  RESET_PASSWORD: '/user/reset-password',
-  VERIFY_OTP: '/user/otp-verify',
-  UPLOAD_PROFILE: '/user/upload',
+  LOGIN: '/auth/login',
+  REGISTER: '/auth/register',
   GET_ASSETS: '/assets',
   REQUEST_ASSET: '/request',
 };

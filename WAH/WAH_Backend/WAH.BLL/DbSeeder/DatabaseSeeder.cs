@@ -28,7 +28,7 @@ namespace WAH.BLL.DbSeeder
                 {
                     _context.Roles.Add(new RoleEntity
                     {
-                        Id = Guid.NewGuid(),
+                       
                         Name = roleName,
                         isActive = true
                     });
@@ -53,7 +53,8 @@ namespace WAH.BLL.DbSeeder
                     DOB = new DateOnly(1990, 1, 1),
                     PhoneNumber = "1234567891",
                     DeskNo = "A-01",
-                    Role = adminRole
+                    Role = adminRole,
+                    IsActive = true
                 };
 
                 _context.Users.Add(admin);

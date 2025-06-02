@@ -15,8 +15,7 @@ namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
             builder.HasKey(r => r.Id);
 
             builder.Property(r => r.Id)
-                   .HasDefaultValueSql("NEWSEQUENTIALID()")
-                   .ValueGeneratedOnAdd();
+       .ValueGeneratedOnAdd(); // auto-increment ID
 
             // Name (Required + Unique)
             builder.Property(r => r.Name)

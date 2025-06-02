@@ -134,8 +134,16 @@ namespace WAH.DAL.Repositories.Implementations
             return _dbSet.AsQueryable();
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
 =======
 >>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
+=======
+
+        public Task<T?> GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+>>>>>>> be956539dad1298027f4584fd080631709eed677
     }
 }

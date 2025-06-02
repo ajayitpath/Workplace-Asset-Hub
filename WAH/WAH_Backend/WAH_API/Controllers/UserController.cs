@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using WAH.BLL.Services.Implementations.AuthServices;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.DtoModels.AuthDtos;
 using WAH.DAL.EntityModels.AuthEntities;
@@ -12,14 +14,14 @@ namespace WAH_API.Controllers
     {
 
         private readonly IUserService _userService;
-        private readonly IUserProfileService _profileService;
-        private readonly IGenericRepository<UserProfileEntity> _profileRepo;
-        public UserController(IUserService userService, IUserProfileService profileService,
-            IGenericRepository<UserProfileEntity> profileRepo)
+        private readonly IUserProfileService _userProfileService;
+
+        public UserController(IUserService userService, IUserProfileService userProfileService)
+            
         {
             _userService = userService;
-            _profileService = profileService;
-            _profileRepo = profileRepo;
+            _userProfileService = userProfileService;
+           
         }
 
         [HttpPost("login")]
@@ -51,12 +53,16 @@ namespace WAH_API.Controllers
         public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto dto)
 =======
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, [FromQuery] string token,
+<<<<<<< HEAD
     [FromQuery] string email)
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
 =======
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, [FromQuery] string token,
     [FromQuery] string email)
 >>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
+=======
+        [FromQuery] string email)
+>>>>>>> be956539dad1298027f4584fd080631709eed677
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return BadRequest("Passwords do not match.");
@@ -68,6 +74,7 @@ namespace WAH_API.Controllers
 
             return Ok(new { message = "Password has been reset successfully." });
         }
+        //[Authorize(Roles = "Admin,Manager")]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
@@ -79,7 +86,7 @@ namespace WAH_API.Controllers
             var result = await _userService.RegisterAsync(model);
             if (result)
             {
-                return Ok(new { message = "User registered successfully" });
+                return Ok(new { message = "Temporary User registered.Please Verify the OTP" });
             }
             return StatusCode(500, "Failed to register user");
         }
@@ -87,50 +94,67 @@ namespace WAH_API.Controllers
 
         [HttpPost("upload/{userId}")]
       
-        public async Task<IActionResult> Upload([FromRoute] Guid userId, [FromForm] UserProfileDto dto)
+        public async Task<IActionResult> Upload ([FromRoute] Guid userId, [FromForm] UserProfileDto dto)
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             dto.UserId = userId;
+            var result = await _userProfileService.UpdateUserProfileImageAsync(dto);
+            if (!result.Success)
+                return BadRequest(result.Message);
 
-            var imagePath = await _profileService.SaveProfileImageAsync(dto);
-
-            // Check if user profile already exists
-            var existing = (await _profileRepo.FindAsync(p => p.UserId == userId)).FirstOrDefault(); 
-            if (existing != null)
-            {
-                existing.ProfileImage = imagePath;
-                _profileRepo.Update(existing);
-            }
-            else
-            {
-                await _profileRepo.AddAsync(new UserProfileEntity
-                {
-                    UserId = userId,
-                    ProfileImage = imagePath
-                });
-            }
-
-            return Ok(new { message = "Profile image updated", imagePath });
+            return Ok(new { message = result.Message, imagePath = result.ImagePath });
         }
 
         [HttpPost("otp-verify")]
+        //[Authorize]
         public async Task<IActionResult> OtpVerify([FromBody] VerifyOtpDto dto)
         {
-            if (dto == null || string.IsNullOrEmpty(dto.Email) || string.IsNullOrEmpty(dto.Otp))
+            if (dto == null || string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Otp))
             {
-                return BadRequest("Invalid OTP or email.");
+                return BadRequest(new { message = "Email and OTP are required." });
             }
 
-            var isValid = await _userService.VerifyOtpAsync(dto.Email,dto.Otp);
-            if (!isValid)
+            try
             {
-                return Unauthorized("Invalid OTP.");
-            }
+                var creatorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                Guid? creatorId = creatorIdClaim != null ? Guid.Parse(creatorIdClaim.Value) : null;
 
-            return Ok(new { message = "OTP verified successfully." });
+                var isValid = await _userService.VerifyOtpAsync(dto.Email, dto.Otp, creatorId);
+                if (!isValid)
+                {
+                    return Unauthorized(new { message = "Invalid or expired OTP." });
+                }
+
+                return Ok(new { message = "OTP verified successfully. Registration complete." });
+            }
+            catch (Exception ex)
+            {
+                // Optional: log ex.Message
+                return StatusCode(500, new { message = "Something went wrong during OTP verification." });
+            }
         }
+
+        [HttpPost("resend-otp")]
+        public async Task<IActionResult> ResendOtp([FromBody] ResendOtpDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Email))
+            {
+                return BadRequest(new { message = "Email is required." });
+            }
+
+            var result = await _userService.ResendOtpAsync(dto.Email);
+
+            if (!result)
+            {
+                return NotFound(new { message = "No registration found for this email or already verified." });
+            }
+
+            return Ok(new { message = "OTP resent successfully." });
+        }
+
+
     }
 }
  

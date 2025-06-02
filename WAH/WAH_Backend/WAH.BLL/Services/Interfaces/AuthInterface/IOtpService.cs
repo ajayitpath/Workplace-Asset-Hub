@@ -11,6 +11,5 @@ namespace WAH.BLL.Services.Interfaces.AuthInterface
         string GenerateAndCacheOtp(string email);
         bool ValidateOtp(string email, string otp);
 
-
     }
 }
