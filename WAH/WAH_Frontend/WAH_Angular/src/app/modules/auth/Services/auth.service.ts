@@ -37,7 +37,7 @@ export class AuthService {
     return this.http.post<{ message: string }>(`${this.baseUrl}${this.endpoint}/otp-verify`, data);
   }
   resendOtp(email: string): Observable<{ message: string }> {
-  return this.http.post<{ message: string }>(`${this.baseUrl}${this.endpoint}/otp-verify`, { email });
+  return this.http.post<{ message: string }>(`${this.baseUrl}${this.endpoint}/resend-otp`, { email });
 }
 
 

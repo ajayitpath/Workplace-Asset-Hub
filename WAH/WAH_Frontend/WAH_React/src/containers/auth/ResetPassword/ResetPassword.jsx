@@ -3,9 +3,35 @@ import React from 'react';
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+<<<<<<< HEAD:WAH/WAH_Frontend/WAH_React/src/containers/auth/ResetPassword/ResetPassword.jsx
 import resetPasswordSchema from './ResetPassword.schema.js';
+=======
+import resetPasswordSchema from '../../../schema/ResetPassword.schema.js';
+import { Link } from 'react-router-dom';
+import { resetPassword } from '../../../services/Auth/AuthService';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import URLS from '../../../constants/URLS';
+>>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26:WAH/WAH_Frontend/WAH_React/src/containers/auth/ResetPassword/index.jsx
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const token = location.state?.token;
+
+  const onSubmit = async (data) => {
+    try {
+      await resetPassword({
+        token,
+        newPassword: data.newPassword,
+        confirmPassword: data.confirmPassword
+      });
+      toast.success('Password reset successful');
+      navigate(URLS.LOGIN);
+    } catch (error) {
+      toast.error(error.response?.data || 'Failed to reset password');
+    }
+  };
   const {
     register,
     handleSubmit,
@@ -13,11 +39,6 @@ const ResetPassword = () => {
   } = useForm({
     resolver: yupResolver(resetPasswordSchema),
   });
-
-  const onSubmit = async (data) => {
-    console.log('Reset Password Data:', data);
-    // TODO: Call API to reset password
-  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-100 to-blue-200 p-4 gap-4">

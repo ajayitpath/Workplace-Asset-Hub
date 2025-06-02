@@ -1,0 +1,9 @@
+﻿using WAH.Common.DtoModels.AssetDtos;
+
+namespace WAH.BLL.Services.Interfaces.AssetInterfaces
+{
+    public interface IAssetService
+    {
+        Task<AssetDto> CreateAssetAsync(AssetDto assetDto);
+    }
+}

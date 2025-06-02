@@ -57,17 +57,17 @@ namespace WAH.BLL.Services.Implementations.AuthServices
 
             var otp = _otpService.GenerateAndCacheOtp(dto.Email);
             var subject = "Reset Your Password";
-            await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
+          //  await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
 
             return token;
         }
 
-        public async Task<bool> ResetPasswordAsync(ResetPasswordDto dto)
+        public async Task<bool> ResetPasswordAsync(ResetPasswordDto dto, string token, string email)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return false;
 
-            var principal = _jwtTokenService.GetPrincipalFromToken(dto.Token);
+            var principal = _jwtTokenService.GetPrincipalFromToken(token);
             if (principal == null) return false;
 
             var emailClaim = principal.FindFirst(ClaimTypes.Email);
@@ -77,7 +77,12 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             if (user == null) return false;
 
             user.Password = _passwordHasherService.HashPassword(dto.NewPassword);
+<<<<<<< HEAD
             _genericRepository.Update(user);
+=======
+            _userRepository.Update(user);
+           await _userRepository.SaveChangesAsync();
+>>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
 
             return true;
         }
@@ -117,7 +122,14 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 var otp = _otpService.GenerateAndCacheOtp(model.Email);
                 await EmailHelper.SendOtpAsync(model.Email, otp);
 
+<<<<<<< HEAD
                 var createdUser = await _genericRepository.AddAsync(newUser);
+=======
+                //var result = _otpService.ValidateOtp(model.Email,otp);
+                //if (result)
+                //{
+                var createdUser = await _userRepository.AddAsync(newUser);
+>>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
                 return createdUser != null;
             }
             catch (Exception ex)
@@ -132,8 +144,14 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             if (!isValidOtp)
                 return false;
 
+<<<<<<< HEAD
             var user = (await _genericRepository.FindAsync(d => d.Email == dto.Email)).FirstOrDefault();
+=======
+            var user = (await _userRepository.FindAsync(d => d.Email == email)).FirstOrDefault();
+>>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
             return user != null;
         }
+
+
     }
 }

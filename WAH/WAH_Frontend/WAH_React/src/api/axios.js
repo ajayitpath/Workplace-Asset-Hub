@@ -7,10 +7,17 @@ import { Navigate } from 'react-router-dom';
 
 
 const axiosInstance = axios.create({
+<<<<<<< HEAD
     baseURL : 'https://api.example.com', // Replace with your API base URL
     headers: {
         'Content-Type': 'application/json',
     },
+=======
+  baseURL: "https://localhost:7126/api", // Replace with your API base URL
+  headers: {
+    "Content-Type": "application/json",
+  },
+>>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
 });
 
 axiosInstance.interceptors.request.use(

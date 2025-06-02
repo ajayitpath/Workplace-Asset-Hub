@@ -4,24 +4,43 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import loginSchema from './login.schema';
 import { useNavigate } from 'react-router-dom';
 import URLS from '../../../constants/urls';
+<<<<<<< HEAD:WAH/WAH_Frontend/WAH_React/src/containers/auth/login/Login.jsx
 import { Button, TextField, Typography, Box, Paper } from '@mui/material';
 
 const Login = () => {
   const navigate = useNavigate();
 
+=======
+import { Button, TextField, Typography, Box, Paper, InputAdornment, IconButton } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { loginUser } from '../../../services/Auth/AuthService';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../../redux/slices/authSlice';
+import { toast } from 'react-toastify';
+
+const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+>>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26:WAH/WAH_Frontend/WAH_React/src/containers/auth/login/index.jsx
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isSubmitting }
   } = useForm({
     resolver: yupResolver(loginSchema)
   });
 
   const onSubmit = async (data) => {
-    console.log('Login form data:', data);
-    // await login(data);
-    // setToken(response.token);
-    // navigate(URLS.DASHBOARD);
+    try {
+      const response = await loginUser(data);
+      dispatch(loginSuccess({ token: response.token }));
+      toast.success('Login successful!');
+      navigate(URLS.DASHBOARD);
+    } catch (error) {
+      toast.error(error.response?.data || 'Login failed');
+    }
   };
 
   return (

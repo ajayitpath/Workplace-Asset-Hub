@@ -1,4 +1,5 @@
-﻿using WAH.DAL.EntityModels.AuthEntities;
+﻿using WAH.Common.Enums;
+using WAH.DAL.EntityModels.AuthEntities;
 
 namespace WAH.DAL.EntityModels.AssetEntities
 {
@@ -9,7 +10,7 @@ namespace WAH.DAL.EntityModels.AssetEntities
         public Guid UserId { get; set; }
 
         public int QuantityRequested { get; set; }
-        public string Status { get; set; } // Pending, Approved, Rejected
+        public RequestStatus Status { get; set; } 
         public DateTime RequestedAt { get; set; }
 
         // Navigation
