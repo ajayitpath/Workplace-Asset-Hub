@@ -3,18 +3,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore; // Ensure this using directive is present
 using Microsoft.IdentityModel.Tokens;
 using WAH.BLL.DbSeeder;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 using WAH.BLL.Interfaces;
 using WAH.BLL.Services;
 using WAH.BLL.Services.Implementations.AssetServices;
->>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
-=======
 using WAH.BLL.Interfaces;
 using WAH.BLL.Services;
 using WAH.BLL.Services.Implementations.AssetServices;
->>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
 using WAH.BLL.Services.Implementations.AuthServices;
 using WAH.BLL.Services.Interfaces;
 using WAH.BLL.Services.Interfaces.AssetInterfaces;
@@ -37,21 +31,11 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IOtpService, OtpService>();
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
 builder.Services.AddScoped<IAssetService, AssetService>();
 builder.Services.AddScoped<IAssetRequestService, AssetRequestService>();
-<<<<<<< HEAD
->>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
-=======
 builder.Services.AddScoped<IAssetService, AssetService>();
 builder.Services.AddScoped<IAssetRequestService, AssetRequestService>();
->>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
-=======
 builder.Services.AddScoped<IAssetCategoryService, AssetCategoryService>();
->>>>>>> be956539dad1298027f4584fd080631709eed677
 
 builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<DatabaseSeeder>();
@@ -125,18 +109,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 app.UseCors("AllowAngularApp");
-=======
 app.UseCors("AllowFrontendDev");
-
->>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
-=======
 app.UseCors("AllowFrontendDev");
-
->>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
 app.UseHttpsRedirection();
 app.UseRouting(); //AM Added
 

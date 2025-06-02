@@ -48,21 +48,10 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("reset-password")]
-<<<<<<< HEAD
-<<<<<<< HEAD
         public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto dto)
-=======
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, [FromQuery] string token,
-<<<<<<< HEAD
-    [FromQuery] string email)
->>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
-=======
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, [FromQuery] string token,
     [FromQuery] string email)
->>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
-=======
         [FromQuery] string email)
->>>>>>> be956539dad1298027f4584fd080631709eed677
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return BadRequest("Passwords do not match.");
