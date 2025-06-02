@@ -26,11 +26,6 @@ namespace WAH.DAL.Repositories.Implementations
             return await _dbSet.FindAsync(id);
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
         public async Task<T?> GetByGuidAsync(Guid id)
         {
             return await _dbSet.FindAsync(id);

@@ -8,8 +8,7 @@ namespace WAH.DAL.Repositories.Interfaces
         Task<T?> GetByIdAsync(Guid id);
         Task<T?> GetByIdAsync(int id);
         Task<T?> GetByGuidAsync(Guid id);
-        Task<T?> GetByIdAsync(int id);
-        Task<T?> GetByGuidAsync(Guid id);
+  
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
         Task<T> AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);

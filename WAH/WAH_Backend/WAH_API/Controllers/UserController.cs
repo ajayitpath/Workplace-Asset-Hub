@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using WAH.BLL.Services.Implementations.AuthServices;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.DtoModels.AuthDtos;
-using WAH.DAL.EntityModels.AuthEntities;
-using WAH.DAL.Repositories.Interfaces;
 
 namespace WAH_API.Controllers
 {
@@ -48,10 +45,8 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto dto)
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, [FromQuery] string token,
     [FromQuery] string email)
-        [FromQuery] string email)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return BadRequest("Passwords do not match.");
