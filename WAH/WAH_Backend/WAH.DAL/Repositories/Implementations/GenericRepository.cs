@@ -46,7 +46,7 @@ namespace WAH.DAL.Repositories.Implementations
         }
 
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
-        {
+            {
             return await _dbSet.Where(predicate).ToListAsync();
         }
 

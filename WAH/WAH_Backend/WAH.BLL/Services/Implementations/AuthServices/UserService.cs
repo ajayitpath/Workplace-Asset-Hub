@@ -73,15 +73,15 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             var subject = "Reset Your Password";
             await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
 
-            return token;
+            return token; 
         }
 
-        public async Task<bool> ResetPasswordAsync(ResetPasswordDto dto, string token, string email)
+        public async Task<bool> ResetPasswordAsync(ResetPasswordDto dto)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return false;
 
-            var principal = _jwtTokenService.GetPrincipalFromToken(token);
+            var principal = _jwtTokenService.GetPrincipalFromToken(dto.Token);
             if (principal == null) return false;
 
             var emailClaim = principal.FindFirst(ClaimTypes.Email);
