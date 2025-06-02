@@ -27,12 +27,18 @@
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.56.4",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "react-router-dom": "^7.6.0",
 =======
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.1",
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
+=======
+    "react-icons": "^5.5.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.6.1",
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
     "react-toastify": "^11.0.5",
     "styled-components": "^6.1.18",
     "yup": "^1.6.1"

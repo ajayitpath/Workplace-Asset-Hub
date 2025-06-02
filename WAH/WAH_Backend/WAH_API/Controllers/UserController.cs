@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.Common.DtoModels.AuthDtos;
-using WAH.DAL.EntityModels;
 using WAH.DAL.EntityModels.AuthEntities;
 using WAH.DAL.Repositories.Interfaces;
 
@@ -9,7 +8,6 @@ namespace WAH_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Consumes("multipart/form-data")]
     public class UserController : ControllerBase
     {
 
@@ -49,11 +47,16 @@ namespace WAH_API.Controllers
 
         [HttpPost("reset-password")]
 <<<<<<< HEAD
+<<<<<<< HEAD
         public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto dto)
 =======
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, [FromQuery] string token,
     [FromQuery] string email)
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
+=======
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, [FromQuery] string token,
+    [FromQuery] string email)
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return BadRequest("Passwords do not match.");
@@ -66,7 +69,6 @@ namespace WAH_API.Controllers
             return Ok(new { message = "Password has been reset successfully." });
         }
         [HttpPost("register")]
-        //[Consumes("multipart/form-data")]
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
             if (!ModelState.IsValid)
@@ -95,7 +97,7 @@ namespace WAH_API.Controllers
             var imagePath = await _profileService.SaveProfileImageAsync(dto);
 
             // Check if user profile already exists
-            var existing = (await _profileRepo.FindAsync(p => p.UserId == userId)).FirstOrDefault();
+            var existing = (await _profileRepo.FindAsync(p => p.UserId == userId)).FirstOrDefault(); 
             if (existing != null)
             {
                 existing.ProfileImage = imagePath;
@@ -114,14 +116,14 @@ namespace WAH_API.Controllers
         }
 
         [HttpPost("otp-verify")]
-        public async Task<IActionResult> OtpVerify([FromForm] VerifyOtpDto dto)
+        public async Task<IActionResult> OtpVerify([FromBody] VerifyOtpDto dto)
         {
             if (dto == null || string.IsNullOrEmpty(dto.Email) || string.IsNullOrEmpty(dto.Otp))
             {
                 return BadRequest("Invalid OTP or email.");
             }
 
-            var isValid = await _userService.VerifyOtpAsync(dto);
+            var isValid = await _userService.VerifyOtpAsync(dto.Email,dto.Otp);
             if (!isValid)
             {
                 return Unauthorized("Invalid OTP.");
@@ -131,3 +133,4 @@ namespace WAH_API.Controllers
         }
     }
 }
+ 

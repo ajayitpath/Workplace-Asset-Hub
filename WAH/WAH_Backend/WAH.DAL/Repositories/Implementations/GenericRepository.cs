@@ -21,13 +21,16 @@ namespace WAH.DAL.Repositories.Implementations
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<T?> GetByIdAsync(Guid id)
+        public async Task<T?> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
         public async Task<T?> GetByGuidAsync(Guid id)
         {
             return await _dbSet.FindAsync(id);
@@ -48,7 +51,10 @@ namespace WAH.DAL.Repositories.Implementations
         }
 
 
+<<<<<<< HEAD
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
+=======
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {
             return await _dbSet.Where(predicate).ToListAsync();
@@ -82,7 +88,10 @@ namespace WAH.DAL.Repositories.Implementations
             _dbSet.RemoveRange(entities);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
         public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
         {
             return await _dbSet.AnyAsync(predicate);
@@ -124,6 +133,9 @@ namespace WAH.DAL.Repositories.Implementations
         {
             return _dbSet.AsQueryable();
         }
+<<<<<<< HEAD
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
+=======
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
     }
 }

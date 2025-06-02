@@ -6,11 +6,16 @@ namespace WAH.DAL.Repositories.Interfaces
     {
         Task<IEnumerable<T>> GetAllAsync();
 <<<<<<< HEAD
+<<<<<<< HEAD
         Task<T?> GetByIdAsync(Guid id);
 =======
         Task<T?> GetByIdAsync(int id);
         Task<T?> GetByGuidAsync(Guid id);
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
+=======
+        Task<T?> GetByIdAsync(int id);
+        Task<T?> GetByGuidAsync(Guid id);
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
         Task<T> AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
@@ -18,7 +23,10 @@ namespace WAH.DAL.Repositories.Interfaces
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
         Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
         Task SaveChangesAsync();
 
@@ -32,6 +40,9 @@ namespace WAH.DAL.Repositories.Interfaces
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null);
 
         IQueryable<T> GetAllQueryable();
+<<<<<<< HEAD
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
+=======
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
     }
 }

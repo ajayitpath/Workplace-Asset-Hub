@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import loginSchema from './login.schema';
+import loginSchema from '../../../schema/login.schema';
 import { useNavigate } from 'react-router-dom';
 import URLS from '../../../constants/urls';
+<<<<<<< HEAD
 <<<<<<< HEAD:WAH/WAH_Frontend/WAH_React/src/containers/auth/login/Login.jsx
 import { Button, TextField, Typography, Box, Paper } from '@mui/material';
 
@@ -11,6 +12,8 @@ const Login = () => {
   const navigate = useNavigate();
 
 =======
+=======
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
 import { Button, TextField, Typography, Box, Paper, InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -23,7 +26,10 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+<<<<<<< HEAD
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26:WAH/WAH_Frontend/WAH_React/src/containers/auth/login/index.jsx
+=======
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
   const {
     register,
     handleSubmit,
@@ -47,15 +53,24 @@ const Login = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundColor: '#F4F4F6',
+        backgroundColor: (theme) => theme.palette.background.default,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         p: 2
       }}
     >
-      <Paper elevation={6} sx={{ p: 4, borderRadius: 4, width: '100%', maxWidth: 400 }}>
-        <Typography variant="h5" fontWeight="bold" textAlign="center" mb={3} color="#2F52FF">
+      <Paper 
+        elevation={1} 
+        sx={{ 
+          p: 4, 
+          borderRadius: 4, 
+          width: '100%', 
+          maxWidth: 400,
+          backgroundColor: (theme) => theme.palette.background.paper
+        }}
+      >
+        <Typography variant="h5" fontWeight="bold" textAlign="center" mb={3} color="rgb(0, 0, 0)">
           Login
         </Typography>
 
@@ -73,7 +88,7 @@ const Login = () => {
           <TextField
             label="Password"
             variant="outlined"
-            type="password"
+            type={showPassword? 'text' : 'password'}
             fullWidth
             margin="normal"
             {...register('password')}
@@ -88,10 +103,10 @@ const Login = () => {
             sx={{
               mt: 2,
               mb: 1,
-              backgroundColor: '#2F52FF',
+              backgroundColor: (theme) => theme.palette.primary.main,
               textTransform: 'none',
               '&:hover': {
-                backgroundColor: '#1C3AEF'
+                backgroundColor: (theme) => theme.palette.primary.dark,
               }
             }}
           >

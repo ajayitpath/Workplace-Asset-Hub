@@ -4,11 +4,17 @@ using Microsoft.EntityFrameworkCore; // Ensure this using directive is present
 using Microsoft.IdentityModel.Tokens;
 using WAH.BLL.DbSeeder;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 using WAH.BLL.Interfaces;
 using WAH.BLL.Services;
 using WAH.BLL.Services.Implementations.AssetServices;
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
+=======
+using WAH.BLL.Interfaces;
+using WAH.BLL.Services;
+using WAH.BLL.Services.Implementations.AssetServices;
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
 using WAH.BLL.Services.Implementations.AuthServices;
 using WAH.BLL.Services.Interfaces.AuthInterface;
 using WAH.DAL.Data;
@@ -22,21 +28,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAngularApp", policy =>
-    {
-        policy.WithOrigins("http://localhost:4200")  // Angular dev server
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
-});
-
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.PropertyNamingPolicy = null;
-});
 // Repositories
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
@@ -45,11 +36,16 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IOtpService, OtpService>();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 builder.Services.AddScoped<IAssetService, AssetService>();
 builder.Services.AddScoped<IAssetRequestService, AssetRequestService>();
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
+=======
+builder.Services.AddScoped<IAssetService, AssetService>();
+builder.Services.AddScoped<IAssetRequestService, AssetRequestService>();
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
 
 builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<DatabaseSeeder>();
@@ -100,7 +96,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontendDev",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173") // frontend origin
+            policy.WithOrigins("http://localhost:5173")
+                   .WithOrigins("http://localhost:4200") 
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials(); // If using cookies/auth headers
@@ -124,12 +121,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 app.UseCors("AllowAngularApp");
 =======
 app.UseCors("AllowFrontendDev");
 
 >>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26
+=======
+app.UseCors("AllowFrontendDev");
+
+>>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
 app.UseHttpsRedirection();
 app.UseRouting(); //AM Added
 
