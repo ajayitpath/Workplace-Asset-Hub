@@ -1,6 +1,5 @@
 ﻿using System.Security.Cryptography;
 using WAH.BLL.Services.Interfaces.AuthInterface;
-
 public class PasswordHasherService : IPasswordHasherService
 {
     private const int SaltSize = 16; 
@@ -14,7 +13,6 @@ public class PasswordHasherService : IPasswordHasherService
             SaltSize,
             Iterations,
             HashAlgorithmName.SHA256);
-
         var key = algorithm.GetBytes(KeySize);
         var salt = algorithm.Salt;
         return $"{Iterations}.{Convert.ToBase64String(salt)}.{Convert.ToBase64String(key)}";

@@ -9,16 +9,13 @@ namespace WAH_API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-
         private readonly IUserService _userService;
         private readonly IUserProfileService _userProfileService;
 
-        public UserController(IUserService userService, IUserProfileService userProfileService)
-            
+        public UserController(IUserService userService, IUserProfileService userProfileService)   
         {
             _userService = userService;
-            _userProfileService = userProfileService;
-           
+            _userProfileService = userProfileService; 
         }
 
         [HttpPost("login")]
@@ -26,9 +23,8 @@ namespace WAH_API.Controllers
         {
             var token = await _userService.LoginAsync(loginDto);
             if (token == null)
-                return Unauthorized("Invalid email or password");
-
-            return Ok(new { token }); 
+                return Unauthorized("Invalid email or password")
+                return Ok(new { token }); 
         }
 
 
@@ -36,25 +32,19 @@ namespace WAH_API.Controllers
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
         {
             var token = await _userService.ForgotPasswordAsync(dto);
-
-        
             if (token == null)
                 return NotFound("User not found.");
-
-            return Ok(new { message = "Password reset token generated.", token = token });
+                return Ok(new { message = "Password reset token generated.", token = token });
         }
 
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
-                return BadRequest("Passwords do not match.");
-
+                return BadRequest("Passwords do not match.")
             var result = await _userService.ResetPasswordAsync(dto);
-
             if (!result)
                 return BadRequest("Invalid or expired token.");
-
             return Ok(new { message = "Password has been reset successfully." });
         }
         //[Authorize(Roles = "Admin,Manager")]
@@ -65,7 +55,6 @@ namespace WAH_API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             var result = await _userService.RegisterAsync(model);
             if (result)
             {
@@ -73,48 +62,38 @@ namespace WAH_API.Controllers
             }
             return StatusCode(500, "Failed to register user");
         }
-
-
         [HttpPost("upload/{userId}")]
-      
         public async Task<IActionResult> Upload ([FromRoute] Guid userId, [FromForm] UserProfileDto dto)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
-
             dto.UserId = userId;
             var result = await _userProfileService.UpdateUserProfileImageAsync(dto);
             if (!result.Success)
-                return BadRequest(result.Message);
-
+                return BadRequest(result.Message)
             return Ok(new { message = result.Message, imagePath = result.ImagePath });
         }
 
         [HttpPost("otp-verify")]
-        //[Authorize]
         public async Task<IActionResult> OtpVerify([FromBody] VerifyOtpDto dto)
         {
             if (dto == null || string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Otp))
             {
                 return BadRequest(new { message = "Email and OTP are required." });
             }
-
             try
             {
                 var creatorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-                Guid? creatorId = creatorIdClaim != null ? Guid.Parse(creatorIdClaim.Value) : null;
-
+                Guid? creatorId = creatorIdClaim != null ? Guid.Parse(creatorIdClaim.Value) : null
                 var isValid = await _userService.VerifyOtpAsync(dto.Email, dto.Otp, creatorId);
                 if (!isValid)
                 {
                     return Unauthorized(new { message = "Invalid or expired OTP." });
                 }
-
                 return Ok(new { message = "OTP verified successfully. Registration complete." });
             }
             catch (Exception ex)
             {
-                // Optional: log ex.Message
                 return StatusCode(500, new { message = "Something went wrong during OTP verification." });
             }
         }
@@ -126,18 +105,13 @@ namespace WAH_API.Controllers
             {
                 return BadRequest(new { message = "Email is required." });
             }
-
             var result = await _userService.ResendOtpAsync(dto.Email);
-
             if (!result)
             {
                 return NotFound(new { message = "No registration found for this email or already verified." });
             }
-
             return Ok(new { message = "OTP resent successfully." });
         }
-
-
     }
 }
  

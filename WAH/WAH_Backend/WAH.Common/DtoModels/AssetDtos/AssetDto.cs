@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Org.BouncyCastle.Tls;
 
 namespace WAH.Common.DtoModels.AssetDtos
 {
