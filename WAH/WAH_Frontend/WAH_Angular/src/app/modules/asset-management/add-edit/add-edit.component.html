@@ -1,0 +1,20 @@
+<form [formGroup]="assetForm" (ngSubmit)="onSubmit()" class="p-fluid">
+  <div class="p-field" *ngFor="let field of ['assetName', 'assetCode', 'brand', 'model', 'specification', 'quantityTotal']">
+    <label [for]="field">{{ field | titlecase }}</label>
+    <input [id]="field" pInputText [type]="field === 'quantityTotal' ? 'number' : 'text'" [formControlName]="field" />
+  </div>
+  <div class="p-field">
+    <label for="categoryName">Category Name</label>
+    <p-dropdown
+      id="categoryName"
+      [options]="categoryList"
+      [formControlName]="'categoryId'"
+      placeholder="Select Category">
+    </p-dropdown>
+  </div>
+  
+  <div class="p-d-flex p-jc-between mt-3">
+    <button pButton type="submit" label="{{ isEditMode ? 'Update' : 'Create' }}" ></button>
+    <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="onCancel()"></button>
+  </div>
+</form>

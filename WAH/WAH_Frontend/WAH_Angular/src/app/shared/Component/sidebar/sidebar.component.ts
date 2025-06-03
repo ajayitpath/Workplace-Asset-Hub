@@ -21,7 +21,7 @@ constructor(private router: Router) {
     });
 }
   menuItems = [
-       { key: 'dashboard', label: 'Dashboard', icon: 'pi pi-th-large' },
+       { key: 'adnin-dashboard', label: 'Dashboard', icon: 'pi pi-th-large' },
     { key: 'asset-management', label: 'Asset Management', icon: 'pi pi-briefcase' },
     { key: 'inventory-management', label: 'Inventory Management', icon: 'pi pi-box' },
     { key: 'requests-approvals', label: 'Requests & Approvals', icon: 'pi pi-check-square' },
@@ -43,6 +43,6 @@ constructor(private router: Router) {
 
   setActive(key: string) {
     this.activeMenuItem = key;
-        this.router.navigate(['/admin-dashboard/', key]);
+        this.router.navigate(['/dashboard/', key]);
   }
 }

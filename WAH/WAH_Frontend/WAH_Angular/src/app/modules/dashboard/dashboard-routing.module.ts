@@ -13,13 +13,13 @@ const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent },
+      { path: 'adnin-dashboard', component: DashboardComponent },
       { path: 'asset-management', component: AssetManagementComponent },
       { path: 'inventory-management', component: InventorymanagementComponent },
       { path: 'requests-approvals', component: RequestapprovalComponent },
       { path: 'reports-analytics', component: ReportanalyticsComponent },
       { path: 'support-faq', component: SupportfaqComponent },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+      { path: '', redirectTo: 'admin-dashboard', pathMatch: 'full' }
     ]
   }
 ];
