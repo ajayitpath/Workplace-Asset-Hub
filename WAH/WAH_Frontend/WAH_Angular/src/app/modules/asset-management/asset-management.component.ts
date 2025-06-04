@@ -13,21 +13,21 @@ import { ConfirmationService } from 'primeng/api';
   styleUrl: './asset-management.component.css'
 })
 export class AssetManagementComponent {
-    assets: Asset[] = [];
+  assets: Asset[] = [];
   filteredData: Asset[] = [];
   searchText = '';
-showViewDialog: boolean = false;
-viewAsset: ApiAssetResponse | null = null;
+  showViewDialog: boolean = false;
+  viewAsset: ApiAssetResponse | null = null;
   showForm = false;
   isEditMode = false;
   selectedAssetId: string | null = null;
-selectedAsset: ApiAssetResponse | null = null; 
+  selectedAsset: ApiAssetResponse | null = null;
   assetForm!: FormGroup;
-  categoryList: { label: string; value: string }[] = [];
+  categoryList: { label: string | number; value: string }[] = [];
 
   columns = [
     { field: 'AssetName', header: 'Asset Name' },
-    { field: 'categoryName', header: 'Category' },
+    { field: 'CategoryName', header: 'Category' },
     { field: 'Brand', header: 'Brand' },
     { field: 'Model', header: 'Model' },
     { field: 'Specification', header: 'Specification' },
@@ -39,7 +39,7 @@ selectedAsset: ApiAssetResponse | null = null;
     private categoryService: CategoryService,
     private fb: FormBuilder,
     private confirmationService: ConfirmationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadAssets();
@@ -53,11 +53,23 @@ selectedAsset: ApiAssetResponse | null = null;
       categories: this.categoryService.getAllCategories()
     }).subscribe({
       next: ({ assets, categories }) => {
-        const categoryMap = new Map(categories.map(cat => [cat.label, cat.value]));
-        this.assets = assets.map(asset => ({
-          ...asset,
-          categoryName: categoryMap.get(asset.categoryId) || 'Unknown Category'
-        }));
+        console.log('Assets loaded:', assets);
+        console.log('Categories loaded:', categories);
+
+        const categoryMap = new Map<string, string>(
+          categories.map(cat => [String(cat.value), cat.label])
+        );
+
+        this.assets = assets.map(asset => {
+          const categoryId = String(asset.categoryId);
+          const categoryLabel = categoryMap.get(categoryId) || 'Unknown Category';
+
+          return {
+            ...asset,
+            categoryName: categoryLabel
+          };
+        });
+
         this.filteredData = this.assets;
       },
       error: err => console.error('Error fetching assets:', err)
@@ -98,11 +110,9 @@ selectedAsset: ApiAssetResponse | null = null;
   }
 
   onAddAsset(): void {
-    debugger
-    this.showForm = true;
     this.isEditMode = false;
+    this.selectedAsset = null;
     this.selectedAssetId = null;
-
     this.assetForm.reset({
       assetName: '',
       assetCode: '',
@@ -112,46 +122,50 @@ selectedAsset: ApiAssetResponse | null = null;
       specification: '',
       quantityTotal: 1
     });
+
+    this.showForm = true;
   }
 
-onEdit(id: string): void {
-  debugger
-  this.showForm = true;
-  this.isEditMode = true;
-  this.selectedAssetId = id;
-  this.assetService.getAssetById(id).subscribe({
-    next: (asset: ApiAssetResponse) => {
-      this.assetForm.patchValue({
-        assetName: asset.AssetName,
-        assetCode: asset.AssetCode,
-        categoryId: asset.CategoryId,
-        brand: asset.Brand,
-        model: asset.Model,
-        specification: asset.Specification,
-        quantityTotal: asset.QuantityTotal
-      });
-      this.selectedAsset = asset;
-      console.log('Editing asset:', this.assetForm.value);
-    },
-    error: err => console.error('Error fetching asset for edit:', err)
-  });
-}
+  onEdit(id: string): void {
+    this.isEditMode = true;
+    this.selectedAssetId = id;
+    this.selectedAsset = null;
+    this.showForm = false;
 
+    this.assetService.getAssetById(id).subscribe({
+      next: (asset: ApiAssetResponse) => {
+        this.selectedAsset = asset;
+        this.showForm = true;
+      },
+      error: err => console.error('Error fetching asset:', err)
+    });
+  }
 
-
-onDelete(id: string): void {
-  this.confirmationService.confirm({
-    message: 'Are you sure you want to delete this asset?',
-    header: 'Delete Confirmation',
-    icon: 'pi pi-exclamation-triangle',
-    accept: () => {
-      this.assetService.deleteAsset(id).subscribe({
-        next: () => this.loadAssets(),
-        error: err => console.error('Error deleting asset:', err)
-      });
+  shouldRenderForm(): boolean {
+    if (this.isEditMode) {
+      return this.selectedAsset !== null;
     }
-  });
-}
+    return this.showForm;
+  }
+
+  onDelete(id: string): void {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this asset?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.assetService.deleteAsset(id).subscribe({
+          next: () => this.loadAssets(),
+          error: err => console.error('Error deleting asset:', err)
+        });
+      }
+    });
+  }
+
+  getCategoryNameById(id: string): string {
+    const category = this.categoryList.find(cat => cat.value === id);
+    return category ? String(category.label) : 'Unknown';
+  }
 
   onSubmit(): void {
     if (this.assetForm.invalid) return;
@@ -162,6 +176,7 @@ onDelete(id: string): void {
       this.assetService.updateAsset(this.selectedAssetId, payload).subscribe({
         next: () => {
           this.showForm = false;
+          this.resetFormState();
           this.loadAssets();
         },
         error: err => console.error('Error updating asset:', err)
@@ -170,6 +185,7 @@ onDelete(id: string): void {
       this.assetService.createAsset(payload).subscribe({
         next: () => {
           this.showForm = false;
+          this.resetFormState();
           this.loadAssets();
         },
         error: err => console.error('Error creating asset:', err)
@@ -179,25 +195,42 @@ onDelete(id: string): void {
 
   onCancel(): void {
     this.showForm = false;
+    this.resetFormState();
   }
-onView(id: string): void {
-  this.assetService.getAssetById(id).subscribe({
-    next: asset => {
-      this.viewAsset = asset;
-      this.showViewDialog = true;
-      console.log('Viewing asset:', asset);
-    },
-    error: err => console.error('Error fetching asset for view:', err)
-  });
-}
+
+  private resetFormState(): void {
+    this.assetForm.reset({
+      assetName: '',
+      assetCode: '',
+      categoryId: '',
+      brand: '',
+      model: '',
+      specification: '',
+      quantityTotal: 1
+    });
+    this.selectedAssetId = null;
+    this.selectedAsset = null;
+    this.isEditMode = false;
+  }
+
+  onView(id: string): void {
+    this.assetService.getAssetById(id).subscribe({
+      next: asset => {
+        this.viewAsset = asset;
+        this.showViewDialog = true;
+        console.log('Viewing asset:', asset);
+      },
+      error: err => console.error('Error fetching asset for view:', err)
+    });
+  }
 
   onFormClose(reload: boolean = false): void {
     this.showForm = false;
-    this.selectedAsset = null;
+    this.resetFormState();
     if (reload) this.loadAssets();
   }
+
   get globalFilterFields(): string[] {
     return this.columns.map(c => c.field);
   }
-
 }

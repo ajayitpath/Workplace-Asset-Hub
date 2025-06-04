@@ -13,6 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { TextareaModule } from 'primeng/textarea';
 @NgModule({
   declarations: [DashboardComponent, AssetManagementComponent, InventorymanagementComponent, AddEditComponent],
   imports: [
@@ -23,6 +24,7 @@ import { ConfirmationService } from 'primeng/api';
     SharedModule,
     InputTextModule,
     ButtonModule,
+    TextareaModule,
     DialogModule,
     DropdownModule,
     ConfirmDialogModule

@@ -38,7 +38,7 @@ export class InventorymanagementComponent {
     
   }
 
-  onEdit(id:string) {
+  onEdit(data:string) {
     
   }
 

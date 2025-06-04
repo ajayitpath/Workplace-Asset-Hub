@@ -32,6 +32,12 @@ form.p-fluid {
   color: var(--text-color);
 }
 
+.p-error {
+  color: var(--error-color, #dc3545); 
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
 /* Input focus effect */
 .p-field input:focus,
 .p-dropdown.p-focus {
