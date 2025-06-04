@@ -12,6 +12,11 @@ import { SidebarComponent } from '../Component/sidebar/sidebar.component';
 import { MainLayoutComponent } from '../Layout/main-layout/main-layout.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
+import { InputNumberModule } from 'primeng/inputnumber';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+
 
 
 @NgModule({
@@ -22,6 +27,11 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   CardModule,
   ButtonModule,
   InputTextModule, 
+  InputTextModule,
+  InputNumberModule,
+  MessagesModule,
+  MessageModule,
+  ToastModule ,
   RouterOutlet,
   DropdownModule,
   FormsModule, 

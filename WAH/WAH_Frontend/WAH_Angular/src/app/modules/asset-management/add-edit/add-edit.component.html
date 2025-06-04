@@ -1,0 +1,92 @@
+<form *ngIf="assetForm" [formGroup]="assetForm" (ngSubmit)="onSubmit()" class="p-fluid">
+
+  <!-- Asset Name -->
+  <div class="p-field">
+    <label for="assetName">Asset Name *</label>
+    <input id="assetName" pInputText formControlName="assetName"
+      [ngClass]="{ 'ng-invalid': assetForm.get('assetName')?.invalid && assetForm.get('assetName')?.touched }" />
+    <ng-container *ngIf="assetForm.get('assetName')?.touched && assetForm.get('assetName')?.invalid">
+      <small class="p-error" *ngIf="assetForm.get('assetName')?.errors?.['required']">Asset Name is required</small>
+      <small class="p-error" *ngIf="assetForm.get('assetName')?.errors?.['minlength']">Minimum 2 characters required</small>
+      <small class="p-error" *ngIf="assetForm.get('assetName')?.errors?.['maxlength']">Maximum 50 characters allowed</small>
+    </ng-container>
+  </div>
+
+  <!-- Asset Code -->
+  <div class="p-field">
+    <label for="assetCode">Asset Code *</label>
+    <input id="assetCode" pInputText formControlName="assetCode"
+      [ngClass]="{ 'ng-invalid': assetForm.get('assetCode')?.invalid && assetForm.get('assetCode')?.touched }" />
+    <ng-container *ngIf="assetForm.get('assetCode')?.touched && assetForm.get('assetCode')?.invalid">
+      <small class="p-error" *ngIf="assetForm.get('assetCode')?.errors?.['required']">Asset Code is required</small>
+      <small class="p-error" *ngIf="assetForm.get('assetCode')?.errors?.['minlength']">Minimum 2 characters required</small>
+      <small class="p-error" *ngIf="assetForm.get('assetCode')?.errors?.['maxlength']">Maximum 15 characters allowed</small>
+    </ng-container>
+  </div>
+
+  <!-- Category -->
+  <div class="p-field">
+    <label for="categoryId">Category *</label>
+    <p-dropdown id="categoryId" [options]="categoryList" placeholder="Select Category" formControlName="categoryId"
+      [ngClass]="{ 'ng-invalid': assetForm.get('categoryId')?.invalid && assetForm.get('categoryId')?.touched }">
+    </p-dropdown>
+    <small class="p-error" *ngIf="assetForm.get('categoryId')?.touched && assetForm.get('categoryId')?.invalid">
+      Category is required
+    </small>
+  </div>
+
+  <!-- Brand -->
+  <div class="p-field">
+    <label for="brand">Brand *</label>
+    <input id="brand" pInputText formControlName="brand"
+      [ngClass]="{ 'ng-invalid': assetForm.get('brand')?.invalid && assetForm.get('brand')?.touched }" />
+    <ng-container *ngIf="assetForm.get('brand')?.touched && assetForm.get('brand')?.invalid">
+      <small class="p-error" *ngIf="assetForm.get('brand')?.errors?.['required']">Brand is required</small>
+      <small class="p-error" *ngIf="assetForm.get('brand')?.errors?.['minlength']">Minimum 2 characters required</small>
+      <small class="p-error" *ngIf="assetForm.get('brand')?.errors?.['maxlength']">Maximum 50 characters allowed</small>
+    </ng-container>
+  </div>
+
+  <!-- Model -->
+  <div class="p-field">
+    <label for="model">Model *</label>
+    <input id="model" pInputText formControlName="model"
+      [ngClass]="{ 'ng-invalid': assetForm.get('model')?.invalid && assetForm.get('model')?.touched }" />
+    <ng-container *ngIf="assetForm.get('model')?.touched && assetForm.get('model')?.invalid">
+      <small class="p-error" *ngIf="assetForm.get('model')?.errors?.['required']">Model is required</small>
+      <small class="p-error" *ngIf="assetForm.get('model')?.errors?.['minlength']">Minimum 2 characters required</small>
+      <small class="p-error" *ngIf="assetForm.get('model')?.errors?.['maxlength']">Maximum 50 characters allowed</small>
+    </ng-container>
+  </div>
+
+  <!-- Specification -->
+  <div class="p-field">
+    <label for="specification">Specification *</label>
+    <textarea id="specification" pInputTextarea formControlName="specification" rows="3"
+      [ngClass]="{ 'ng-invalid': assetForm.get('specification')?.invalid && assetForm.get('specification')?.touched }">
+    </textarea>
+    <ng-container *ngIf="assetForm.get('specification')?.touched && assetForm.get('specification')?.invalid">
+      <small class="p-error" *ngIf="assetForm.get('specification')?.errors?.['required']">Specification is required</small>
+      <small class="p-error" *ngIf="assetForm.get('specification')?.errors?.['minlength']">Minimum 2 characters required</small>
+      <small class="p-error" *ngIf="assetForm.get('specification')?.errors?.['maxlength']">Maximum 100 characters allowed</small>
+    </ng-container>
+  </div>
+
+  <!-- Quantity Total -->
+  <div class="p-field">
+    <label for="quantityTotal">Total Quantity *</label>
+    <input id="quantityTotal" pInputText type="number" min="1" formControlName="quantityTotal"
+      [ngClass]="{ 'ng-invalid': assetForm.get('quantityTotal')?.invalid && assetForm.get('quantityTotal')?.touched }" />
+    <ng-container *ngIf="assetForm.get('quantityTotal')?.touched && assetForm.get('quantityTotal')?.invalid">
+      <small class="p-error" *ngIf="assetForm.get('quantityTotal')?.errors?.['required']">Total Quantity is required</small>
+      <small class="p-error" *ngIf="assetForm.get('quantityTotal')?.errors?.['min']">Quantity must be at least 1</small>
+    </ng-container>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="p-d-flex p-jc-between mt-3">
+    <button pButton type="submit" [label]="isEditMode ? 'Update' : 'Create'" class="p-button-primary"
+      [disabled]="assetForm.invalid"></button>
+    <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="onCancel()"></button>
+  </div>
+</form>
