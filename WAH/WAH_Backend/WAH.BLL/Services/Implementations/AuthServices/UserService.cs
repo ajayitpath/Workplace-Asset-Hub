@@ -17,7 +17,6 @@ namespace WAH.BLL.Services.Implementations.AuthServices
         private readonly IConfiguration _configuration;
         private readonly IOtpService _otpService;
         private readonly IGenericRepository<TemporaryUserEntity> _tempUserRepository;
-
         public UserService(
             IPasswordHasherService passwordHasherService,
             IJwtTokenService jwtTokenService,
@@ -34,27 +33,19 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             _otpService = otpService;
             _roleRepository = roleRepository;
             _tempUserRepository = temporaryUserRepository;
-
         }
-
         public async Task<string?> LoginAsync(LoginDto loginDto)
         {
             var user = await _userRepository.GetWithIncludeAsync(
                 u => u.Email == loginDto.Email,
                 u => u.Role // Include the Role navigation property
             );
-
             if (user == null) return null;
-
             var isPasswordValid = _passwordHasherService.VerifyPassword(user.Password, loginDto.Password);
             if (!isPasswordValid) return null;
-
             var token = _jwtTokenService.GenerateToken(user);
             return token;
         }
-
-
-
         public async Task<string?> ForgotPasswordAsync(ForgotPasswordDto dto)
         {
             var user = (await _userRepository.FindAsync(u => u.Email == dto.Email)).FirstOrDefault();
@@ -65,7 +56,6 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             var otp = _otpService.GenerateAndCacheOtp(dto.Email);
             var subject = "Reset Your Password";
             await EmailHelper.SendUserEmailAsync(dto.Email, subject, resetLink);
-
             return token; 
         }
 
@@ -73,23 +63,17 @@ namespace WAH.BLL.Services.Implementations.AuthServices
         {
             if (dto.NewPassword != dto.ConfirmPassword)
                 return false;
-
             var principal = _jwtTokenService.GetPrincipalFromToken(dto.Token);
             if (principal == null) return false;
-
             var emailClaim = principal.FindFirst(ClaimTypes.Email);
             if (emailClaim == null) return false;
-
             var user = (await _userRepository.FindAsync(u => u.Email == emailClaim.Value)).FirstOrDefault();
             if (user == null) return false;
-
             user.Password = _passwordHasherService.HashPassword(dto.NewPassword);
             _userRepository.Update(user);
            await _userRepository.SaveChangesAsync();
-
             return true;
         }
-
         public async Task<bool> RegisterAsync(RegisterDto model)
         {
             try
@@ -97,9 +81,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 var exists = (await _userRepository.FindAsync(x => x.Email == model.Email)).Any();
                 if (exists || model.Password != model.ConfirmPassword)
                     return false;
-
                 var hashedPassword = _passwordHasherService.HashPassword(model.Password);
-
                 RoleEntity? role;
                 if (model.RoleId == 0 || model.RoleId == null)
                 {
@@ -109,13 +91,10 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 {
                     role = await _roleRepository.GetByIdAsync(model.RoleId);
                 }
-
                 if (role == null)
                     throw new Exception("Role not found.");
-
                 var otp = _otpService.GenerateAndCacheOtp(model.Email);
                 await EmailHelper.SendOtpAsync(model.Email, otp);
-
                 var tempUser = new TemporaryUserEntity
                 {
                     FirstName = model.FirstName,
@@ -131,7 +110,6 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                     OTP = otp,
                     ExpiryTime = DateTime.UtcNow.AddMinutes(15)
                 };
-
                 var created = await _tempUserRepository.AddAsync(tempUser); 
                 return created != null;
             }
@@ -140,13 +118,10 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 throw new Exception("An error occurred during registration.", ex);
             }
         }
-
-
         public async Task<bool> VerifyOtpAsync(string email, string inputOtp, Guid? creatorId = null)
         {
             try {
                 var tempUser = (await _tempUserRepository.FindAsync(u => u.Email == email)).FirstOrDefault();
-
                 if (tempUser == null || tempUser.OTP != inputOtp || tempUser.ExpiryTime < DateTime.UtcNow)
                     return false;
                 RoleEntity? role;
@@ -199,10 +174,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
             _tempUserRepository.Update(tempUser);
             await _tempUserRepository.SaveChangesAsync();
             await EmailHelper.SendOtpAsync(email, newOtp);
-
                 return true;
         }
-
-
     }
 }

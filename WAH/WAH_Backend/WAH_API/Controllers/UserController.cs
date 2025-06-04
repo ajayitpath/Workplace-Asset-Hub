@@ -11,13 +11,11 @@ namespace WAH_API.Controllers
     {
         private readonly IUserService _userService;
         private readonly IUserProfileService _userProfileService;
-
         public UserController(IUserService userService, IUserProfileService userProfileService)   
         {
             _userService = userService;
             _userProfileService = userProfileService; 
         }
-
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
@@ -26,8 +24,6 @@ namespace WAH_API.Controllers
                 return Unauthorized("Invalid email or password");
                 return Ok(new { token }); 
         }
-
-
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
         {
@@ -36,7 +32,6 @@ namespace WAH_API.Controllers
                 return NotFound("User not found.");
                 return Ok(new { message = "Password reset token generated.", token = token });
         }
-
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
         {
@@ -73,7 +68,6 @@ namespace WAH_API.Controllers
                 return BadRequest(result.Message);
             return Ok(new { message = result.Message, imagePath = result.ImagePath });
         }
-
         [HttpPost("otp-verify")]
         public async Task<IActionResult> OtpVerify([FromBody] VerifyOtpDto dto)
         {
@@ -97,7 +91,6 @@ namespace WAH_API.Controllers
                 return StatusCode(500, new { message = "Something went wrong during OTP verification." });
             }
         }
-
         [HttpPost("resend-otp")]
         public async Task<IActionResult> ResendOtp([FromBody] ResendOtpDto dto)
         {

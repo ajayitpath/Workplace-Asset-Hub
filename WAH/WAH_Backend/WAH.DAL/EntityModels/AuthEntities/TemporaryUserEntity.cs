@@ -19,5 +19,4 @@ namespace WAH.DAL.EntityModels.AuthEntities
         public DateTime ExpiryTime { get; set; }
         public string? DeskNo { get; set; }
     }
-
 }

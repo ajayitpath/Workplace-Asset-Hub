@@ -7,12 +7,10 @@ namespace WAH.BLL.Services.Implementations.AuthServices
     {
         private readonly IMemoryCache _cache;
         private readonly TimeSpan _otpExpiry = TimeSpan.FromMinutes(5);
-
         public OtpService(IMemoryCache cache)
         {
             _cache = cache;
         }
-
         public string GenerateAndCacheOtp(string email)
         {
             var otp = new Random().Next(100000, 999999).ToString();
