@@ -42,7 +42,8 @@ export class ForgotpasswordComponent {
         this.isSubmitting = false;
         this.successMessage = response.message || 'Reset instructions sent to your email.';
         alert(this.successMessage);
-        this.router.navigate(['/auth/reset-password']); // Adjust path as needed
+        const token = response.token;
+        const email = this.forgotPasswordForm.value.email;
       },
       error: (err) => {
         this.isSubmitting = false;

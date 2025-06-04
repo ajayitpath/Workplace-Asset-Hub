@@ -15,7 +15,7 @@ export class ResetpasswordComponent {
   isSubmitting = false;
   errorMessage: string = '';
   token: string = ''; // assuming you receive a reset token in the query
-
+  email: string = '';
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -25,11 +25,14 @@ export class ResetpasswordComponent {
     }, {
       validators: this.passwordMatchValidator
     });
-
-  //  Get token from query params
     this.route.queryParams.subscribe(params => {
       this.token = params['token'] || '';
+      this.email = params['email'] || '';
     });
+    if (!this.token || !this.email) {
+      this.errorMessage = 'Reset token or email is missing.';
+      return;
+    }
   }
 
   passwordMatchValidator(group: FormGroup) {
@@ -39,19 +42,21 @@ export class ResetpasswordComponent {
   }
 
   onSubmit(): void {
-    if (this.resetPasswordForm.invalid || !this.token) {
+    if (this.resetPasswordForm.invalid) {
+
       this.resetPasswordForm.markAllAsTouched();
-      if (!this.token) {
-        this.errorMessage = 'Reset token is missing or invalid.';
-      }
       return;
     }
 
+    if (!this.token || !this.email) {
+      this.errorMessage = 'Reset token or email is missing.';
+      return;
+    }
     this.isSubmitting = true;
     this.errorMessage = '';
 
     const dto: ResetPasswordDto = {
-      email: this.resetPasswordForm.value.email,
+      email: this.email,
       token: this.token,
       newPassword: this.resetPasswordForm.value.newPassword,
       confirmPassword: this.resetPasswordForm.value.confirmPassword
@@ -59,11 +64,13 @@ export class ResetpasswordComponent {
 
     this.authService.resetPassword(dto).subscribe({
       next: (res) => {
+        console.log(res);
         this.isSubmitting = false;
         alert(res.message || 'Password reset successful. Please login.');
         this.router.navigate(['/auth/login']);
       },
       error: (err) => {
+        console.error(err);
         this.isSubmitting = false;
         this.errorMessage = err.error?.message || 'Something went wrong. Please try again.';
       }

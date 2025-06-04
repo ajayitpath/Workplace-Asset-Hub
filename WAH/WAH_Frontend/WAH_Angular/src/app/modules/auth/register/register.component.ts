@@ -67,30 +67,22 @@ export class RegisterComponent {
   }
   allowOnlyNumbers(event: KeyboardEvent): void {
     const input = event.target as HTMLInputElement;
-
     // Allow only 10 digits
     if (input.value.length >= 10) {
       event.preventDefault();
       return;
     }
-
     const charCode = event.charCode;
-    // Block anything that's not a number (0–9)
     if (charCode < 48 || charCode > 57) {
       event.preventDefault();
     }
   }
 
-
   onNavigateAway(): void {
-    debugger
     this.formDataService.setFormData(this.registerForm.value);
     this.router.navigate(['/auth/emailverify']);
   }
   onSubmit(): void {
-    console.log('Form submitted:', this.registerForm.value);
-    // this.registerForm.email = localStorage.getItem('email') || '';
-
     this.submitted = true;
     this.errorMessage = '';
     this.successMessage = '';
@@ -98,19 +90,11 @@ export class RegisterComponent {
 
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
-      // if (!this.profileImage) {
-      //   this.imageRequired = true;
-      // }
       return;
     }
-    // if (this.profileImage) {
-    //   this.imageRequired = true;
-    //   return;
-    // }
     this.isSubmitting = true;
 
     const formValue = this.registerForm.value;
-    // Prepare data to send (exclude profileImage)
     const registerData: any = {
       firstName: formValue.firstName,
       lastName: formValue.lastName,
@@ -119,26 +103,26 @@ export class RegisterComponent {
       confirmPassword: formValue.confirmPassword,
       phoneNumber: formValue.phoneNumber,
       gender: formValue.gender.value,
-      dob: this.formatDateOnly(formValue.dob), // backend expects DateOnly (adjust if needed)
+      dob: this.formatDateOnly(formValue.dob),
       deskNo: formValue.deskNo,
       // roleId: formValue.roleId,
     };
 
-    // Register the user first
     this.authService.register(registerData).subscribe({
       next: (res) => {
         const userId = res.userId;
-        localStorage.setItem('email', formValue.email);
         if (this.profileImage && userId) {
-          // Upload image with real userId
           this.authService.uploadProfileImage(userId, this.profileImage).subscribe({
             next: (uploadRes) => {
+              localStorage.setItem('email', formValue.email);
               this.successMessage = 'Registration successful!';
               this.isSubmitting = false;
               this.registerForm.reset();
               this.profileImage = null;
               this.submitted = false;
-              this.router.navigate(['/auth/emailverify']);
+              this.router.navigate(['/auth/emailverify'], {
+                queryParams: { email: formValue.email }
+              });
             },
             error: () => {
               this.errorMessage = 'Failed to upload profile image.';
@@ -146,13 +130,14 @@ export class RegisterComponent {
             }
           });
         } else {
-          // No profile image, just finish registration
           this.successMessage = 'Registration successful!';
           this.isSubmitting = false;
           this.registerForm.reset();
           this.profileImage = null;
           this.submitted = false;
-          this.router.navigate(['/auth/emailverify']);
+          this.router.navigate(['/auth/emailverify'], {
+            queryParams: { email: formValue.email }
+          });
         }
       },
       error: () => {
@@ -171,9 +156,7 @@ export function dobValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const dob = new Date(control.value);
     const today = new Date();
-
     if (!control.value || isNaN(dob.getTime())) return null;
-
     if (dob > today) {
       return { futureDate: true };
     }
@@ -183,11 +166,9 @@ export function dobValidator(): ValidatorFn {
     if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
       age--;
     }
-
     if (age < 18) {
       return { underage: true };
     }
-
     return null;
   };
 }

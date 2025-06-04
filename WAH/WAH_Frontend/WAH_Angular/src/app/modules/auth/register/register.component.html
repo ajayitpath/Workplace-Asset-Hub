@@ -1,9 +1,7 @@
 <div class="register-container">
   <div class="register-card p-4 shadow w-100" style="max-width: 600px; border-radius: 0;">
     <h2 class="text-center mb-4 text-dark">Sign Up</h2>
-
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="firstName" class="form-label">First Name</label>
@@ -16,7 +14,6 @@
             <div *ngIf="registerForm.get('firstName')?.errors?.['maxlength']">Cannot exceed 50 characters.</div>
           </div>
         </div>
-
         <div class="col-md-6 mb-3">
           <label for="lastName" class="form-label">Last Name</label>
           <input pInputText id="lastName" formControlName="lastName" placeholder="Enter Last Name" class="form-control"
@@ -28,7 +25,6 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="email" class="form-label">Email</label>
@@ -42,10 +38,8 @@
             <div *ngIf="registerForm.get('email')?.errors?.['email']">Must be a valid email and in this
               'username&#64;domain.com' format..</div>
             <div *ngIf="registerForm.get('email')?.errors?.['maxlength']">Cannot exceed 100 characters.</div>
-
           </div>
         </div>
-
         <div class="col-md-6 mb-3">
           <label for="phoneNumber" class="form-label">Phone Number</label>
           <input pInputText id="phoneNumber" formControlName="phoneNumber" placeholder="Enter Phone Number"
@@ -57,7 +51,6 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="gender" class="form-label">Gender</label>
@@ -70,7 +63,6 @@
             Gender is required.
           </div>
         </div>
-
         <div class="col-md-6 mb-3">
           <label for="dob" class="form-label">Date of Birth</label>
           <p-datepicker id="dob" formControlName="dob" placeholder="Select DOB" showIcon="true" inputId="dobInput"
@@ -90,9 +82,7 @@
             </div>
           </div>
         </div>
-
       </div>
-
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="deskNo" class="form-label">Desk No.</label>
@@ -104,7 +94,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-md-6 mb-3">
           <label for="password" class="form-label">Password</label>
           <p-password id="password" formControlName="password" toggleMask="true" [feedback]="false"
@@ -120,7 +109,6 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="confirmPassword" class="form-label">Confirm Password</label>
@@ -140,10 +128,8 @@
             </div>
           </div>
         </div>
-      
-
-      <!-- Role ID (If applicable) -->
-      <!-- <div class="col-md-6 mb-3">
+        <!-- Role ID (If applicable) -->
+        <!-- <div class="col-md-6 mb-3">
         <label for="roleId" class="form-label">Role</label>
         <p-dropdown id="roleId" formControlName="roleId" [options]="roleOptions" placeholder="Select Role"
           optionLabel="label" class="w-100"
@@ -154,28 +140,21 @@
           Role is required.
         </div>
       </div> -->
+      </div>
+
+      <div class="col-md-6 mb-3 d-flex flex-column">
+        <label class="form-label">Upload Profile Image</label>
+        <p-fileUpload mode="basic" name="profileImage" accept="image/*" auto="true" (onSelect)="onImageUpload($event)"
+          chooseLabel="Upload Image" class="w-100"></p-fileUpload>
+        <div class="text-danger mt-1" *ngIf="imageRequired && !profileImage">
+          Profile image is required.
+        </div>
+      </div>
+      <button pButton type="submit" label="{{ isSubmitting ? 'Signing Up...' : 'Sign Up' }}"
+        [disabled]="registerForm.invalid || isSubmitting" class="btn btn-primary w-100 mt-2 text-align-center">
+      </button>
+      <div class="form-footer mt-4 text-center small">
+        <p>Already have an account? <a routerLink="/auth/login" class="text-primary">Login</a></p>
+      </div>
+    </form>
   </div>
-
-
-  <div class="col-md-6 mb-3 d-flex flex-column">
-    <label class="form-label">Upload Profile Image</label>
-    <p-fileUpload mode="basic" name="profileImage" accept="image/*" auto="true" (onSelect)="onImageUpload($event)"
-      chooseLabel="Upload Image" class="w-100"></p-fileUpload>
-    <div class="text-danger mt-1" *ngIf="imageRequired && !profileImage">
-      Profile image is required.
-    </div>
-  </div>
-
-
-
-  <button pButton type="submit" label="{{ isSubmitting ? 'Signing Up...' : 'Sign Up' }}"
-    [disabled]="registerForm.invalid || isSubmitting || !profileImage"
-    class="btn btn-primary w-100 mt-2 text-align-center">
-  </button>
-
-  <div class="form-footer mt-4 text-center small">
-    <p>Already have an account? <a routerLink="/auth/login" class="text-primary">Login</a></p>
-  </div>
-
-  </form>
-</div>
