@@ -129,52 +129,53 @@
             [ngClass]="{'ng-invalid ng-dirty': (registerForm.get('confirmPassword')?.invalid || registerForm.hasError('passwordMismatch')) && registerForm.get('confirmPassword')?.touched}">
           </p-password>
           <div class="text-danger mt-1" *ngIf="registerForm.get('confirmPassword')?.touched">
-            div *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid"
-            class="text-danger">
-            <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm password is required.</div>
-            <div *ngIf="registerForm.get('confirmPassword')?.errors?.['pattern']">Must match password requirements.
+            <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">
+              Confirm password is required.
+            </div>
+            <div *ngIf="registerForm.get('confirmPassword')?.errors?.['pattern']">
+              Must match password requirements.
+            </div>
+            <div *ngIf="registerForm.errors?.['mismatch']">
+              Passwords do not match.
             </div>
           </div>
-          <div *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched"
-            class="text-danger">
-            Passwords do not match.
-          </div>
         </div>
+      
 
-        <!-- Role ID (If applicable) -->
-        <div class="col-md-6 mb-3">
-          <label for="roleId" class="form-label">Role</label>
-          <p-dropdown id="roleId" formControlName="roleId" [options]="roleOptions" placeholder="Select Role"
-            optionLabel="label" class="w-100"
-            [ngClass]="{'ng-invalid ng-dirty': registerForm.get('roleId')?.invalid && registerForm.get('roleId')?.touched}">
-          </p-dropdown>
-          <div class="text-danger mt-1"
-            *ngIf="registerForm.get('roleId')?.touched && registerForm.get('roleId')?.invalid">
-            Role is required.
-          </div>
+      <!-- Role ID (If applicable) -->
+      <!-- <div class="col-md-6 mb-3">
+        <label for="roleId" class="form-label">Role</label>
+        <p-dropdown id="roleId" formControlName="roleId" [options]="roleOptions" placeholder="Select Role"
+          optionLabel="label" class="w-100"
+          [ngClass]="{'ng-invalid ng-dirty': registerForm.get('roleId')?.invalid && registerForm.get('roleId')?.touched}">
+        </p-dropdown>
+        <div class="text-danger mt-1"
+          *ngIf="registerForm.get('roleId')?.touched && registerForm.get('roleId')?.invalid">
+          Role is required.
         </div>
-      </div>
-
-
-      <div class="col-md-6 mb-3 d-flex flex-column">
-        <label class="form-label">Upload Profile Image</label>
-        <p-fileUpload mode="basic" name="profileImage" accept="image/*" auto="true" (onSelect)="onImageUpload($event)"
-          chooseLabel="Upload Image" class="w-100"></p-fileUpload>
-        <div class="text-danger mt-1" *ngIf="imageRequired && !profileImage">
-          Profile image is required.
-        </div>
-      </div>
-
-
-
-      <button pButton type="submit" label="{{ isSubmitting ? 'Signing Up...' : 'Sign Up' }}"
-        [disabled]="registerForm.invalid || isSubmitting || !profileImage"
-        class="btn btn-primary w-100 mt-2 text-align-center">
-      </button>
-
-      <div class="form-footer mt-4 text-center small">
-        <p>Already have an account? <a routerLink="/auth/login" class="text-primary">Login</a></p>
-      </div>
-
-    </form>
+      </div> -->
   </div>
+
+
+  <div class="col-md-6 mb-3 d-flex flex-column">
+    <label class="form-label">Upload Profile Image</label>
+    <p-fileUpload mode="basic" name="profileImage" accept="image/*" auto="true" (onSelect)="onImageUpload($event)"
+      chooseLabel="Upload Image" class="w-100"></p-fileUpload>
+    <div class="text-danger mt-1" *ngIf="imageRequired && !profileImage">
+      Profile image is required.
+    </div>
+  </div>
+
+
+
+  <button pButton type="submit" label="{{ isSubmitting ? 'Signing Up...' : 'Sign Up' }}"
+    [disabled]="registerForm.invalid || isSubmitting || !profileImage"
+    class="btn btn-primary w-100 mt-2 text-align-center">
+  </button>
+
+  <div class="form-footer mt-4 text-center small">
+    <p>Already have an account? <a routerLink="/auth/login" class="text-primary">Login</a></p>
+  </div>
+
+  </form>
+</div>

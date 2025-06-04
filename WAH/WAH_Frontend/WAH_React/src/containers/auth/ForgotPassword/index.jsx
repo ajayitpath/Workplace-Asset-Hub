@@ -1,4 +1,3 @@
-// pages/auth/ForgotPassword.jsx
 import React from 'react';
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';

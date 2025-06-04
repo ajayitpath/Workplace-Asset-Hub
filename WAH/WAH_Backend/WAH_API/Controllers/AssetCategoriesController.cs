@@ -9,19 +9,16 @@ namespace WAH.API.Controllers
     public class AssetCategoriesController : ControllerBase
     {
         private readonly IAssetCategoryService _service;
-
         public AssetCategoriesController(IAssetCategoryService service)
         {
             _service = service;
         }
-
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var result = await _service.GetAllAsync();
             return Ok(result);
         }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -29,7 +26,6 @@ namespace WAH.API.Controllers
             if (result == null) return NotFound("Requested record not found");
             return Ok(result);
         }
-
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AssetCategoryDto dto)
         {
@@ -43,7 +39,6 @@ namespace WAH.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] AssetCategoryDto dto)
         {
@@ -52,7 +47,6 @@ namespace WAH.API.Controllers
             if (!updated) return NotFound("Can not update");
             return Ok("Category updated");
         }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

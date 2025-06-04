@@ -89,6 +89,9 @@ namespace WAH.DAL.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -129,8 +132,8 @@ namespace WAH.DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid>("StatusId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("WarrantyExpiryDate")
                         .HasColumnType("datetime2");
@@ -140,8 +143,6 @@ namespace WAH.DAL.Migrations
                     b.HasIndex("AssetId");
 
                     b.HasIndex("LocationId");
-
-                    b.HasIndex("StatusId");
 
                     b.ToTable("AssetItems", (string)null);
                 });
@@ -163,10 +164,8 @@ namespace WAH.DAL.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -178,22 +177,6 @@ namespace WAH.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AssetRequests", (string)null);
-                });
-
-            modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetStatusEntity", b =>
-                {
-                    b.Property<Guid>("StatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("StatusName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("StatusId");
-
-                    b.ToTable("AssetStatuses", (string)null);
                 });
 
             modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.LocationEntity", b =>
@@ -381,9 +364,7 @@ namespace WAH.DAL.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("PhoneNumber")
-                        .IsUnique()
-                        .HasFilter("[PhoneNumber] IS NOT NULL");
+                    b.HasIndex("PhoneNumber");
 
                     b.HasIndex("RoleId");
 
@@ -454,17 +435,9 @@ namespace WAH.DAL.Migrations
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("WAH.DAL.EntityModels.AssetEntities.AssetStatusEntity", "Status")
-                        .WithMany("AssetItems")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Asset");
 
                     b.Navigation("Location");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetRequestEntity", b =>
@@ -536,11 +509,6 @@ namespace WAH.DAL.Migrations
                 });
 
             modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetEntity", b =>
-                {
-                    b.Navigation("AssetItems");
-                });
-
-            modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetStatusEntity", b =>
                 {
                     b.Navigation("AssetItems");
                 });

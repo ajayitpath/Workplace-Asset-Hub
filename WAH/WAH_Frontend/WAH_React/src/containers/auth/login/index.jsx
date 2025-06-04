@@ -8,7 +8,6 @@ import { Button, TextField, Typography, Box, Paper } from '@mui/material';
 
 const Login = () => {
   const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,

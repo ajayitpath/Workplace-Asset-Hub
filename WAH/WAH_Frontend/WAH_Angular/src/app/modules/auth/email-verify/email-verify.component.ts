@@ -11,14 +11,15 @@ import { VerifyOtpDto } from '../../../shared/Model/auth.model';
   styleUrl: './email-verify.component.css'
 })
 export class EmailVerifyComponent {
+
   otpForm!: FormGroup;
   isSubmitting = false;
   errorMessage = '';
   email = '';
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private route: ActivatedRoute) { }
-    
-  
+
+
   // this.otpForm = this.fb.group({
   //     otp: ['', Validators.required]
   //   });
@@ -39,6 +40,7 @@ export class EmailVerifyComponent {
   //   console.log('Resending OTP...');
   // }
   ngOnInit(): void {
+    console.log('ngOnInit called');
     this.otpForm = this.fb.group({
       otp: ['', Validators.required]
     });
@@ -50,6 +52,11 @@ export class EmailVerifyComponent {
   }
 
   onVerify(): void {
+    debugger;
+    if (!this.email) {
+      this.email = localStorage.getItem('email') || '';
+      console.log('Email from localStorage:', this.email);
+    }
     if (this.otpForm.invalid || !this.email) {
       this.otpForm.markAllAsTouched();
       this.errorMessage = 'Email or OTP is missing.';
@@ -60,17 +67,19 @@ export class EmailVerifyComponent {
     this.errorMessage = '';
 
     const dto: VerifyOtpDto = {
+
       email: this.email,
-      otp: this.otpForm.value.otp
+      Otp: this.otpForm.value.otp
     };
 
     this.authService.verifyOtp(dto).subscribe({
       next: (res) => {
+        debugger
         this.isSubmitting = false;
         alert(res.message || 'OTP verified successfully.');
-        // ✅ Navigate to reset password and pass email
-        this.router.navigate(['/auth/reset-password'], {
-          queryParams: { email: this.email }
+
+        this.router.navigate(['auth/login'], {
+          state: { email: this.email }
         });
       },
       error: (err) => {
@@ -82,15 +91,25 @@ export class EmailVerifyComponent {
 
   resendOtp(): void {
     if (!this.email) {
+      const rawEmail = localStorage.getItem('email') || '';
+      try {
+        this.email = JSON.parse(rawEmail); // Remove extra quotes if needed
+      } catch {
+        this.email = rawEmail.replace(/^"(.*)"$/, '$1');
+      }
+    }
+    if (!this.email) {
       alert('Email is missing. Cannot resend OTP.');
       return;
     }
 
     this.isSubmitting = true;
+    this.errorMessage = '';
+
     this.authService.resendOtp(this.email).subscribe({
-      next: () => {
+      next: (res) => {
         this.isSubmitting = false;
-        alert('OTP has been resent to your email.');
+        alert(res.message || 'OTP has been resent to your email.');
       },
       error: (err) => {
         this.isSubmitting = false;

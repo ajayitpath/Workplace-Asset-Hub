@@ -30,5 +30,5 @@ export interface ResetPasswordDto {
 
 export interface VerifyOtpDto {
   email: string;
-  otp: string;
+  Otp: string;
 }
