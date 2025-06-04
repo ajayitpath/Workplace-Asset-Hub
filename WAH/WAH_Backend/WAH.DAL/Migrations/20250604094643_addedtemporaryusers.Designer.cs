@@ -12,8 +12,8 @@ using WAH.DAL.Data;
 namespace WAH.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250603112618_Remove Unique Phone Number")]
-    partial class RemoveUniquePhoneNumber
+    [Migration("20250604094643_addedtemporaryusers")]
+    partial class addedtemporaryusers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
