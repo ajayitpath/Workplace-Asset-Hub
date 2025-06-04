@@ -1,27 +1,8 @@
-// pages/auth/OtpVerification.jsx
 import React from 'react';
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-<<<<<<< HEAD:WAH/WAH_Frontend/WAH_React/src/containers/auth/OtpVerification/OtpVerification.jsx
-<<<<<<< HEAD
-<<<<<<< HEAD:WAH/WAH_Frontend/WAH_React/src/containers/auth/OtpVerification/OtpVerification.jsx
 import { otpSchema } from './OtpVerification.schema';
-=======
-=======
->>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
-import { otpSchema } from '../../../schema/OtpVerification.schema';
-import { verifyOtp } from '../../../services/Auth/AuthService';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import URLS from '../../../constants/urls';
-<<<<<<< HEAD
->>>>>>> 37460a2419a2b4497bc5880090c561747cc63d26:WAH/WAH_Frontend/WAH_React/src/containers/auth/OtpVerification/index.jsx
-=======
->>>>>>> 1c1a080754a8366397552ac29e8a493654e80fb9
-=======
-import { otpSchema } from './OtpVerification.schema';
->>>>>>> be956539dad1298027f4584fd080631709eed677:WAH/WAH_Frontend/WAH_React/src/containers/auth/OtpVerification/index.jsx
 
 const OtpVerification = () => {
   const {

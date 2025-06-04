@@ -23,7 +23,7 @@ namespace WAH_API.Controllers
         {
             var token = await _userService.LoginAsync(loginDto);
             if (token == null)
-                return Unauthorized("Invalid email or password")
+                return Unauthorized("Invalid email or password");
                 return Ok(new { token }); 
         }
 
@@ -41,7 +41,7 @@ namespace WAH_API.Controllers
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
         {
             if (dto.NewPassword != dto.ConfirmPassword)
-                return BadRequest("Passwords do not match.")
+                return BadRequest("Passwords do not match.");
             var result = await _userService.ResetPasswordAsync(dto);
             if (!result)
                 return BadRequest("Invalid or expired token.");
@@ -70,7 +70,7 @@ namespace WAH_API.Controllers
             dto.UserId = userId;
             var result = await _userProfileService.UpdateUserProfileImageAsync(dto);
             if (!result.Success)
-                return BadRequest(result.Message)
+                return BadRequest(result.Message);
             return Ok(new { message = result.Message, imagePath = result.ImagePath });
         }
 
@@ -84,7 +84,7 @@ namespace WAH_API.Controllers
             try
             {
                 var creatorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-                Guid? creatorId = creatorIdClaim != null ? Guid.Parse(creatorIdClaim.Value) : null
+                Guid? creatorId = creatorIdClaim != null ? Guid.Parse(creatorIdClaim.Value) : null;
                 var isValid = await _userService.VerifyOtpAsync(dto.Email, dto.Otp, creatorId);
                 if (!isValid)
                 {
