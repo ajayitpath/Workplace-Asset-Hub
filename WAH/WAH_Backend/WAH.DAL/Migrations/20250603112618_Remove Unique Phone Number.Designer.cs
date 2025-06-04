@@ -12,8 +12,8 @@ using WAH.DAL.Data;
 namespace WAH.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250530101207_categortAPI")]
-    partial class categortAPI
+    [Migration("20250603112618_Remove Unique Phone Number")]
+    partial class RemoveUniquePhoneNumber
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,8 +135,8 @@ namespace WAH.DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid>("StatusId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("WarrantyExpiryDate")
                         .HasColumnType("datetime2");
@@ -146,8 +146,6 @@ namespace WAH.DAL.Migrations
                     b.HasIndex("AssetId");
 
                     b.HasIndex("LocationId");
-
-                    b.HasIndex("StatusId");
 
                     b.ToTable("AssetItems", (string)null);
                 });
@@ -182,22 +180,6 @@ namespace WAH.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AssetRequests", (string)null);
-                });
-
-            modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetStatusEntity", b =>
-                {
-                    b.Property<Guid>("StatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("StatusName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("StatusId");
-
-                    b.ToTable("AssetStatuses", (string)null);
                 });
 
             modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.LocationEntity", b =>
@@ -240,6 +222,67 @@ namespace WAH.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("Roles", (string)null);
+                });
+
+            modelBuilder.Entity("WAH.DAL.EntityModels.AuthEntities.TemporaryUserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("DeskNo")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("ExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OTP")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("TemporaryUsers", (string)null);
                 });
 
             modelBuilder.Entity("WAH.DAL.EntityModels.AuthEntities.UserAuditEntity", b =>
@@ -324,9 +367,7 @@ namespace WAH.DAL.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("PhoneNumber")
-                        .IsUnique()
-                        .HasFilter("[PhoneNumber] IS NOT NULL");
+                    b.HasIndex("PhoneNumber");
 
                     b.HasIndex("RoleId");
 
@@ -397,17 +438,9 @@ namespace WAH.DAL.Migrations
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("WAH.DAL.EntityModels.AssetEntities.AssetStatusEntity", "Status")
-                        .WithMany("AssetItems")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Asset");
 
                     b.Navigation("Location");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetRequestEntity", b =>
@@ -427,6 +460,17 @@ namespace WAH.DAL.Migrations
                     b.Navigation("Asset");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WAH.DAL.EntityModels.AuthEntities.TemporaryUserEntity", b =>
+                {
+                    b.HasOne("WAH.DAL.EntityModels.AuthEntities.RoleEntity", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("WAH.DAL.EntityModels.AuthEntities.UserAuditEntity", b =>
@@ -468,11 +512,6 @@ namespace WAH.DAL.Migrations
                 });
 
             modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetEntity", b =>
-                {
-                    b.Navigation("AssetItems");
-                });
-
-            modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetStatusEntity", b =>
                 {
                     b.Navigation("AssetItems");
                 });
