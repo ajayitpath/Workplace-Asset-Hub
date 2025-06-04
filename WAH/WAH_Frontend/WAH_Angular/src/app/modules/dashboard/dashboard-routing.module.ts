@@ -14,11 +14,9 @@ const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
-<<<<<<< HEAD
-      { path: 'dashboard', component: DashboardComponent,canActivate:[AuthGuard] },
-=======
-      { path: 'adnin-dashboard', component: DashboardComponent },
->>>>>>> db1470f0b72acea2191d0910db515cf770737bf9
+
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'admin-dashboard', component: DashboardComponent },
       { path: 'asset-management', component: AssetManagementComponent },
       { path: 'inventory-management', component: InventorymanagementComponent },
       { path: 'requests-approvals', component: RequestapprovalComponent },

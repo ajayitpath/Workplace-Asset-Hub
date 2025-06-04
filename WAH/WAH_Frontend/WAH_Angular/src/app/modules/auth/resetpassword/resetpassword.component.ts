@@ -43,6 +43,7 @@ export class ResetpasswordComponent {
 
   onSubmit(): void {
     if (this.resetPasswordForm.invalid) {
+
       this.resetPasswordForm.markAllAsTouched();
       return;
     }

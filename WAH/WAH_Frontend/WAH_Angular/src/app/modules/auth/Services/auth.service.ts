@@ -11,7 +11,6 @@ export class AuthService {
 
   private baseUrl = 'https://localhost:7126';
   private readonly endpoint = '/api/User';
-  authService: any;
 
   constructor(private http: HttpClient, private router: Router) { }
   // register , login , resetpassword, forgotpassword, emailverify(otp) , resetpassword link , gettoken , resetOTP, 
@@ -48,8 +47,5 @@ export class AuthService {
       formData
     );
   }
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/auth/login']);
-  }
+
 }
