@@ -44,10 +44,6 @@ export class ForgotpasswordComponent {
         alert(this.successMessage);
         const token = response.token;
         const email = this.forgotPasswordForm.value.email;
-
-        this.router.navigate(['/auth/reset-password'], {
-          queryParams: { token, email }
-        });
       },
       error: (err) => {
         this.isSubmitting = false;
