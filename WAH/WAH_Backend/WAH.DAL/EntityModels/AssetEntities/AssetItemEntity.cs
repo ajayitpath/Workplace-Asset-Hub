@@ -11,7 +11,6 @@ namespace WAH.DAL.EntityModels.AssetEntities
         public DateTime? WarrantyExpiryDate { get; set; }
         public AssetStatus Status { get; set; }
         public Guid? LocationId { get; set; }
-
         // Navigation
         public AssetEntity Asset { get; set; }
         public LocationEntity Location { get; set; }

@@ -39,8 +39,8 @@ namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
             builder.Property(u => u.PhoneNumber)
                    .HasMaxLength(10);
 
-            builder.HasIndex(u => u.PhoneNumber)
-                   .IsUnique();
+            builder.HasIndex(u => u.PhoneNumber);
+                   //.IsUnique();
 
             builder.Property(u => u.Gender)
                    .IsRequired();
@@ -48,8 +48,8 @@ namespace WAH.DAL.Data.EntityConfigs.UserEntityConfig
             builder.Property(u => u.DOB)
         .IsRequired()
         .HasConversion(
-            v => v.ToDateTime(TimeOnly.MinValue),   // Convert DateOnly to DateTime
-            v => DateOnly.FromDateTime(v))          // Convert DateTime to DateOnly
+            v => v.ToDateTime(TimeOnly.MinValue),   
+            v => DateOnly.FromDateTime(v))          
         .HasColumnType("datetime");
 
             builder.Property(u => u.DeskNo)

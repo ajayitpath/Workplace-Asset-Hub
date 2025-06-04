@@ -1,15 +1,13 @@
 import axios from 'axios';
 import store from '../redux/store';
 import { logout } from '../redux/slices/authSlice';
-import URLS from '../constants/urls';    
+import URLS from '../constants/urls';
 import { toast } from 'react-toastify';
-import { Navigate } from 'react-router-dom';
-
 
 const axiosInstance = axios.create({
-    baseURL : 'https://api.example.com', // Replace with your API base URL
+    baseURL: "https://localhost:7126/api", // Replace with your API base URL
     headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
     },
 });
 

@@ -18,16 +18,14 @@ namespace WAH.BLL.Services.Implementations.AuthServices
         public string GenerateToken(UserEntity user)
         {
             var claims = new[]
-       {
+        {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Role,user.Role.Name.ToString()), //AM added 28-05
             // You can add more claims if needed like roles, name, etc.
         };
-
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
@@ -35,7 +33,6 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: creds
             );
-
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
         public string GeneratePasswordResetToken(UserEntity user)
@@ -45,10 +42,8 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim("Reset", "true")
             };
-
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
@@ -56,7 +51,6 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 expires: DateTime.UtcNow.AddMinutes(5),
                 signingCredentials: creds
             );
-
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
@@ -75,7 +69,6 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                     ValidAudience = _configuration["Jwt:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
-
                 var principal = tokenHandler.ValidateToken(token, parameters, out _);
                 return principal;
             }
@@ -84,7 +77,6 @@ namespace WAH.BLL.Services.Implementations.AuthServices
                 return null;
             }
         }
-
     }
 }
 
