@@ -1,3 +1,4 @@
+
 <div class="asset-management-container">
   <!-- Header -->
   <div class="header">
@@ -10,17 +11,10 @@
       <input
         type="text"
         pInputText
-        placeholder="Search Item"
+        placeholder="Search any Item"
         [(ngModel)]="searchText"
         (input)="onSearchChange()"
       />
-      <button
-        pButton
-        type="button"
-        icon="pi pi-search"
-        class="p-button-sm p-button-secondary"
-        (click)="onSearchChange()"
-      ></button>
     </div>
 
     <div class="right">
@@ -44,4 +38,70 @@
     (delete)="onDelete($event)"
     (view)="onView($event)">
   </app-reusabletable>
+
+  <!-- Add/Edit Dialog -->
+  <p-dialog
+    header="{{ isEditMode ? 'Edit Asset' : 'Add Asset' }}"
+    [(visible)]="showForm"
+    [modal]="true"
+    [closable]="true"
+    [style]="{ width: '40vw' }"
+    (onHide)="onFormClose(false)"
+  >
+    <!-- FIXED: Single component with proper input binding -->
+    <app-add-edit
+      [isEditMode]="isEditMode"
+      [assetData]="selectedAsset"
+      (formClose)="onFormClose($event)">
+    </app-add-edit>
+  </p-dialog>
+
+  <!-- View Dialog -->
+  <p-dialog
+    [(visible)]="showViewDialog"
+    [modal]="true"
+    [style]="{ width: '500px' }"
+    [closable]="true"
+  >
+    <div class="plan-details-container" *ngIf="viewAsset">
+      <h1 class="customh1">Asset Details</h1>
+
+      <div class="plan-detail-block">
+        <label class="label1">Asset Name:</label>
+        <span class="plan-value">{{ viewAsset.AssetName }}</span>
+      </div>
+
+      <div class="plan-detail-block">
+        <label class="label1">Asset Code:</label>
+        <span class="plan-value">{{ viewAsset.AssetCode }}</span>
+      </div>
+
+      <div class="plan-detail-block">
+        <label class="label1">Category:</label>
+        <span class="plan-value">{{ getCategoryNameById(viewAsset.CategoryId) }}</span>
+      </div>
+
+      <div class="plan-detail-block">
+        <label class="label1">Brand:</label>
+        <span class="plan-value">{{ viewAsset.Brand }}</span>
+      </div>
+
+      <div class="plan-detail-block">
+        <label class="label1">Model:</label>
+        <span class="plan-value">{{ viewAsset.Model }}</span>
+      </div>
+
+      <div class="plan-detail-block">
+        <label class="label1">Specification:</label>
+        <span class="plan-value">{{ viewAsset.Specification }}</span>
+      </div>
+
+      <div class="plan-detail-block">
+        <label class="label1">Total Quantity:</label>
+        <span class="plan-value">{{ viewAsset.QuantityTotal }}</span>
+      </div>
+    </div>
+  </p-dialog>
 </div>
+
+<p-confirmDialog></p-confirmDialog>

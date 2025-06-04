@@ -4,11 +4,10 @@ namespace WAH.Common.DtoModels.AssetDtos
 {
     public class AssetDto
     {
-        [Required]
-        public Guid AssetId { get; set; }
+        public Guid? AssetId { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 2)] 
+        [StringLength(50, MinimumLength = 2)] 
         public string AssetName { get; set; }
 
         [Required]
@@ -17,7 +16,7 @@ namespace WAH.Common.DtoModels.AssetDtos
 
         [Required]
         public Guid CategoryId { get; set; }
-
+        public string? CategoryName { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 2)] 
         public string Brand { get; set; }
