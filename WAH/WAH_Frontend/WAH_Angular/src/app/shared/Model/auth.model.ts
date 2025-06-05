@@ -32,3 +32,8 @@ export interface VerifyOtpDto {
   email: string;
   otp: string;
 }
+
+export interface UserProfile {
+  userId?: string;
+  file: File;
+}

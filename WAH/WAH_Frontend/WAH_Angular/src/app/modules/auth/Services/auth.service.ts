@@ -39,7 +39,7 @@ export class AuthService {
 
   uploadProfileImage(userId: string, file: File): Observable<{ message: string, imagePath: string }> {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('File', file);
     // formData.append('UserId', userId);                  // if needed by backend
 
     return this.http.post<{ message: string, imagePath: string }>(
