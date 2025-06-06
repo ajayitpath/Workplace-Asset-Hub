@@ -72,3 +72,12 @@ a.text-primary {
   border-radius: 6px;
   font-size: 15px;
 }
+.page-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;     /* Full viewport width */
+  height: 100vh;    /* Full viewport height */
+  background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+  z-index: 1050;    /* Higher than typical content */
+}

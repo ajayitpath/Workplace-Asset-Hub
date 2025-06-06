@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, 
 import { FormdataService } from '../Services/formdata.service';
 import { AuthService } from '../Services/auth.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,7 @@ export class RegisterComponent {
     { label: 'User', value: 1 },
     { label: 'Manager', value: 2 }
   ];
-  constructor(private formBuilder: FormBuilder, private router: Router, private formDataService: FormdataService, private authService: AuthService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private formDataService: FormdataService, private authService: AuthService, private messageService: MessageService) { }
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -61,7 +62,7 @@ export class RegisterComponent {
   onImageUpload(event: any) {
     const file = event.files?.[0];
     if (file) {
-      this.profileImage = file;
+      this.profileImage = file; 
       this.imageRequired = false;
     }
   }
@@ -113,35 +114,59 @@ export class RegisterComponent {
         const userId = res.userId;
         if (this.profileImage && userId) {
           this.authService.uploadProfileImage(userId, this.profileImage).subscribe({
-            next: (uploadRes) => {
+            next: () => {
               localStorage.setItem('email', formValue.email);
-              this.successMessage = 'Registration successful!';
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Registration Successful',
+                detail: 'Your account has been registered successfully.',
+                life: 3000
+              });
               this.isSubmitting = false;
               this.registerForm.reset();
               this.profileImage = null;
               this.submitted = false;
-              this.router.navigate(['/auth/emailverify'], {
-                queryParams: { email: formValue.email }
-              });
+              setTimeout(() => {
+                this.router.navigate(['/auth/emailverify'], {
+                  queryParams: { email: formValue.email }
+                });
+              }, 3000);
             },
             error: () => {
-              this.errorMessage = 'Failed to upload profile image.';
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to upload profile image.',
+                life: 3000
+              });
               this.isSubmitting = false;
             }
           });
         } else {
-          this.successMessage = 'Registration successful!';
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Registration Successful',
+            detail: 'Your account has been registered successfully.',
+            life: 3000
+          });
           this.isSubmitting = false;
           this.registerForm.reset();
           this.profileImage = null;
           this.submitted = false;
-          this.router.navigate(['/auth/emailverify'], {
-            queryParams: { email: formValue.email }
-          });
+          setTimeout(() => {
+            this.router.navigate(['/auth/emailverify'], {
+              queryParams: { email: formValue.email }
+            });
+          }, 3000);
         }
       },
       error: () => {
-        this.errorMessage = 'Registration failed. Please try again.';
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Registration Failed',
+          detail: 'Registration failed. Please try again.',
+          life: 3000
+        });
         this.isSubmitting = false;
       }
     });
@@ -156,7 +181,9 @@ export function dobValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const dob = new Date(control.value);
     const today = new Date();
+
     if (!control.value || isNaN(dob.getTime())) return null;
+
     if (dob > today) {
       return { futureDate: true };
     }
@@ -166,9 +193,16 @@ export function dobValidator(): ValidatorFn {
     if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
       age--;
     }
+
     if (age < 18) {
       return { underage: true };
     }
+
+    if (age > 60) {
+      return { overage: true };
+    }
+
     return null;
   };
 }
+

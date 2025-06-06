@@ -1,3 +1,8 @@
+<div *ngIf="isSubmitting" class="page-loader-overlay d-flex justify-content-center align-items-center">
+  <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
+    [style]="{ width: '80px', height: '80px' }"></p-progress-spinner>
+</div>
+
 <div class="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
   <div class="card shadow rounded-4 p-4" style="max-width: 450px; width: 100%;">
     <div class="card-body">
@@ -34,11 +39,14 @@
             </small>
           </div>
         </div>
-        <!-- Error Message -->
-        <p-message *ngIf="errorMessage" severity="error" [text]="errorMessage" class="mb-3 w-100"></p-message>
+
         <!-- Submit Button -->
         <button pButton type="submit" label="{{ isSubmitting ? 'Logging in...' : 'Login' }}"
           class="btn btn-primary w-100" [disabled]="loginForm.invalid || isSubmitting">
+          <!-- <div class="d-flex justify-content-center mt-3" *ngIf="isSubmitting">
+            <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
+              [style]="{ width: '50px', height: '50px' }"></p-progress-spinner>
+          </div> -->
         </button>
       </form>
       <!-- Footer -->
@@ -51,3 +59,4 @@
     </div>
   </div>
 </div>
+<p-toast></p-toast>
