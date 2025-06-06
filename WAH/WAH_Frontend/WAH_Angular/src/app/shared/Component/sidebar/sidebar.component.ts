@@ -43,6 +43,7 @@ constructor(private router: Router) {
 
   setActive(key: string) {
     this.activeMenuItem = key;
-        this.router.navigate(['/dashboard/', key]);
+    this.router.navigate(['/dashboard/', key]);
   }
+
 }
