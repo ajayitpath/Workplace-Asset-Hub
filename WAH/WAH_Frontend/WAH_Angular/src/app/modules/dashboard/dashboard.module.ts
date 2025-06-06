@@ -12,14 +12,17 @@ import { AddEditComponent } from '../asset-management/add-edit/add-edit.componen
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { TextareaModule } from 'primeng/textarea';
+import { RequestapprovalComponent } from '../requestapproval/requestapproval.component';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 @NgModule({
-  declarations: [DashboardComponent, AssetManagementComponent, InventorymanagementComponent, AddEditComponent],
+  declarations: [DashboardComponent, AssetManagementComponent, InventorymanagementComponent, AddEditComponent, RequestapprovalComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     FormsModule,
+    ToggleButtonModule,
     ReactiveFormsModule,
     SharedModule,
     InputTextModule,
@@ -27,8 +30,9 @@ import { TextareaModule } from 'primeng/textarea';
     TextareaModule,
     DialogModule,
     DropdownModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    
   ],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, MessageService],
 })
 export class DashboardModule { }
