@@ -1,13 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputTextModule } from 'primeng/inputtext';
-import { TooltipModule } from 'primeng/tooltip';
-import { CardModule } from 'primeng/card';
-import { TableModule } from 'primeng/table';
-import { Asset } from '../../Model/asset.model';
+import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-reusabletable',
@@ -19,7 +11,7 @@ export class ReusabletableComponent {
   @Input() data: any[] = [];
   @Input() columns: { field: string, header: string, filterable?: boolean }[] = [];
   @Input() showActions: boolean = false;
-
+  @Input() actionsTemplate!: TemplateRef<any>;
   @Output() edit = new EventEmitter<string>();
   @Output() delete = new EventEmitter<string>();
   @Output() view = new EventEmitter<any>();

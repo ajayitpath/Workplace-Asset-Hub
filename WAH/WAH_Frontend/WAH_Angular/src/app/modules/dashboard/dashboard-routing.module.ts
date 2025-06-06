@@ -14,8 +14,6 @@ const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
-
-      { path: 'dashboard', component: DashboardComponent },
       { path: 'admin-dashboard', component: DashboardComponent },
       { path: 'asset-management', component: AssetManagementComponent },
       { path: 'inventory-management', component: InventorymanagementComponent },
