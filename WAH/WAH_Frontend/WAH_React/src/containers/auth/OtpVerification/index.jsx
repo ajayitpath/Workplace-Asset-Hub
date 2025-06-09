@@ -8,25 +8,39 @@ import { verifyOtp } from '../../../services/Auth/AuthService';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import URLS from '../../../constants/urls';
+import { useDispatch, useSelector } from 'react-redux';
+import { verifyOtpThunk, resendOtpThunk } from '../../../redux/thunks/authThunk';
 
 const OtpVerification = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+    const { loading, error } = useSelector(state => state.auth);
   const location = useLocation();
   const email = location.state?.email;
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      await verifyOtp({
-        email,
-        otp: data.otp
-      });
-      toast.success('Email verified successfully');
-      navigate(URLS.LOGIN);
+      const resultAction = await dispatch(verifyOtpThunk({ email, otp: data.otp }));
+      if (verifyOtpThunk.fulfilled.match(resultAction)) {
+        toast.success('Email verified successfully');
+        navigate(URLS.LOGIN);
+      }
     } catch (error) {
-      toast.error(error.response?.data || 'Invalid OTP');
+      toast.error(error.message || 'OTP verification failed');
     }
   };
 
+  const handleResendOtp = async () => {
+    try {
+      const resultAction = await dispatch(resendOtpThunk(email));
+      if (resendOtpThunk.fulfilled.match(resultAction)) {
+        toast.success('OTP resent successfully');
+      }
+    } catch (error) {
+      toast.error(error.message || 'Failed to resend OTP');
+    }
+  };
+  
   const {
     register,
     handleSubmit,

@@ -17,11 +17,17 @@ import { registerUser } from "../../../services/Auth/AuthService";
 import URLS from "../../../constants/urls";
 import FormInput from "../../../components/FormInput";
 import defaultAvatar from "../../../assets/Avtar.png";
+import { useDispatch, useSelector } from 'react-redux';
+import { registerThunk } from "../../../redux/thunks/authThunk";
 
 const genders = ["Male", "Female", "Other"];
 const roles = ["Admin", "Manager", "Employee"];
 
 const SignupForm = () => {
+
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector(state => state.auth);
+
   const navigate = useNavigate();
   const fileInputRef = useRef();
 
@@ -67,26 +73,24 @@ const SignupForm = () => {
     }
   }, [selectedImage]);
 
-  const onSubmit = async (data) => {
-    setLoading(true);
+   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
       Object.entries(data).forEach(([key, value]) => {
-  if (key === "profileImage" && value && value.length > 0) {
-    formData.append("File", value[0]); // ✅ must be "File" to match DTO
-  } else {
-    formData.append(key, value);
-  }
-});
+        if (key === "profileImage") {
+          formData.append("profileImageUrl", value[0]);
+        } else {
+          formData.append(key, value);
+        }
+      });
 
-
-      await registerUser(formData);
-      toast.success("Registration successful! Please verify your email.");
-      navigate(URLS.OTP_VERIFICATION, { state: { email: data.email } });
+      const resultAction = await dispatch(registerThunk(formData));
+      if (registerThunk.fulfilled.match(resultAction)) {
+        toast.success('Registration successful! Please verify your email.');
+        navigate('/otp-verification', { state: { email: data.email } });
+      }
     } catch (error) {
-      toast.error(error.response?.data || "Registration failed");
-    } finally {
-      setLoading(false);
+      toast.error(error.message || 'Registration failed');
     }
   };
 

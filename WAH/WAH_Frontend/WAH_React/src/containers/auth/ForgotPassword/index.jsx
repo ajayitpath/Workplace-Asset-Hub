@@ -9,8 +9,12 @@ import { forgotPassword } from '../../../services/Auth/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import URLS from '../../../constants/URLS';
+import { useDispatch, useSelector } from 'react-redux';
+import { forgotPasswordThunk } from '../../../redux/thunks/authThunk';
 
 const ForgotPassword = () => {
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector(state => state.auth);
   const {
     register,
     handleSubmit,
@@ -19,13 +23,15 @@ const ForgotPassword = () => {
     resolver: yupResolver(forgotPasswordSchema),
   });
 
-  const onSubmit = async (data) => {
+    const onSubmit = async (data) => {
     try {
-      const response = await forgotPassword(data);
-      toast.success('Password reset link has been sent to your email');
-      navigate(URLS.RESET_PASSWORD, { state: { token: response.token } });
+      const resultAction = await dispatch(forgotPasswordThunk(data.email));
+      if (forgotPasswordThunk.fulfilled.match(resultAction)) {
+        toast.success('Reset password link sent to your email');
+        navigate(URLS.LOGIN);
+      }
     } catch (error) {
-      toast.error(error.response?.data || 'Failed to process request');
+      toast.error(error.message || 'Failed to process request');
     }
   };
 

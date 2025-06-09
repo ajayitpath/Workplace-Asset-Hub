@@ -9,25 +9,34 @@ import { resetPassword } from '../../../services/Auth/AuthService';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import URLS from '../../../constants/URLS';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetPasswordThunk } from '../../../redux/thunks/authThunk.js';
 
 const ResetPassword = () => {
+   const dispatch = useDispatch();
+  const { loading, error } = useSelector(state => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
   const token = location.state?.token;
 
   const onSubmit = async (data) => {
     try {
-      await resetPassword({
+      const resultAction = await dispatch(resetPasswordThunk({
         token,
+        email: data.email,
         newPassword: data.newPassword,
         confirmPassword: data.confirmPassword
-      });
-      toast.success('Password reset successful');
-      navigate(URLS.LOGIN);
+      }));
+      
+      if (resetPasswordThunk.fulfilled.match(resultAction)) {
+        toast.success('Password reset successful');
+        navigate(URLS.LOGIN);
+      }
     } catch (error) {
-      toast.error(error.response?.data || 'Failed to reset password');
+      toast.error(error.message || 'Password reset failed');
     }
   };
+
   const {
     register,
     handleSubmit,

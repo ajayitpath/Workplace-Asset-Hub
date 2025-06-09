@@ -16,14 +16,15 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { loginUser } from "../../../services/Auth/AuthService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import { Navigate } from "react-router-dom";
+import { loginThunk } from "../../../redux/thunks/authThunk";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { loading, error } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -36,14 +37,16 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await loginUser(data);
-      dispatch(loginSuccess({ token: response.token }));
-      const userInfo = jwtDecode(response.token);
-      dispatch(setUser(userInfo));
-      toast.success("Login successful!");
-      navigate(URLS.DASHBOARD);
+      const resultAction = await dispatch(loginThunk(data));
+      if (loginThunk.fulfilled.match(resultAction)) {
+        const token = resultAction.payload.token;
+        const userInfo = jwtDecode(token);
+        dispatch(setUser(userInfo));
+        toast.success('Login successful!');
+        navigate(URLS.DASHBOARD);
+      }
     } catch (error) {
-      toast.error(error.response?.data || "Login failed");
+      toast.error(error.message || 'Login failed');
     }
   };
 

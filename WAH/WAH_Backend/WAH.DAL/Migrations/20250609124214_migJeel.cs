@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WAH.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class categortAPI : Migration
+    public partial class migJeel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,18 +21,6 @@ namespace WAH.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AssetCategories", x => x.CategoryId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AssetStatuses",
-                columns: table => new
-                {
-                    StatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StatusName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AssetStatuses", x => x.StatusId);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,6 +75,34 @@ namespace WAH.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TemporaryUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    DOB = table.Column<DateTime>(type: "datetime", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    OTP = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    ExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeskNo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemporaryUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TemporaryUsers_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -122,18 +138,12 @@ namespace WAH.DAL.Migrations
                     SerialNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PurchaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     WarrantyExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    StatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AssetItems", x => x.AssetItemId);
-                    table.ForeignKey(
-                        name: "FK_AssetItems_AssetStatuses_StatusId",
-                        column: x => x.StatusId,
-                        principalTable: "AssetStatuses",
-                        principalColumn: "StatusId",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AssetItems_Assets_AssetId",
                         column: x => x.AssetId,
@@ -265,11 +275,6 @@ namespace WAH.DAL.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AssetItems_StatusId",
-                table: "AssetItems",
-                column: "StatusId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AssetRequests_AssetId",
                 table: "AssetRequests",
                 column: "AssetId");
@@ -289,6 +294,17 @@ namespace WAH.DAL.Migrations
                 table: "Roles",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemporaryUsers_Email",
+                table: "TemporaryUsers",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemporaryUsers_RoleId",
+                table: "TemporaryUsers",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAudit_UserId",
@@ -331,6 +347,9 @@ namespace WAH.DAL.Migrations
                 name: "AssetRequests");
 
             migrationBuilder.DropTable(
+                name: "TemporaryUsers");
+
+            migrationBuilder.DropTable(
                 name: "UserAudit");
 
             migrationBuilder.DropTable(
@@ -341,9 +360,6 @@ namespace WAH.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "AssetStatuses");
 
             migrationBuilder.DropTable(
                 name: "Assets");

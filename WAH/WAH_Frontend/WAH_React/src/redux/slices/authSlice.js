@@ -1,80 +1,121 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { registerUser } from "../../services/Auth/AuthService";
-
-const token = localStorage.getItem('token');
+import { createSlice } from "@reduxjs/toolkit";
+// import { registerUser } from "../../services/Auth/AuthService";
+import {
+  loginThunk,
+  registerThunk,
+  forgotPasswordThunk,
+  resetPasswordThunk,
+  verifyOtpThunk,
+  resendOtpThunk
+} from '../thunks/authThunks';
 
 const initialState = {
-  isAuthenticated: !!token,
-  token: token || null,
+  isAuthenticated: !!localStorage.getItem('token'),
+  token: localStorage.getItem('token'),
   user: null,
   loading: false,
   error: null,
+  resetToken: null,
+  otpVerified: false
 };
-
-// Thunk for registration
-export const registerThunk = createAsyncThunk(
-  'auth/register',
-  async (formData, { rejectWithValue }) => {
-    try {
-      const data = await registerUser(formData); // calls your axios service
-      return data;
-    } catch (err) {
-      return rejectWithValue(err.response?.data || err.message);
-    }
-  }
-);
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    loginStart(state) {
-      state.loading = true;
-      state.error = null;
-    },
-    loginSuccess(state, action) {
-      state.token = action.payload.token;
-      state.isAuthenticated = true;
-      state.loading = false;
-      localStorage.setItem('token', action.payload.token);
-    },
-    loginFailure(state, action) {
-      state.loading = false;
-      state.error = action.payload.error;
-    },
     logout(state) {
       state.isAuthenticated = false;
       state.token = null;
       state.user = null;
       localStorage.removeItem('token');
     },
-    setUser(state, action) {
-      state.user = action.payload;
+    clearError(state) {
+      state.error = null;
     }
   },
   extraReducers: (builder) => {
     builder
+      // Login
+      .addCase(loginThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token);
+      })
+      .addCase(loginThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Register
       .addCase(registerThunk.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(registerThunk.fulfilled, (state, action) => {
+      .addCase(registerThunk.fulfilled, (state) => {
         state.loading = false;
-        state.user = action.payload.user || null;
-        state.token = action.payload.token || null;
-        state.isAuthenticated = !!action.payload.token;
-
-        if (action.payload.token) {
-          localStorage.setItem('token', action.payload.token);
-        }
       })
       .addCase(registerThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Forgot Password
+      .addCase(forgotPasswordThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(forgotPasswordThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.resetToken = action.payload.token;
+      })
+      .addCase(forgotPasswordThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Reset Password
+      .addCase(resetPasswordThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetPasswordThunk.fulfilled, (state) => {
+        state.loading = false;
+        state.resetToken = null;
+      })
+      .addCase(resetPasswordThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Verify OTP
+      .addCase(verifyOtpThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(verifyOtpThunk.fulfilled, (state) => {
+        state.loading = false;
+        state.otpVerified = true;
+      })
+      .addCase(verifyOtpThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Resend OTP
+      .addCase(resendOtpThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resendOtpThunk.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(resendOtpThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
   }
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout, setUser } = authSlice.actions;
+export const { logout, clearError } = authSlice.actions;
 
 export default authSlice.reducer;
