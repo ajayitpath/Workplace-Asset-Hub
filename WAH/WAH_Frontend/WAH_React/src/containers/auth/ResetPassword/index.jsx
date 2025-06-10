@@ -4,26 +4,39 @@ import { TextField, Button, Typography, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import resetPasswordSchema from '../../../schema/ResetPassword.schema.js';
-import { Link } from 'react-router-dom';
-import { resetPassword } from '../../../services/Auth/AuthService';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import URLS from '../../../constants/URLS';
+import URLS from '../../../constants/urls.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordThunk } from '../../../redux/thunks/authThunk.js';
 
 const ResetPassword = () => {
    const dispatch = useDispatch();
-  const { loading, error } = useSelector(state => state.auth);
+  const { loading } = useSelector(state => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
   const token = location.state?.token;
+  const email = new URLSearchParams(location.search).get('email');
+
+    const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(resetPasswordSchema),
+  });
 
   const onSubmit = async (data) => {
+
+    if (!token || !email) {
+      toast.error('Invalid reset password link');
+      return;
+    }
+
     try {
       const resultAction = await dispatch(resetPasswordThunk({
         token,
-        email: data.email,
+        email,
         newPassword: data.newPassword,
         confirmPassword: data.confirmPassword
       }));
@@ -37,13 +50,7 @@ const ResetPassword = () => {
     }
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    resolver: yupResolver(resetPasswordSchema),
-  });
+
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 gap-4">
@@ -74,10 +81,10 @@ const ResetPassword = () => {
             variant="contained"
             fullWidth
             type="submit"
-            disabled={isSubmitting}
+            disabled={loading}
             className="bg-primary-600 hover:bg-primary-700"
           >
-            Reset Password
+            {loading? "Resetting password" : "Reset Password"}
           </Button>
           <div className="text-center mt-4">
             <span className="text-sm text-gray-600">

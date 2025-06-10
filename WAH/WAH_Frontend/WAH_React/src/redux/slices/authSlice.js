@@ -7,7 +7,7 @@ import {
   resetPasswordThunk,
   verifyOtpThunk,
   resendOtpThunk
-} from '../thunks/authThunks';
+} from '../thunks/authThunk';
 
 const initialState = {
   isAuthenticated: !!localStorage.getItem('token'),
@@ -31,7 +31,17 @@ const authSlice = createSlice({
     },
     clearError(state) {
       state.error = null;
-    }
+    },
+    // Add the loginSuccess reducer
+    loginSuccess(state, action) {
+      state.isAuthenticated = true;
+      state.token = action.payload.token;
+      state.user = action.payload.user;
+      localStorage.setItem('token', action.payload.token);
+    },
+    setUser(state, action) {
+    state.user = action.payload;
+  }
   },
   extraReducers: (builder) => {
     builder
@@ -116,6 +126,6 @@ const authSlice = createSlice({
   }
 });
 
-export const { logout, clearError } = authSlice.actions;
+export const { logout, clearError, loginSuccess, setUser } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,38 +1,46 @@
 // File: components/forms/SignupForm.jsx
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-  Box, Paper, Typography, Avatar, IconButton,
-  TextField, MenuItem, FormControl, InputLabel, Select,
-  InputAdornment, Button
+  Box,
+  Paper,
+  Typography,
+  Avatar,
+  IconButton,
+  TextField,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  InputAdornment,
+  Button,
 } from "@mui/material";
-import { Visibility, VisibilityOff, Edit as EditIcon } from "@mui/icons-material";
+import {
+  Visibility,
+  VisibilityOff,
+  Edit as EditIcon,
+} from "@mui/icons-material";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import signupSchema from "../../../schema/signup.schema";
-import { registerUser } from "../../../services/Auth/AuthService";
 import URLS from "../../../constants/urls";
 import FormInput from "../../../components/FormInput";
-import defaultAvatar from "../../../assets/Avtar.png";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { registerThunk } from "../../../redux/thunks/authThunk";
+import { ROLES } from "../../../constants/roles";
+import { genderOptions } from "../../../constants/enums";
 
-const genders = ["Male", "Female", "Other"];
-const roles = ["Admin", "Manager", "Employee"];
+const DEFAULT_ROLE_ID = 3;
 
 const SignupForm = () => {
-
   const dispatch = useDispatch();
-  const { loading, error } = useSelector(state => state.auth);
+  const { loading } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
-  const fileInputRef = useRef();
 
-  const [imagePreview, setImagePreview] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -40,8 +48,6 @@ const SignupForm = () => {
     register,
     control,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(signupSchema),
@@ -56,41 +62,63 @@ const SignupForm = () => {
       password: "",
       confirmPassword: "",
       deskNo: "",
-      role: "",
-      profileImage: null,
     },
   });
 
-  const selectedImage = watch("profileImage");
+  // useEffect(() => {
+  //   if (selectedImage?.[0]) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => setImagePreview(reader.result);
+  //     reader.readAsDataURL(selectedImage[0]);
+  //   } else {
+  //     setImagePreview(null);
+  //   }
+  // }, [selectedImage]);
 
-  useEffect(() => {
-    if (selectedImage?.[0]) {
-      const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result);
-      reader.readAsDataURL(selectedImage[0]);
-    } else {
-      setImagePreview(null);
-    }
-  }, [selectedImage]);
+  //   const onSubmit = async (data) => {
+  //   try {
+  //     const formData = new FormData();
+  //     Object.entries(data).forEach(([key, value]) => {
+  //       if (key === "profileImage" && value[0]) {
+  //         formData.append("profileImageUrl", value[0]);
+  //       } else if (key !== 'role' && value !== null && value !== undefined) { // Skip role field
+  //         formData.append(key, value);
+  //       }
+  //     });
 
-   const onSubmit = async (data) => {
+  //     const resultAction = await dispatch(registerThunk(formData));
+  //     if (registerThunk.fulfilled.match(resultAction)) {
+  //       toast.success("Registration successful! Please verify your email.");
+  //       navigate("/otp-verification", { state: { email: data.email } });
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.message || "Registration failed");
+  //   }
+  // };
+
+  const onSubmit = async (data) => {
     try {
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) => {
-        if (key === "profileImage") {
-          formData.append("profileImageUrl", value[0]);
-        } else {
-          formData.append(key, value);
-        }
-      });
+      // Format date to match DateOnly in C#
+      const formattedData = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        gender: parseInt(data.gender), // Convert to number enum
+        dob: new Date(data.dob).toISOString().split("T")[0], // Format: YYYY-MM-DD
+        deskNo: data.deskNo || null,
+        roleId: 3, // Default role ID for User
+      };
 
-      const resultAction = await dispatch(registerThunk(formData));
+      const resultAction = await dispatch(registerThunk(formattedData));
       if (registerThunk.fulfilled.match(resultAction)) {
-        toast.success('Registration successful! Please verify your email.');
-        navigate('/otp-verification', { state: { email: data.email } });
+        toast.success("Registration successful! Please verify your email.");
+        navigate("/verify-email", { state: { email: data.email } });
       }
     } catch (error) {
-      toast.error(error.message || 'Registration failed');
+      toast.error(error.message || "Registration failed");
     }
   };
 
@@ -114,12 +142,16 @@ const SignupForm = () => {
           maxWidth: 500,
         }}
       >
-        <Typography variant="h5" align="center" sx={{ mb: 2, fontWeight: "bold" }}>
+        <Typography
+          variant="h5"
+          align="center"
+          sx={{ mb: 2, fontWeight: "bold" }}
+        >
           Create Your Account
         </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Avatar Upload */}
+          {/* Avatar Upload
           <div className="flex justify-center mb-4">
             <div className="relative">
               <Avatar
@@ -133,23 +165,44 @@ const SignupForm = () => {
                 <EditIcon sx={{ fontSize: 16, color: "#5974FC" }} />
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <input
+          {/* <input
             type="file"
             accept="image/*"
             {...register("profileImage")}
             ref={fileInputRef}
             style={{ display: "none" }}
             onChange={(e) => setValue("profileImage", [e.target.files[0]])}
-          />
+          /> */}
 
           {/* Form Fields */}
           <div className="grid grid-cols-2 gap-6 mb-8">
-            <FormInput label="First Name" name="firstName" register={register} error={errors.firstName?.message} />
-            <FormInput label="Last Name" name="lastName" register={register} error={errors.lastName?.message} />
-            <FormInput label="Email" name="email" type="email" register={register} error={errors.email?.message} />
-            <FormInput label="Phone Number" name="phoneNumber" register={register} error={errors.phoneNumber?.message} />
+            <FormInput
+              label="First Name"
+              name="firstName"
+              register={register}
+              error={errors.firstName?.message}
+            />
+            <FormInput
+              label="Last Name"
+              name="lastName"
+              register={register}
+              error={errors.lastName?.message}
+            />
+            <FormInput
+              label="Email"
+              name="email"
+              type="email"
+              register={register}
+              error={errors.email?.message}
+            />
+            <FormInput
+              label="Phone Number"
+              name="phoneNumber"
+              register={register}
+              error={errors.phoneNumber?.message}
+            />
 
             <TextField
               label="Password"
@@ -161,7 +214,9 @@ const SignupForm = () => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton onClick={() => setShowPassword((prev) => !prev)}>
+                    <IconButton
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
@@ -179,7 +234,9 @@ const SignupForm = () => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton onClick={() => setShowConfirmPassword((prev) => !prev)}>
+                    <IconButton
+                      onClick={() => setShowConfirmPassword((prev) => !prev)}
+                    >
                       {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
@@ -195,38 +252,37 @@ const SignupForm = () => {
               {...register("dob")}
               error={!!errors.dob}
               helperText={errors.dob?.message}
+              inputProps={{
+                max: new Date().toISOString().split("T")[0], // Prevent future dates
+              }}
             />
 
-            <FormInput label="Desk Number (optional)" name="deskNo" register={register} error={errors.deskNo?.message} />
+            <FormInput
+              label="Desk Number (optional)"
+              name="deskNo"
+              register={register}
+              error={errors.deskNo?.message}
+            />
 
             <Controller
               name="gender"
               control={control}
+              defaultValue=""
               render={({ field }) => (
                 <FormControl fullWidth error={!!errors.gender}>
                   <InputLabel id="gender-label">Gender</InputLabel>
                   <Select labelId="gender-label" label="Gender" {...field}>
-                    {genders.map((g) => (
-                      <MenuItem key={g} value={g}>{g}</MenuItem>
+                    {genderOptions.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
                     ))}
                   </Select>
-                  {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>}
-                </FormControl>
-              )}
-            />
-
-            <Controller
-              name="role"
-              control={control}
-              render={({ field }) => (
-                <FormControl fullWidth error={!!errors.role}>
-                  <InputLabel id="role-label">Role</InputLabel>
-                  <Select labelId="role-label" label="Role" {...field}>
-                    {roles.map((r) => (
-                      <MenuItem key={r} value={r}>{r}</MenuItem>
-                    ))}
-                  </Select>
-                  {errors.role && <p className="text-red-500 text-xs mt-1">{errors.role.message}</p>}
+                  {errors.gender && (
+                    <FormHelperText error>
+                      {errors.gender.message}
+                    </FormHelperText>
+                  )}
                 </FormControl>
               )}
             />
@@ -243,7 +299,9 @@ const SignupForm = () => {
               py: 1.5,
               textTransform: "none",
               backgroundColor: (theme) => theme.palette.primary.main,
-              "&:hover": { backgroundColor: (theme) => theme.palette.primary.dark },
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.primary.dark,
+              },
             }}
           >
             {loading ? "Registering..." : "Register"}
@@ -252,7 +310,10 @@ const SignupForm = () => {
           {/* Login Link */}
           <Typography align="center" variant="body2" sx={{ mt: 2 }}>
             Already have an account?{" "}
-            <Link to="/login" className="text-blue-600 hover:underline font-medium">
+            <Link
+              to="/login"
+              className="text-blue-600 hover:underline font-medium"
+            >
               Login
             </Link>
           </Typography>

@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import loginSchema from "../../../schema/login.schema";
 import { useNavigate } from "react-router-dom";
 import URLS from "../../../constants/urls";
-import { loginSuccess,setUser } from "../../../redux/slices/authSlice";
+import { setUser } from "../../../redux/slices/authSlice";
 import {
   Button,
   TextField,
@@ -22,33 +22,37 @@ import { jwtDecode } from "jwt-decode";
 import { Navigate } from "react-router-dom";
 import { loginThunk } from "../../../redux/thunks/authThunk";
 
+
 const Login = () => {
-  const navigate = useNavigate();
-  const { loading, error } = useSelector(state => state.auth);
-  const dispatch = useDispatch();
+   
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loading } = useSelector(state => state.auth);
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
 
-  const onSubmit = async (data) => {
-    try {
-      const resultAction = await dispatch(loginThunk(data));
-      if (loginThunk.fulfilled.match(resultAction)) {
-        const token = resultAction.payload.token;
-        const userInfo = jwtDecode(token);
-        dispatch(setUser(userInfo));
-        toast.success('Login successful!');
-        navigate(URLS.DASHBOARD);
-      }
-    } catch (error) {
-      toast.error(error.message || 'Login failed');
+const onSubmit = async (data) => {
+  try {
+    const resultAction = await dispatch(loginThunk(data));
+    if (loginThunk.fulfilled.match(resultAction)) {
+      const token = resultAction.payload.token;
+      const userInfo = jwtDecode(token);
+      dispatch(setUser(userInfo));
+      toast.success('Login successful!');
+      navigate(URLS.DASHBOARD);
     }
-  };
+  } catch (error) {
+    toast.error(error.message || 'Login failed');
+  }
+};
+
 
   return (
     <Box
@@ -132,7 +136,7 @@ const Login = () => {
               },
             }}
           >
-            Login
+            {loading? "Logging-in" : "Login"}
           </Button>
 
           <Typography
