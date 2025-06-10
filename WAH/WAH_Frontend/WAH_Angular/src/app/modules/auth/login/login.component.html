@@ -1,64 +1,14 @@
-<!-- <div class="login-container d-flex justify-content-center align-items-center min-vh-100 bg-light p-3">
-  <div class="login-card bg-white p-4 rounded shadow w-100" style="max-width: 450px;">
-    <h2 class="text-center mb-4 text-dark">Login</h2>
+<div *ngIf="isSubmitting" class="page-loader-overlay d-flex justify-content-center align-items-center">
+  <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
+    [style]="{ width: '80px', height: '80px' }"></p-progress-spinner>
+</div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"> -->
-
-<!-- Email -->
-<!-- <div class="form-group mb-3">
-        <label for="email" class="form-label fw-medium text-secondary">Email</label>
-        <input pInputText id="email" formControlName="email" placeholder="Enter email" class="form-control bg-white"
-          [ngClass]="{'ng-invalid ng-dirty': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}" />
-        <div class="text-danger mt-1" *ngIf="loginForm.get('email')?.touched">
-          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
-            <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
-            <div *ngIf="loginForm.get('email')?.errors?.['email']">Must be a valid email and in this
-              'username&#64;domain.com' format..</div>
-            <div *ngIf="loginForm.get('email')?.errors?.['maxlength']">Cannot exceed 100 characters.</div>
-          </div>
-        </div>
-      </div> -->
-
-<!-- Password -->
-
-<!-- <div class="form-group mb-3">
-        <label for="password" class="form-label fw-medium text-secondary">Password</label>
-        <p-password id="password" formControlName="password" [feedback]="false" inputStyleClass="form-control bg-white"
-          toggleMask="true" placeholder="Enter password"
-          [ngClass]="{'ng-invalid ng-dirty': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"></p-password>
-        <div class="text-danger mt-1" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
-          <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
-          <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Min 6 characters required.</small>
-          <small *ngIf="loginForm.get('password')?.errors?.['maxlength']">Max 100 characters allowed.</small>
-          <small *ngIf="loginForm.get('password')?.errors?.['pattern']">
-            Must include uppercase, lowercase, number & special character.
-          </small>
-        </div>
-      </div> -->
-
-<!-- Message -->
-<!-- <p-message *ngIf="errorMessage" severity="error" [text]="errorMessage" class="mb-3"></p-message> -->
-
-<!-- Submit -->
-<!-- <button pButton type="submit" label="{{ isSubmitting ? 'Logging in...' : 'Login' }}"
-        [disabled]="loginForm.invalid || isSubmitting" class="btn btn-primary w-100 mt-2"></button>
-    </form>
-
-    <div class="form-footer mt-4 text-center small">
-      <p>Don't have an account? <a routerLink="/auth/register" class="text-primary">Sign Up</a></p>
-      <p>Forgot your password? <a routerLink="/auth/forgot-password" class="text-primary">Reset here</a></p>
-    </div>
-  </div>
-</div> -->
 <div class="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
   <div class="card shadow rounded-4 p-4" style="max-width: 450px; width: 100%;">
     <div class="card-body">
-
       <!-- Heading -->
       <h3 class="text-center text-primary fw-semibold mb-4">Login</h3>
-
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
         <!-- Email -->
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
@@ -73,7 +23,6 @@
             </div>
           </div>
         </div>
-
         <!-- Password -->
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
@@ -91,15 +40,15 @@
           </div>
         </div>
 
-        <!-- Error Message -->
-        <p-message *ngIf="errorMessage" severity="error" [text]="errorMessage" class="mb-3 w-100"></p-message>
-
         <!-- Submit Button -->
         <button pButton type="submit" label="{{ isSubmitting ? 'Logging in...' : 'Login' }}"
           class="btn btn-primary w-100" [disabled]="loginForm.invalid || isSubmitting">
+          <!-- <div class="d-flex justify-content-center mt-3" *ngIf="isSubmitting">
+            <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
+              [style]="{ width: '50px', height: '50px' }"></p-progress-spinner>
+          </div> -->
         </button>
       </form>
-
       <!-- Footer -->
       <div class="mt-4 text-center small">
         <p>Don't have an account? <a routerLink="/auth/register" class="text-decoration-none text-primary">Sign Up</a>
@@ -107,7 +56,7 @@
         <p>Forgot your password? <a routerLink="/auth/forgot-password" class="text-decoration-none text-primary">Reset
             here</a></p>
       </div>
-
     </div>
   </div>
 </div>
+<p-toast></p-toast>

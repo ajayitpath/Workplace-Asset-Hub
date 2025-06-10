@@ -9,7 +9,9 @@
           <p-columnFilter *ngIf="col.filterable !== false" [field]="col.field" display="menu"
                           [placeholder]="'Filter by ' + col.header"></p-columnFilter>
         </th>
-        <th *ngIf="showActions">Actions</th>
+        <th *ngIf="showActions">Actions
+  
+        </th>
       </tr>
     </ng-template>
 
@@ -18,13 +20,33 @@
         <td *ngFor="let col of columns">
           {{ row[col.field] }}
         </td>
-        <td *ngIf="showActions">
-          <button pButton icon="pi pi-eye" class="p-button-rounded p-button-info p-button-sm"
-                  (click)="view.emit(row)" pTooltip="View"></button>
-          <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-warning p-button-sm"
-                  (click)="edit.emit(row.id)" pTooltip="Edit"></button>
-          <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm"
-                  (click)="delete.emit(row.id)" pTooltip="Delete"></button>
+        <td *ngIf="showActions" style="display: flex; gap: 0.5rem;">
+     <ng-container *ngIf="actionsTemplate; else defaultActions">
+            <ng-container *ngTemplateOutlet="actionsTemplate; context: { $implicit: row }"></ng-container>
+          </ng-container>
+               <ng-template #defaultActions>
+            <button 
+              pButton 
+              icon="pi pi-eye" 
+              class="p-button-rounded p-button-info p-button-sm"
+              (click)="emitViewId(row)" 
+              pTooltip="View"
+            ></button>
+            <button 
+              pButton 
+              icon="pi pi-pencil" 
+              class="p-button-rounded p-button-warning p-button-sm"
+              (click)="emitEditId(row)" 
+              pTooltip="Edit"
+            ></button>
+            <button 
+              pButton 
+              icon="pi pi-trash" 
+              class="p-button-rounded p-button-danger p-button-sm"
+              (click)="emitDeleteId(row)" 
+              pTooltip="Delete"
+            ></button>
+          </ng-template>
         </td>
       </tr>
     </ng-template>

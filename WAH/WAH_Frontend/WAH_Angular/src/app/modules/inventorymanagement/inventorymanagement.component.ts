@@ -38,15 +38,15 @@ export class InventorymanagementComponent {
     
   }
 
-  onEdit(id:number) {
+  onEdit(data:string) {
     
   }
 
-  onDelete(id: number) {
+  onDelete(id: string) {
  
   }
 
-  onView(id: number) {
+  onView(id: string) {
     
   }
 }

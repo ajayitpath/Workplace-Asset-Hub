@@ -9,7 +9,7 @@ import { filter } from 'rxjs';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-   isExpanded = true;
+  isExpanded = true;
   activeMenuItem = 'dashboard';
 
   // Sample data for dashboard widgets
@@ -28,7 +28,10 @@ export class DashboardComponent {
       this.activeMenuItem = currentRoute;
     });
   }
-
+  logout(): void {
+    localStorage.clear(); 
+    this.router.navigate(['/auth/login']);
+  }
 
   addNewAsset() {
     this.router.navigate(['/admin-dashboard/asset-management/add']);
