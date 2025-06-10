@@ -10,7 +10,6 @@
         public Guid CreatedBy { get; set; }
         public Guid? UpdatedBy { get; set; }
 
-        // FK to User
         public Guid UserId { get; set; }
         public UserEntity User { get; set; } = null!;
     }

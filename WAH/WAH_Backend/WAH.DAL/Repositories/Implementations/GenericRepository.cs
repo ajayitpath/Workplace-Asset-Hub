@@ -120,9 +120,6 @@ namespace WAH.DAL.Repositories.Implementations
             return _dbSet.AsQueryable();
         }
 
-        public Task<T?> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
