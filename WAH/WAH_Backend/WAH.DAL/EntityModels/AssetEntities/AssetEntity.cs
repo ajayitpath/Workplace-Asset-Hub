@@ -11,7 +11,6 @@
         public string Specification { get; set; }
         public int QuantityTotal { get; set; }
         public bool IsActive { get; set; } = true;
-
         // Navigation
         public AssetCategoryEntity Category { get; set; }
         public ICollection<AssetItemEntity> AssetItems { get; set; }

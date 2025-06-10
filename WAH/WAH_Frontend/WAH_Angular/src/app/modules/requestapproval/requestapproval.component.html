@@ -1,1 +1,65 @@
-<p>requestapproval works!</p>
+<div class="request-approval-container">
+    <h2 class="text-center">Asset Requests & Approvals</h2>
+
+    <!-- Search Toolbar -->
+    <div class="toolbar p-mb-3">
+        <input type="text" pInputText placeholder="Search by user or asset" [(ngModel)]="searchText"
+            (input)="onSearchChange()" style="width: 300px" />
+    </div>
+
+    <!-- Reusable Table for Request Approval (Only Toggle and View) -->
+    <ng-template #approvalActions let-rowData>
+        <p-toggleButton [ngModel]="rowData.status === 'Approved'" onLabel="Approved" offLabel="Rejected"
+         
+ (ngModelChange)="onToggleStatus(rowData)"
+            styleClass="p-button-sm"></p-toggleButton>
+        <button pButton type="button" icon="pi pi-eye" class="p-button-rounded p-button-info p-button-sm"
+            (click)="onView(rowData)" pTooltip="View Details" style="margin-left: 0.5rem;"></button>
+    </ng-template>
+
+    <app-reusabletable [columns]="columns" [data]="filteredRequests" [showActions]="true"
+        [actionsTemplate]="approvalActions">
+    </app-reusabletable>
+
+   <p-dialog
+  [(visible)]="showViewDialog"
+  [modal]="true"
+  [style]="{ width: '500px' }"
+  [closable]="true"
+>
+  <div class="plan-details-container" *ngIf="viewRequest">
+    <h1 class="customh1">Request Details</h1>
+
+    <div class="plan-detail-block">
+      <label class="label1">Asset Name:</label>
+      <span class="plan-value">{{ viewRequest.AssetName }}</span>
+    </div>
+
+    <div class="plan-detail-block">
+      <label class="label1">Quantity Requested:</label>
+      <span class="plan-value">{{ viewRequest.QuantityRequested }}</span>
+    </div>
+
+    <div class="plan-detail-block">
+      <label class="label1">Requested At:</label>
+      <span class="plan-value">
+        {{ viewRequest.RequestedAt | date: 'dd MMM yyyy, hh:mm a' }}
+      </span>
+    </div>
+
+    <div class="plan-detail-block">
+      <label class="label1">Status:</label>
+      <span class="plan-value">{{ viewRequest.Status }}</span>
+    </div>
+
+    <div class="plan-detail-block">
+      <label class="label1">User Name:</label>
+      <span class="plan-value">{{ viewRequest.UserName }}</span>
+    </div>
+
+
+  </div>
+</p-dialog>
+ 
+</div>
+<p-confirmDialog></p-confirmDialog>

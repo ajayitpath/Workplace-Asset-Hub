@@ -1,4 +1,3 @@
-// pages/auth/ResetPassword.jsx
 import React from 'react';
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -53,7 +52,7 @@ const ResetPassword = () => {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 gap-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-100 to-blue-200 p-4 gap-4">
       <Paper elevation={3} className="p-6 rounded-lg w-full max-w-md gap-4">
         <Typography variant="h5" className="text-center mb-4 text-primary-700 font-semibold p-2 gap-2">
           Reset Password
@@ -86,17 +85,6 @@ const ResetPassword = () => {
           >
             {loading? "Resetting password" : "Reset Password"}
           </Button>
-          <div className="text-center mt-4">
-            <span className="text-sm text-gray-600">
-              Remember your password?{" "}
-              <Link
-                to="/login"
-                className="text-blue-600 hover:underline font-medium"
-              >
-                Login
-              </Link>
-            </span>
-          </div>
         </form>
       </Paper>
     </div>

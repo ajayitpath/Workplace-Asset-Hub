@@ -5,24 +5,24 @@ import URLS from "../constants/urls";
 import { toast } from "react-toastify";
 
 const axiosInstance = axios.create({
-  baseURL: "https://localhost:7126/api", // Replace with your API base URL
-  headers: {
-    "Content-Type": "application/json",
-  },
+    baseURL: "https://localhost:7126/api", // Replace with your API base URL
+    headers: {
+        "Content-Type": "application/json",
+    },
 });
 
 axiosInstance.interceptors.request.use(
-  (config) => {
-    const state = store.getState();
-    const token = state.auth?.token;
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+    (config) => {
+        const state = store.getState();
+        const token = state.auth?.token;
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
     }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
 );
 
 axiosInstance.interceptors.response.use(

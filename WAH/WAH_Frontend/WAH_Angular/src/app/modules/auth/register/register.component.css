@@ -50,9 +50,6 @@ input.form-control:focus,
   border-color: var(--primary-color);
 }
 
-.btn-primary:hover {
-  background-color: darken(var(--primary-color), 10%);
-}
 
 a.text-primary {
   color: var(--primary-color);
@@ -73,7 +70,9 @@ a.text-primary {
   text-decoration: underline;
 }
 
-
+.desk{
+  width: 100%;
+}
 ::ng-deep .p-password, .p-datepicker {
   width: 100% !important;
 }
@@ -92,4 +91,14 @@ a.text-primary {
 
   border-radius: 6px;
   font-size: 15px;
+}
+
+.page-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;      /* Full viewport width */
+  height: 100vh;     /* Full viewport height */
+  background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white overlay */
+  z-index: 1050;     /* On top of all other content */
 }

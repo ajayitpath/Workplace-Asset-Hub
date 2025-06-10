@@ -2,25 +2,38 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card shadow p-4">
-        <h4 class="text-center mb-4">Email OTP Verification</h4>
-
-        <form [formGroup]="otpForm" (ngSubmit)="onVerify()">
-          <div class="form-group">
-            <label for="otp">Enter OTP</label>
-            <input type="text" id="otp" formControlName="otp" class="form-control" placeholder="Enter OTP" />
-            <div *ngIf="otpForm.get('otp')?.invalid && otpForm.get('otp')?.touched" class="text-danger small">
+        <h4 class="text-center mb-4">OTP Verification</h4>
+        <form [formGroup]="otpForm" (ngSubmit)="onVerify()" novalidate>
+          <div class="mb-3">
+            <input type="text" id="otp" formControlName="otp" class="form-control" placeholder="Enter OTP"
+              aria-describedby="otpHelp" maxlength="6" pattern="[0-9]*" inputmode="numeric"
+              (keypress)="allowOnlyNumbers($event)" />
+            <div *ngIf="otpForm.get('otp')?.invalid && otpForm.get('otp')?.touched" class="text-danger small mt-1">
               OTP is required.
             </div>
+            <div *ngIf="otpForm.get('otp')?.errors?.['pattern']" class="text-danger small mt-1">OTP must be 6 digits and
+              numeric only.</div>
           </div>
+          <button type="submit" class="btn btn-primary w-100 mt-3 d-flex align-items-center justify-content-center"
+            [disabled]="otpForm.invalid || isSubmitting">
+            <p-progress-spinner *ngIf="isSubmitting" strokeWidth="8" fill="transparent" animationDuration=".5s"
+              [style]="{ width: '24px', height: '24px' }" styleClass="me-2"></p-progress-spinner>
+            Verify
+          </button>
 
-          <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="otpForm.invalid">Verify</button>
         </form>
-
         <div class="form-footer mt-4 text-center small">
-          <p>Didn't get the OTP? <a (click)="resendOtp()" class="text-primary text-decoration-none"  style="cursor:pointer;">Resend</a></p>
-          <p>Go back to <a routerLink="/auth/register" class="text-primary text-decoration-none">Register</a></p>
+          <p>
+            Didn't get the OTP?
+            <a (click)="resendOtp()" class="text-primary text-decoration-none" style="cursor:pointer;">Resend</a>
+          </p>
+          <p>
+            Go back to
+            <a routerLink="/auth/register" class="text-primary text-decoration-none">Sign up</a>
+          </p>
         </div>
       </div>
     </div>
   </div>
 </div>
+<p-toast></p-toast>

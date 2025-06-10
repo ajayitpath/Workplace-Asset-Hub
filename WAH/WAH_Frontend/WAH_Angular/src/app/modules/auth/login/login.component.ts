@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../Services/auth.service';
 import { Router } from '@angular/router';
-
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-login',
   standalone: false,
@@ -12,9 +12,8 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm!: FormGroup;
   isSubmitting = false;
-  errorMessage = '';
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -22,7 +21,7 @@ export class LoginComponent {
         Validators.required,
         Validators.email,
         Validators.maxLength(100),
-        Validators.pattern(/^(?=.*@)(?=.*\.).+$/) // Must contain '@' and '.'
+        Validators.pattern(/^(?=.*@)(?=.*\.).+$/)
       ]],
       password: ['', [
         Validators.required,
@@ -30,38 +29,53 @@ export class LoginComponent {
         Validators.maxLength(100),
         Validators.pattern(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,100}$/
-        ) // Complex password rule
+        )
       ]]
     });
   }
 
   onSubmit(): void {
-    this.errorMessage = '';
-
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }
-
     this.isSubmitting = true;
-
-    // const { email, password } = this.loginForm.value;
-    // console.log('Login data:', email, password);
-    // this.router.navigate(['/dashboard'])
-
-    // setTimeout(() => {
-    //   this.isSubmitting = false;
-    // }, 1500);
-
-    // Call the login service
     const loginData = this.loginForm.value;
     this.authService.login(loginData).subscribe({
       next: (response) => {
         localStorage.setItem('token', response.token); // Store token
-        this.router.navigate(['/dashboard']);           // Navigate to dashboard
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Login Successful',
+          detail: 'Welcome back!',
+          life: 3000
+        });
+        setTimeout(() => {
+          this.router.navigate(['/dashboard']);
+        }, 3000);          // Navigate to dashboard
       },
       error: (err) => {
-        this.errorMessage = err.error?.message || 'Login failed. Please try again.';
+        const backendMessage = err?.error?.message;
+        const status = err?.status;
+        if (status === 401) {
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Unauthorized',
+            detail: 'Invalid email or password.'
+          });
+        } else if (status === 500) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Server Error',
+            detail: 'Please try again later.'
+          });
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Login Failed',
+            detail: backendMessage || 'Something went wrong. Please try again.'
+          });
+        }
         this.isSubmitting = false;
       },
       complete: () => {

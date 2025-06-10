@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
@@ -10,9 +11,13 @@ import {
   Avatar,
   IconButton,
   TextField,
+
   MenuItem,
+
   FormControl,
+
   InputLabel,
+
   Select,
   InputAdornment,
   Button,
@@ -45,11 +50,13 @@ const SignupForm = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
+
     register,
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
+
     resolver: yupResolver(signupSchema),
     mode: "onChange",
     defaultValues: {
@@ -321,6 +328,7 @@ const SignupForm = () => {
       </Paper>
     </Box>
   );
+
 };
 
 export default SignupForm;

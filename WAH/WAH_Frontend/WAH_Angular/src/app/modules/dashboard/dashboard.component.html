@@ -5,11 +5,9 @@
     <div class="header">
       <h1>Admin Dashboard</h1>
       <div class="header-actions">
-  
         <div class="logout-container">
-  <p class="logout-button">Logout</p>
-</div>
-
+          <p class="logout-button" (click)="logout()">Logout</p>
+        </div>
       </div>
     </div>
 
@@ -41,7 +39,6 @@
             <h3>Pending Requests</h3>
             <p class="stat-number">{{ dashboardData.pendingRequests }}</p>
           </div>
-     
         </div>
       </div>
 

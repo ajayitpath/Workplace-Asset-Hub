@@ -11,7 +11,6 @@ namespace WAH.BLL.Mappers
             {
                 return new AssetEntity
                 {
-                    AssetId = dto.AssetId,
                     AssetName = dto.AssetName,
                     AssetCode = dto.AssetCode,
                     CategoryId = dto.CategoryId,
@@ -30,6 +29,7 @@ namespace WAH.BLL.Mappers
                     AssetName = entity.AssetName,
                     AssetCode = entity.AssetCode,
                     CategoryId = entity.CategoryId,
+                    CategoryName = entity.Category?.CategoryName,
                     Brand = entity.Brand,
                     Model = entity.Model,
                     Specification = entity.Specification,

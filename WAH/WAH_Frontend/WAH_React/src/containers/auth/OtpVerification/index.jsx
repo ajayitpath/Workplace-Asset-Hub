@@ -1,4 +1,3 @@
-// pages/auth/OtpVerification.jsx
 import React from 'react';
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -58,10 +57,10 @@ const OtpVerification = () => {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 gap-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-purple-200 p-4 gap-4">
       <Paper elevation={3} className="p-6 rounded-lg w-full max-w-md">
         <Typography variant="h5" className="text-center mb-4 text-primary-700 font-semibold p-2 gap-2">
-          Verify Email
+          OTP Verification
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} noValidate className="p-4 flex flex-col gap-4">
           <TextField

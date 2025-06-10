@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, 
 import { FormdataService } from '../Services/formdata.service';
 import { AuthService } from '../Services/auth.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,7 @@ export class RegisterComponent {
     { label: 'User', value: 1 },
     { label: 'Manager', value: 2 }
   ];
-  constructor(private formBuilder: FormBuilder, private router: Router, private formDataService: FormdataService, private authService: AuthService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private formDataService: FormdataService, private authService: AuthService, private messageService: MessageService) { }
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -41,7 +42,7 @@ export class RegisterComponent {
       gender: ['', Validators.required],
       dob: ['', [Validators.required, dobValidator()]], // date of birth
       deskNo: ['', [Validators.pattern(/^[0-9]{1,4}$/), Validators.maxLength(20)]], // 1-4 digit desk number
-      roleId: ['', Validators.required], // Assuming roleId is a string
+      // roleId: ['', Validators.required], // Assuming roleId is a string
       profileImage: [null],
     }, { validators: this.passwordMatchValidator });
 
@@ -61,29 +62,24 @@ export class RegisterComponent {
   onImageUpload(event: any) {
     const file = event.files?.[0];
     if (file) {
-      this.profileImage = file;
+      this.profileImage = file; 
       this.imageRequired = false;
     }
   }
-allowOnlyNumbers(event: KeyboardEvent): void {
-  const input = event.target as HTMLInputElement;
-
-  // Allow only 10 digits
-  if (input.value.length >= 10) {
-    event.preventDefault();
-    return;
+  allowOnlyNumbers(event: KeyboardEvent): void {
+    const input = event.target as HTMLInputElement;
+    // Allow only 10 digits
+    if (input.value.length >= 10) {
+      event.preventDefault();
+      return;
+    }
+    const charCode = event.charCode;
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
   }
-
-  const charCode = event.charCode;
-  // Block anything that's not a number (0–9)
-  if (charCode < 48 || charCode > 57) {
-    event.preventDefault();
-  }
-}
-
 
   onNavigateAway(): void {
-    debugger
     this.formDataService.setFormData(this.registerForm.value);
     this.router.navigate(['/auth/emailverify']);
   }
@@ -95,19 +91,11 @@ allowOnlyNumbers(event: KeyboardEvent): void {
 
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
-      // if (!this.profileImage) {
-      //   this.imageRequired = true;
-      // }
       return;
     }
-    // if (this.profileImage) {
-    //   this.imageRequired = true;
-    //   return;
-    // }
     this.isSubmitting = true;
 
     const formValue = this.registerForm.value;
-    // Prepare data to send (exclude profileImage)
     const registerData: any = {
       firstName: formValue.firstName,
       lastName: formValue.lastName,
@@ -116,43 +104,69 @@ allowOnlyNumbers(event: KeyboardEvent): void {
       confirmPassword: formValue.confirmPassword,
       phoneNumber: formValue.phoneNumber,
       gender: formValue.gender.value,
-      dob: this.formatDateOnly(formValue.dob), // backend expects DateOnly (adjust if needed)
+      dob: this.formatDateOnly(formValue.dob),
       deskNo: formValue.deskNo,
-      roleId: formValue.roleId,
+      // roleId: formValue.roleId,
     };
 
-    // Register the user first
     this.authService.register(registerData).subscribe({
       next: (res) => {
         const userId = res.userId;
         if (this.profileImage && userId) {
-          // Upload image with real userId
           this.authService.uploadProfileImage(userId, this.profileImage).subscribe({
-            next: (uploadRes) => {
-              this.successMessage = 'Registration successful!';
+            next: () => {
+              localStorage.setItem('email', formValue.email);
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Registration Successful',
+                detail: 'Your account has been registered successfully.',
+                life: 3000
+              });
               this.isSubmitting = false;
               this.registerForm.reset();
               this.profileImage = null;
               this.submitted = false;
-              this.router.navigate(['/auth/emailverify']);
+              setTimeout(() => {
+                this.router.navigate(['/auth/emailverify'], {
+                  queryParams: { email: formValue.email }
+                });
+              }, 3000);
             },
             error: () => {
-              this.errorMessage = 'Failed to upload profile image.';
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to upload profile image.',
+                life: 3000
+              });
               this.isSubmitting = false;
             }
           });
         } else {
-          // No profile image, just finish registration
-          this.successMessage = 'Registration successful!';
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Registration Successful',
+            detail: 'Your account has been registered successfully.',
+            life: 3000
+          });
           this.isSubmitting = false;
           this.registerForm.reset();
           this.profileImage = null;
           this.submitted = false;
-          this.router.navigate(['/auth/emailverify']);
+          setTimeout(() => {
+            this.router.navigate(['/auth/emailverify'], {
+              queryParams: { email: formValue.email }
+            });
+          }, 3000);
         }
       },
       error: () => {
-        this.errorMessage = 'Registration failed. Please try again.';
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Registration Failed',
+          detail: 'Registration failed. Please try again.',
+          life: 3000
+        });
         this.isSubmitting = false;
       }
     });
@@ -184,6 +198,11 @@ export function dobValidator(): ValidatorFn {
       return { underage: true };
     }
 
+    if (age > 60) {
+      return { overage: true };
+    }
+
     return null;
   };
 }
+
