@@ -74,7 +74,6 @@ export class ResetpasswordComponent {
 
     this.authService.resetPassword(dto).subscribe({
       next: (res) => {
-        // console.log(res);
         this.isSubmitting = false;
         this.messageService.add({
           severity: 'success',
@@ -89,7 +88,6 @@ export class ResetpasswordComponent {
         }, 3000); // Matches the toast duration
       },
       error: (err) => {
-        // console.error(err);
         this.isSubmitting = false;
         this.messageService.add({
           severity: 'error',

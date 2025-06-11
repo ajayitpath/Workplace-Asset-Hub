@@ -1,5 +1,6 @@
-<form *ngIf="assetForm" [formGroup]="assetForm" (ngSubmit)="onSubmit()" class="p-fluid">
+<!-- Asset management Form -->
 
+<form *ngIf="assetForm" [formGroup]="assetForm" (ngSubmit)="onSubmit()" class="p-fluid">
   <!-- Asset Name -->
   <div class="p-field">
     <label for="assetName">Asset Name *</label>
@@ -7,8 +8,10 @@
       [ngClass]="{ 'ng-invalid': assetForm.get('assetName')?.invalid && assetForm.get('assetName')?.touched }" />
     <ng-container *ngIf="assetForm.get('assetName')?.touched && assetForm.get('assetName')?.invalid">
       <small class="p-error" *ngIf="assetForm.get('assetName')?.errors?.['required']">Asset Name is required</small>
-      <small class="p-error" *ngIf="assetForm.get('assetName')?.errors?.['minlength']">Minimum 2 characters required</small>
-      <small class="p-error" *ngIf="assetForm.get('assetName')?.errors?.['maxlength']">Maximum 50 characters allowed</small>
+      <small class="p-error" *ngIf="assetForm.get('assetName')?.errors?.['minlength']">Minimum 2 characters
+        required</small>
+      <small class="p-error" *ngIf="assetForm.get('assetName')?.errors?.['maxlength']">Maximum 50 characters
+        allowed</small>
     </ng-container>
   </div>
 
@@ -19,8 +22,10 @@
       [ngClass]="{ 'ng-invalid': assetForm.get('assetCode')?.invalid && assetForm.get('assetCode')?.touched }" />
     <ng-container *ngIf="assetForm.get('assetCode')?.touched && assetForm.get('assetCode')?.invalid">
       <small class="p-error" *ngIf="assetForm.get('assetCode')?.errors?.['required']">Asset Code is required</small>
-      <small class="p-error" *ngIf="assetForm.get('assetCode')?.errors?.['minlength']">Minimum 2 characters required</small>
-      <small class="p-error" *ngIf="assetForm.get('assetCode')?.errors?.['maxlength']">Maximum 15 characters allowed</small>
+      <small class="p-error" *ngIf="assetForm.get('assetCode')?.errors?.['minlength']">Minimum 2 characters
+        required</small>
+      <small class="p-error" *ngIf="assetForm.get('assetCode')?.errors?.['maxlength']">Maximum 15 characters
+        allowed</small>
     </ng-container>
   </div>
 
@@ -66,9 +71,12 @@
       [ngClass]="{ 'ng-invalid': assetForm.get('specification')?.invalid && assetForm.get('specification')?.touched }">
     </textarea>
     <ng-container *ngIf="assetForm.get('specification')?.touched && assetForm.get('specification')?.invalid">
-      <small class="p-error" *ngIf="assetForm.get('specification')?.errors?.['required']">Specification is required</small>
-      <small class="p-error" *ngIf="assetForm.get('specification')?.errors?.['minlength']">Minimum 2 characters required</small>
-      <small class="p-error" *ngIf="assetForm.get('specification')?.errors?.['maxlength']">Maximum 100 characters allowed</small>
+      <small class="p-error" *ngIf="assetForm.get('specification')?.errors?.['required']">Specification is
+        required</small>
+      <small class="p-error" *ngIf="assetForm.get('specification')?.errors?.['minlength']">Minimum 2 characters
+        required</small>
+      <small class="p-error" *ngIf="assetForm.get('specification')?.errors?.['maxlength']">Maximum 100 characters
+        allowed</small>
     </ng-container>
   </div>
 
@@ -78,7 +86,8 @@
     <input id="quantityTotal" pInputText type="number" min="1" formControlName="quantityTotal"
       [ngClass]="{ 'ng-invalid': assetForm.get('quantityTotal')?.invalid && assetForm.get('quantityTotal')?.touched }" />
     <ng-container *ngIf="assetForm.get('quantityTotal')?.touched && assetForm.get('quantityTotal')?.invalid">
-      <small class="p-error" *ngIf="assetForm.get('quantityTotal')?.errors?.['required']">Total Quantity is required</small>
+      <small class="p-error" *ngIf="assetForm.get('quantityTotal')?.errors?.['required']">Total Quantity is
+        required</small>
       <small class="p-error" *ngIf="assetForm.get('quantityTotal')?.errors?.['min']">Quantity must be at least 1</small>
     </ng-container>
   </div>
@@ -90,3 +99,4 @@
     <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="onCancel()"></button>
   </div>
 </form>
+<p-toast></p-toast>

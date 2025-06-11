@@ -1,16 +1,16 @@
 <p-card>
-  <p-table [value]="data" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[10,20,30]"
-           [resizableColumns]="true" [responsiveLayout]="'scroll'" [globalFilterFields]="globalFilterFields">
+  <p-table [value]="data" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[10,20,30]" [resizableColumns]="true"
+    [responsiveLayout]="'scroll'" [globalFilterFields]="globalFilterFields">
     <ng-template pTemplate="header">
       <tr>
         <th *ngFor="let col of columns" pSortableColumn="{{ col.field }}">
           {{ col.header }}
           <p-sortIcon [field]="col.field"></p-sortIcon>
           <p-columnFilter *ngIf="col.filterable !== false" [field]="col.field" display="menu"
-                          [placeholder]="'Filter by ' + col.header"></p-columnFilter>
+            [placeholder]="'Filter by ' + col.header"></p-columnFilter>
         </th>
         <th *ngIf="showActions">Actions
-  
+
         </th>
       </tr>
     </ng-template>
@@ -21,31 +21,16 @@
           {{ row[col.field] }}
         </td>
         <td *ngIf="showActions" style="display: flex; gap: 0.5rem;">
-     <ng-container *ngIf="actionsTemplate; else defaultActions">
+          <ng-container *ngIf="actionsTemplate; else defaultActions">
             <ng-container *ngTemplateOutlet="actionsTemplate; context: { $implicit: row }"></ng-container>
           </ng-container>
-               <ng-template #defaultActions>
-            <button 
-              pButton 
-              icon="pi pi-eye" 
-              class="p-button-rounded p-button-info p-button-sm"
-              (click)="emitViewId(row)" 
-              pTooltip="View"
-            ></button>
-            <button 
-              pButton 
-              icon="pi pi-pencil" 
-              class="p-button-rounded p-button-warning p-button-sm"
-              (click)="emitEditId(row)" 
-              pTooltip="Edit"
-            ></button>
-            <button 
-              pButton 
-              icon="pi pi-trash" 
-              class="p-button-rounded p-button-danger p-button-sm"
-              (click)="emitDeleteId(row)" 
-              pTooltip="Delete"
-            ></button>
+          <ng-template #defaultActions>
+            <button pButton icon="pi pi-eye" class="p-button-rounded p-button-info p-button-sm"
+              (click)="emitViewId(row)" pTooltip="View"></button>
+            <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-warning p-button-sm"
+              (click)="emitEditId(row)" pTooltip="Edit"></button>
+            <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm"
+              (click)="emitDeleteId(row)" pTooltip="Delete"></button>
           </ng-template>
         </td>
       </tr>

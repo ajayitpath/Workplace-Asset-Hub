@@ -1,10 +1,10 @@
-
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AssetService } from '../Services/asset.service';
 import { ApiAssetResponse, Asset } from '../../../shared/Model/asset.model';
-import { CategoryService } from '../Services/category.service';
+import { CategoryService } from '../../assestcategories/Services/category.service';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-add-edit',
@@ -18,15 +18,16 @@ export class AddEditComponent {
   @Output() formClose = new EventEmitter<boolean>();
 
   assetForm!: FormGroup;
-  selectedAssetId: string | null = null; 
+  selectedAssetId: string | null = null;
   categoryList: { label: string; value: string }[] = [];
 
   constructor(
-    private fb: FormBuilder, 
-    private assetService: AssetService, 
-    private categoryService: CategoryService,   
-    private route: ActivatedRoute 
-  ) {}
+    private fb: FormBuilder,
+    private assetService: AssetService,
+    private categoryService: CategoryService,
+    private route: ActivatedRoute,
+    private messageService: MessageService
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -61,8 +62,8 @@ export class AddEditComponent {
       assetCode: ['', Validators.required],
       categoryId: ['', Validators.required],
       brand: ['', Validators.required],
-      model: ['',Validators.required],
-      specification: ['',Validators.required],
+      model: ['', Validators.required],
+      specification: ['', Validators.required],
       quantityTotal: [1, [Validators.required, Validators.min(1)]],
     });
   }
@@ -82,7 +83,7 @@ export class AddEditComponent {
     }
   }
 
- private resetForm(): void {
+  private resetForm(): void {
     this.assetForm.reset({
       assetId: null,
       assetName: '',
@@ -106,7 +107,11 @@ export class AddEditComponent {
           this.patchFormWithAssetData();
         },
         error: (err) => {
-          console.error('Error fetching asset:', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Fetch Failed',
+            detail: 'Failed to load asset details from route.'
+          });
         }
       });
     }
@@ -120,34 +125,56 @@ export class AddEditComponent {
           value: cat.CategoryId
         }));
       },
-      error: err => console.error('Error fetching categories:', err)
+      error: err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Load Failed',
+          detail: 'Unable to fetch category list.'
+        });
+      }
     });
   }
 
   onSubmit(): void {
     if (this.assetForm.valid) {
       const payload: Asset = this.assetForm.value;
-    
+
       const assetId = this.selectedAssetId || payload.assetId;
 
       if (this.isEditMode && assetId) {
         this.assetService.updateAsset(assetId, payload).subscribe({
           next: (response) => {
-            console.log('Asset updated:', response);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Asset Updated',
+              detail: 'The asset has been updated successfully.'
+            });
             this.formClose.emit(true);
           },
           error: (err) => {
-            console.error('Error updating asset:', err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Update Failed',
+              detail: 'An error occurred while updating the asset.'
+            });
           }
         });
       } else {
         this.assetService.createAsset(payload).subscribe({
           next: (response) => {
-            console.log('Asset created:', response);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Asset Created',
+              detail: 'The asset has been created successfully.'
+            });
             this.formClose.emit(true);
           },
           error: (err) => {
-            console.error('Error creating asset:', err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Creation Failed',
+              detail: 'An error occurred while creating the asset.'
+            });
           }
         });
       }

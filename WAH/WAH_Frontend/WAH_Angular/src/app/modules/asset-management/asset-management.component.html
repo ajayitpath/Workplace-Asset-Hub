@@ -1,4 +1,3 @@
-
 <div class="asset-management-container">
   <!-- Header -->
   <div class="header">
@@ -8,61 +7,30 @@
   <!-- Toolbar -->
   <div class="toolbar">
     <div class="left">
-      <input
-        type="text"
-        pInputText
-        placeholder="Search any Item"
-        [(ngModel)]="searchText"
-        (input)="onSearchChange()"
-      />
+      <input type="text" pInputText placeholder="Search any Item" [(ngModel)]="searchText" (input)="onSearchChange()" />
     </div>
 
     <div class="right">
-      <button
-        pButton
-        type="button"
-        icon="pi pi-plus"
-        label="Add Asset"
-        class="p-button-sm p-button-primary"
-        (click)="onAddAsset()"
-      ></button>
+      <button pButton type="button" icon="pi pi-plus" label="Add Asset" class="p-button-sm p-button-primary"
+        (click)="onAddAsset()"></button>
     </div>
   </div>
 
   <!-- Reusable Table -->
-  <app-reusabletable
-    [columns]="columns"
-    [data]="filteredData"
-    [showActions]="true"
-    (edit)="onEdit($event)"
-    (delete)="onDelete($event)"
-    (view)="onView($event)">
+  <app-reusabletable [columns]="columns" [data]="filteredData" [showActions]="true" (edit)="onEdit($event)"
+    (delete)="onDelete($event)" (view)="onView($event)">
   </app-reusabletable>
 
   <!-- Add/Edit Dialog -->
-  <p-dialog
-    header="{{ isEditMode ? 'Edit Asset' : 'Add Asset' }}"
-    [(visible)]="showForm"
-    [modal]="true"
-    [closable]="true"
-    [style]="{ width: '40vw' }"
-    (onHide)="onFormClose(false)"
-  >
+  <p-dialog header="{{ isEditMode ? 'Edit Asset' : 'Add Asset' }}"  [(visible)]="showForm" [modal]="true"
+    [closable]="true" [style]="{ width: '40vw' }" (onHide)="onFormClose(false)">
     <!-- FIXED: Single component with proper input binding -->
-    <app-add-edit
-      [isEditMode]="isEditMode"
-      [assetData]="selectedAsset"
-      (formClose)="onFormClose($event)">
+    <app-add-edit [isEditMode]="isEditMode" [assetData]="selectedAsset" (formClose)="onFormClose($event)">
     </app-add-edit>
   </p-dialog>
 
   <!-- View Dialog -->
-  <p-dialog
-    [(visible)]="showViewDialog"
-    [modal]="true"
-    [style]="{ width: '500px' }"
-    [closable]="true"
-  >
+  <p-dialog [(visible)]="showViewDialog" [modal]="true" [style]="{ width: '500px' }" [closable]="true">
     <div class="plan-details-container" *ngIf="viewAsset">
       <h1 class="customh1">Asset Details</h1>
 
@@ -103,5 +71,5 @@
     </div>
   </p-dialog>
 </div>
-
+<p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
