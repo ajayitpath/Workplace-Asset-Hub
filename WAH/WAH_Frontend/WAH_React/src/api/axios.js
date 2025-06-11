@@ -7,7 +7,7 @@ import { Navigate } from 'react-router-dom';
 
 
 const axiosInstance = axios.create({
-    baseURL : 'https://api.example.com', // Replace with your API base URL
+    baseURL : 'https://localhost:7126/api', 
     headers: {
         'Content-Type': 'application/json',
     },
