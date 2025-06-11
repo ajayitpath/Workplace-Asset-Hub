@@ -23,7 +23,7 @@ export class ReusabletableComponent {
     const field = this.idFieldName || (rowData['AssetId'] ? 'AssetId' : (rowData['categoryId'] ? 'categoryId' : ''));
     const id = rowData?.[field];
     if (!id || typeof id !== 'string') {
-      console.warn(`ReusableTable: '${field}' not found or not a string:`, rowData);
+      // console.warn(`ReusableTable: '${field}' not found or not a string:`, rowData);
       return '';
     }
     return id;

@@ -66,14 +66,12 @@ export class AddEditCategoriesComponent {
         // Update category
         this.categoryService.updateCategory(payload.CategoryId, payload).subscribe({
           next: (res) => {
-            // console.log(res.message);  
             this.messageService.add({ severity: 'success', summary: 'Success', detail: this.isEditMode ? 'Category updated' : 'Category created' });
             this.resetForm();
             this.categoryData = null;
             this.formClose.emit(true);
           },
           error: (err) => {
-            // console.error('❌ Update error:', err); 
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Operation failed' });
           },
         });
@@ -89,7 +87,11 @@ export class AddEditCategoriesComponent {
               this.formClose.emit(true);
             },
             error: (err) => {
-              console.error('Error creating category:', err);
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Creation Failed',
+                detail: 'An error occurred while creating the category.'
+              });
             },
           });
       }

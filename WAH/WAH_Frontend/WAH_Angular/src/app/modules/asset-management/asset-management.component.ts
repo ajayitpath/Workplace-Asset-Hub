@@ -39,7 +39,7 @@ export class AssetManagementComponent {
     private categoryService: CategoryService,
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService   
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -54,8 +54,8 @@ export class AssetManagementComponent {
       categories: this.categoryService.getAllCategories()
     }).subscribe({
       next: ({ assets, categories }) => {
-        console.log('Assets loaded:', assets);
-        console.log('Categories loaded:', categories);
+        // console.log('Assets loaded:', assets);
+        // console.log('Categories loaded:', categories);
 
         const categoryMap = new Map<string, string>(
           categories.map(cat => [String(cat.CategoryId), cat.CategoryName])
@@ -73,7 +73,13 @@ export class AssetManagementComponent {
 
         this.filteredData = this.assets;
       },
-      error: err => console.error('Error fetching assets:', err)
+      error: err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Asset Load Failed',
+          detail: 'An error occurred while fetching assets.'
+        });
+      }
     });
   }
 
@@ -85,7 +91,13 @@ export class AssetManagementComponent {
           value: cat.CategoryId
         }));
       },
-      error: err => console.error('Error fetching categories:', err)
+      error: err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Category Load Failed',
+          detail: 'An error occurred while fetching categories.'
+        });
+      }
     });
   }
 
@@ -139,8 +151,11 @@ export class AssetManagementComponent {
         this.showForm = true;
       },
       error: err => {
-        console.error('Error fetching asset:', err);
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to fetch asset details.' });
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Fetch Failed',
+          detail: 'Failed to fetch asset details.'
+        });
       }
     });
   }
@@ -159,8 +174,21 @@ export class AssetManagementComponent {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.assetService.deleteAsset(id).subscribe({
-          next: () => this.loadAssets(),
-          error: err => console.error('Error deleting asset:', err)
+          next: () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Deleted',
+              detail: 'Asset deleted successfully.'
+            });
+            this.loadAssets(); // refresh list
+          },
+          error: err => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Delete Failed',
+              detail: 'An error occurred while deleting the asset.'
+            });
+          }
         });
       }
     });
@@ -179,20 +207,42 @@ export class AssetManagementComponent {
     if (this.isEditMode && this.selectedAssetId) {
       this.assetService.updateAsset(this.selectedAssetId, payload).subscribe({
         next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Updated',
+            detail: 'Asset updated successfully.'
+          });
           this.showForm = false;
           this.resetFormState();
           this.loadAssets();
         },
-        error: err => console.error('Error updating asset:', err)
+        error: err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Update Failed',
+            detail: 'An error occurred while updating the asset.'
+          });
+        }
       });
     } else {
       this.assetService.createAsset(payload).subscribe({
         next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Created',
+            detail: 'Asset created successfully.'
+          });
           this.showForm = false;
           this.resetFormState();
           this.loadAssets();
         },
-        error: err => console.error('Error creating asset:', err)
+        error: err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Creation Failed',
+            detail: 'An error occurred while creating the asset.'
+          });
+        }
       });
     }
   }
@@ -218,15 +268,31 @@ export class AssetManagementComponent {
   }
 
   onView(id: string): void {
-    debugger;
-    console.log('View Asset ID:', id);
     this.assetService.getAssetById(id).subscribe({
       next: asset => {
-        this.viewAsset = asset;
-        this.showViewDialog = true;
-        console.log('Viewing asset:', asset);
+        if (asset) {
+          this.viewAsset = asset;
+          this.showViewDialog = true;
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Asset Loaded',
+            detail: `Asset "${asset.AssetName || 'details'}" loaded for viewing.`
+          });
+        } else {
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Not Found',
+            detail: 'No asset data found for the given ID.'
+          });
+        }
       },
-      error: err => console.error('Error fetching asset for view:', err)
+      error: err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error fetching asset for view',
+          detail: 'An error occurred while fetching asset details.'
+        });
+      }
     });
   }
 

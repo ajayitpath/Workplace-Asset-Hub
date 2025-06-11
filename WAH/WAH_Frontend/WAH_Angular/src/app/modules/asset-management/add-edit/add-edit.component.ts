@@ -4,6 +4,7 @@ import { AssetService } from '../Services/asset.service';
 import { ApiAssetResponse, Asset } from '../../../shared/Model/asset.model';
 import { CategoryService } from '../../assestcategories/Services/category.service';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-add-edit',
@@ -24,7 +25,8 @@ export class AddEditComponent {
     private fb: FormBuilder,
     private assetService: AssetService,
     private categoryService: CategoryService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -105,7 +107,11 @@ export class AddEditComponent {
           this.patchFormWithAssetData();
         },
         error: (err) => {
-          console.error('Error fetching asset:', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Fetch Failed',
+            detail: 'Failed to load asset details from route.'
+          });
         }
       });
     }
@@ -119,7 +125,13 @@ export class AddEditComponent {
           value: cat.CategoryId
         }));
       },
-      error: err => console.error('Error fetching categories:', err)
+      error: err => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Load Failed',
+          detail: 'Unable to fetch category list.'
+        });
+      }
     });
   }
 
@@ -132,21 +144,37 @@ export class AddEditComponent {
       if (this.isEditMode && assetId) {
         this.assetService.updateAsset(assetId, payload).subscribe({
           next: (response) => {
-            console.log('Asset updated:', response);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Asset Updated',
+              detail: 'The asset has been updated successfully.'
+            });
             this.formClose.emit(true);
           },
           error: (err) => {
-            console.error('Error updating asset:', err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Update Failed',
+              detail: 'An error occurred while updating the asset.'
+            });
           }
         });
       } else {
         this.assetService.createAsset(payload).subscribe({
           next: (response) => {
-            console.log('Asset created:', response);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Asset Created',
+              detail: 'The asset has been created successfully.'
+            });
             this.formClose.emit(true);
           },
           error: (err) => {
-            console.error('Error creating asset:', err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Creation Failed',
+              detail: 'An error occurred while creating the asset.'
+            });
           }
         });
       }

@@ -43,12 +43,15 @@ export class AssestcategoriesComponent {
         this.filteredCategories = categories;
       },
       error: (err) => {
-        console.error('Error loading categories', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to load categories'
+        });
       }
     });
   }
   onEdit(id: string): void {
-    debugger
     this.categoryService.getCategoryById(id).subscribe({
 
       next: (asset: AssetCategory) => {
@@ -76,7 +79,6 @@ export class AssestcategoriesComponent {
     });
   }
   onDelete(id: string): void {
-    debugger;
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this category?',
       accept: () => {

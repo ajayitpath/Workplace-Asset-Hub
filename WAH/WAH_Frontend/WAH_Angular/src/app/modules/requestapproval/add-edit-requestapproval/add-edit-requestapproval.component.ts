@@ -30,7 +30,6 @@ export class AddEditRequestapprovalComponent {
   submitRequest(): void {
     if (this.requestForm.valid) {
       const requestData: AssetRequestCreateDto = this.requestForm.value;
-      console.log('Submitting Request:', requestData);
 
       this.assetRequestService.createRequest(requestData).subscribe({
         next: (response) => {

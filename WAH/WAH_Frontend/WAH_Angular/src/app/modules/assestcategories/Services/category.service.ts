@@ -28,7 +28,6 @@ export class CategoryService {
 
   // PUT: Update Category
   updateCategory(id: string, payload: AssetCategory): Observable<any> {
-    debugger;
     return this.http.put(`${this.baseUrl}/${id}`, payload);
   }
 

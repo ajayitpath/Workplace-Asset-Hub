@@ -51,7 +51,11 @@ export class RequestapprovalComponent {
         this.assetRequests = data;
         this.filteredRequests = data;
         this.loading = false;
-        console.log('Asset requests loaded:', data);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Data Loaded',
+          detail: 'Asset requests loaded successfully.'
+        });
       },
       error: () => {
         this.loading = false;
@@ -71,7 +75,6 @@ export class RequestapprovalComponent {
   onToggleStatus(rowData: any): void {
     const newStatus = rowData.Status === 'Approved' ? 'Rejected' : 'Approved';
     const requestId = rowData.RequestId;
-    console.log('Toggling status for request:', requestId, 'to', newStatus);
     this.confirmationService.confirm({
       message: `Are you sure you want to ${newStatus.toLowerCase()} this request?`,
       accept: () => {
