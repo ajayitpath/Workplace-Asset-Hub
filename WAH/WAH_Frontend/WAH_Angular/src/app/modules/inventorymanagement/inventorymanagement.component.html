@@ -1,4 +1,3 @@
-
 <div class="inventory-management-container">
   <!-- Header -->
   <div class="header">
@@ -8,41 +7,17 @@
   <!-- Toolbar -->
   <div class="toolbar">
     <div class="left">
-      <input
-        type="text"
-        pInputText
-        placeholder="Search Item"
-        [(ngModel)]="searchText"
-        (input)="onSearchChange()"
-      />
-      <button
-        pButton
-        type="button"
-        icon="pi pi-search"
-        class="p-button-sm p-button-secondary"
-        (click)="onSearchChange()"
-      ></button>
+      <input type="text" pInputText placeholder="Search Item" [(ngModel)]="searchText" (input)="onSearchChange()" />
     </div>
 
     <div class="right">
-      <button
-        pButton
-        type="button"
-        icon="pi pi-plus"
-        label="Add Inventory"
-        class="p-button-sm p-button-primary"
-        (click)="onAddInventory()"
-      ></button>
+      <button pButton type="button" icon="pi pi-plus" label="Add Inventory" class="p-button-sm p-button-primary"
+        (click)="onAddInventory()"></button>
     </div>
   </div>
 
   <!-- Reusable Table -->
-  <app-reusabletable
-    [columns]="columns"
-    [data]="filteredData"
-    [showActions]="true"
-    (edit)="onEdit($event)"
-    (delete)="onDelete($event)"
-    (view)="onView($event)">
+  <app-reusabletable [columns]="columns" [data]="filteredData" [showActions]="true" (edit)="onEdit($event)"
+    (delete)="onDelete($event)" (view)="onView($event)">
   </app-reusabletable>
 </div>

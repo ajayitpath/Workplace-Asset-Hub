@@ -2,23 +2,41 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssetManagementComponent } from '../asset-management/asset-management.component';
 import { SharedModule } from '../../shared/Module/shared.module';
 import { InventorymanagementComponent } from '../inventorymanagement/inventorymanagement.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-
-
+import { AddEditComponent } from '../asset-management/add-edit/add-edit.component';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { TextareaModule } from 'primeng/textarea';
+import { RequestapprovalComponent } from '../requestapproval/requestapproval.component';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { AssestcategoriesComponent } from '../assestcategories/assestcategories.component';
+import { AddEditCategoriesComponent } from '../assestcategories/add-edit-categories/add-edit-categories.component';
+import { ToastModule } from 'primeng/toast';
+import { AddEditRequestapprovalComponent } from '../requestapproval/add-edit-requestapproval/add-edit-requestapproval.component';
 @NgModule({
-  declarations: [DashboardComponent, AssetManagementComponent, InventorymanagementComponent],
+  declarations: [DashboardComponent, AssetManagementComponent, InventorymanagementComponent, AddEditComponent, RequestapprovalComponent, AssestcategoriesComponent, AddEditCategoriesComponent, AddEditRequestapprovalComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     FormsModule,
+    ToggleButtonModule,
+    ReactiveFormsModule,
     SharedModule,
     InputTextModule,
-    ButtonModule
-  ]
+    ButtonModule,
+    TextareaModule,
+    DialogModule,
+    DropdownModule,
+    ConfirmDialogModule,
+    ToastModule
+  ],
+  providers: [ConfirmationService, MessageService],
 })
 export class DashboardModule { }

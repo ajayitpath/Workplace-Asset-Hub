@@ -38,6 +38,43 @@
   display: flex;
   justify-content: flex-end;
 }
+/* Apply same layout and styling from Member Details to Asset Details */
+
+.plan-details-container {
+  padding: 20px;
+}
+
+.customh1 {
+  text-align: center;
+  color: darkblue;
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.plan-detail-block {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  background: whitesmoke;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.label1 {
+  font-weight: bold;
+  color: black !important;
+  min-width: 140px;
+  font-size: 15px;
+}
+
+.plan-value {
+  color: #666;
+  font-size: 15px;
+}
+
 
 @media (max-width: 640px) {
   .toolbar {

@@ -21,9 +21,10 @@ constructor(private router: Router) {
     });
 }
   menuItems = [
-       { key: 'dashboard', label: 'Dashboard', icon: 'pi pi-th-large' },
+    { key: 'admin-dashboard', label: 'Dashboard', icon: 'pi pi-th-large' },
     { key: 'asset-management', label: 'Asset Management', icon: 'pi pi-briefcase' },
     { key: 'inventory-management', label: 'Inventory Management', icon: 'pi pi-box' },
+    { key: 'asset-categories', label: 'Asset Categories', icon: 'pi pi-tags' },
     { key: 'requests-approvals', label: 'Requests & Approvals', icon: 'pi pi-check-square' },
     { key: 'notifications-reminders', label: 'Notifications & Reminders', icon: 'pi pi-bell' },
     { key: 'reports-analytics', label: 'Reports & Analytics', icon: 'pi pi-chart-bar' },
@@ -43,6 +44,7 @@ constructor(private router: Router) {
 
   setActive(key: string) {
     this.activeMenuItem = key;
-        this.router.navigate(['/admin-dashboard/', key]);
+    this.router.navigate(['/dashboard/', key]);
   }
+
 }

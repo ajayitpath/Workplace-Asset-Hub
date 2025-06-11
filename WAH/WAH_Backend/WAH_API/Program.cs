@@ -15,6 +15,7 @@ using WAH.DAL.EntityModels.AuthEntities;
 using WAH.DAL.Repositories.Implementations;
 using WAH.DAL.Repositories.Interfaces;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Database
@@ -31,7 +32,8 @@ builder.Services.AddScoped<IOtpService, OtpService>();
 builder.Services.AddScoped<IAssetService, AssetService>();
 builder.Services.AddScoped<IAssetRequestService, AssetRequestService>();
 builder.Services.AddScoped<IAssetCategoryService, AssetCategoryService>();
-
+builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+builder.Services.AddScoped<IGenericRepository<UserProfileEntity>, GenericRepository<UserProfileEntity>>();
 builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<DatabaseSeeder>();
 
@@ -64,16 +66,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
-// Fix for CS0305: Specify the generic type parameter explicitly
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserProfileService, UserProfileService>();
-builder.Services.AddScoped<IGenericRepository<UserProfileEntity>, GenericRepository<UserProfileEntity>>();
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); 
-//Add for email service - otp stored in cache
 builder.Services.AddMemoryCache();
 
 builder.Services.AddCors(options =>
@@ -83,14 +76,11 @@ builder.Services.AddCors(options =>
         {
             policy.AllowAnyOrigin() // frontend origin
                   .AllowAnyHeader()
-                  .AllowAnyMethod();
-                 
+                  .AllowAnyMethod();     
         });
 });
 
-
 var app = builder.Build();
-
 // Seed Admin
 using (var scope = app.Services.CreateScope())
 {
@@ -104,8 +94,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowAngularApp");
 app.UseCors("AllowFrontendDev");
-
+app.UseCors("AllowFrontendDev");
 app.UseHttpsRedirection();
 app.UseRouting(); //AM Added
 

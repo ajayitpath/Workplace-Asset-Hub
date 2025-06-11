@@ -1,0 +1,82 @@
+form.p-fluid {
+  max-width: 400px;
+  margin: 1rem auto;
+  padding: 1rem;
+  background-color: var(--card-background);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: var(--text-color);
+}
+
+/* Field styles */
+.p-field {
+  margin-bottom: 1.5rem;
+}
+
+.p-field label {
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Inputs and Dropdown */
+.p-field input,
+.p-dropdown {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--input-border);
+  font-size: 1rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.p-error {
+  color: var(--error-color, #dc3545); 
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+/* Input focus effect */
+.p-field input:focus,
+.p-dropdown.p-focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+/* Buttons */
+.p-d-flex.p-jc-between {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+button[pButton] {
+  min-width: 120px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+}
+
+button[type="submit"] {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+button.p-button-secondary {
+  background-color: var(--secondary-color);
+  color: #fff;
+}
+
+button.p-button-secondary:hover {
+  background-color: #545b62;
+}
