@@ -5,14 +5,18 @@ import assetReducer from './slices/assetSlice';
 import requestReducer from './slices/requestSlice';
 import uiReducer from './slices/uiSlice';
 
-const store = {
-  reducers: {
+const store = configureStore({
+  reducer: {
     auth: authReducer,
-    user: userReducer,
+    user: userReducer, 
     asset: assetReducer,
     request: requestReducer,
-    ui: uiReducer,
+    ui: uiReducer
   },
-};
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
 
 export default store;

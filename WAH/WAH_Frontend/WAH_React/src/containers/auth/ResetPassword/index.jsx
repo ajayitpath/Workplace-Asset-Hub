@@ -1,9 +1,10 @@
-import React from 'react';
-import { TextField, Button, Typography, Paper } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Button, Typography, Paper, InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import resetPasswordSchema from '../../../schema/ResetPassword.schema.js';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import URLS from '../../../constants/urls.js';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,8 +15,14 @@ const ResetPassword = () => {
   const { loading } = useSelector(state => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
-  const token = location.state?.token;
-  const email = new URLSearchParams(location.search).get('email');
+
+    const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const params = new URLSearchParams(location.search);
+  const token = params.get('token');
+  const email = params.get('email');
+
 
     const {
     register,
@@ -57,33 +64,60 @@ const ResetPassword = () => {
         <Typography variant="h5" className="text-center mb-4 text-primary-700 font-semibold p-2 gap-2">
           Reset Password
         </Typography>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="p-4 flex flex-col gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4 flex flex-col gap-4">
           <TextField
             {...register('newPassword')}
             label="New Password"
-            type="password"
+            type={showNewPassword ? 'text' : 'password'}
             fullWidth
             error={!!errors.newPassword}
             helperText={errors.newPassword?.message}
             className="mb-4"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                    edge="end"
+                  >
+                    {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
-          <TextField
+         <TextField
             {...register('confirmPassword')}
             label="Confirm Password"
-            type="password"
+            type={showConfirmPassword ? 'text' : 'password'}
             fullWidth
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword?.message}
-            className="mb-4"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    edge="end"
+                  >
+                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
-          <Button
+           <Button
             variant="contained"
             fullWidth
             type="submit"
             disabled={loading}
-            className="bg-primary-600 hover:bg-primary-700"
+            sx={{
+              mt: 2,
+              py: 1.5,
+              textTransform: 'none',
+            }}
           >
-            {loading? "Resetting password" : "Reset Password"}
+            {loading ? 'Resetting Password...' : 'Reset Password'}
           </Button>
         </form>
       </Paper>

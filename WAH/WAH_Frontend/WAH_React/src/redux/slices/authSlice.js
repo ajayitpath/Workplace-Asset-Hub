@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { registerUser } from "../../services/Auth/AuthService";
+
 import {
   loginThunk,
   registerThunk,
@@ -15,7 +15,7 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
-  resetToken: null,
+  resetToken: null, 
   otpVerified: false
 };
 
@@ -38,12 +38,22 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.user = action.payload.user;
       localStorage.setItem('token', action.payload.token);
+      localStorage.setItem('user',action.payload.user)
     },
     setUser(state, action) {
     state.user = action.payload;
   }
   },
   extraReducers: (builder) => {
+//     const {
+//   loginThunk,
+//   registerThunk,
+//   forgotPasswordThunk,
+//   resetPasswordThunk,
+//   verifyOtpThunk,
+//   resendOtpThunk
+// } = require('../thunks/authThunk');
+
     builder
       // Login
       .addCase(loginThunk.pending, (state) => {
@@ -127,5 +137,8 @@ const authSlice = createSlice({
 });
 
 export const { logout, clearError, loginSuccess, setUser } = authSlice.actions;
-
+// export const authReducer = authSlice.reducer;
 export default authSlice.reducer;
+
+
+// export default authSlice.reducer;
