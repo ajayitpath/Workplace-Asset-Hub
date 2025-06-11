@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { ApiAssetResponse, Asset } from '../../shared/Model/asset.model';
 import { AssetService } from './Services/asset.service';
 import { forkJoin } from 'rxjs';
-import { CategoryService } from './Services/category.service';
+import { CategoryService } from '../assestcategories/Services/category.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-asset-management',
@@ -38,7 +38,8 @@ export class AssetManagementComponent {
     private assetService: AssetService,
     private categoryService: CategoryService,
     private fb: FormBuilder,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService   
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +58,7 @@ export class AssetManagementComponent {
         console.log('Categories loaded:', categories);
 
         const categoryMap = new Map<string, string>(
-          categories.map(cat => [String(cat.value), cat.label])
+          categories.map(cat => [String(cat.CategoryId), cat.CategoryName])
         );
 
         this.assets = assets.map(asset => {
@@ -137,7 +138,10 @@ export class AssetManagementComponent {
         this.selectedAsset = asset;
         this.showForm = true;
       },
-      error: err => console.error('Error fetching asset:', err)
+      error: err => {
+        console.error('Error fetching asset:', err);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to fetch asset details.' });
+      }
     });
   }
 
@@ -214,6 +218,8 @@ export class AssetManagementComponent {
   }
 
   onView(id: string): void {
+    debugger;
+    console.log('View Asset ID:', id);
     this.assetService.getAssetById(id).subscribe({
       next: asset => {
         this.viewAsset = asset;

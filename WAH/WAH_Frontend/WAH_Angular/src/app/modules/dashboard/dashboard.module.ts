@@ -16,8 +16,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { TextareaModule } from 'primeng/textarea';
 import { RequestapprovalComponent } from '../requestapproval/requestapproval.component';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { AssestcategoriesComponent } from '../assestcategories/assestcategories.component';
+import { AddEditCategoriesComponent } from '../assestcategories/add-edit-categories/add-edit-categories.component';
+import { ToastModule } from 'primeng/toast';
+import { AddEditRequestapprovalComponent } from '../requestapproval/add-edit-requestapproval/add-edit-requestapproval.component';
 @NgModule({
-  declarations: [DashboardComponent, AssetManagementComponent, InventorymanagementComponent, AddEditComponent, RequestapprovalComponent],
+  declarations: [DashboardComponent, AssetManagementComponent, InventorymanagementComponent, AddEditComponent, RequestapprovalComponent, AssestcategoriesComponent, AddEditCategoriesComponent, AddEditRequestapprovalComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -31,7 +35,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     DialogModule,
     DropdownModule,
     ConfirmDialogModule,
-    
+    ToastModule
   ],
   providers: [ConfirmationService, MessageService],
 })

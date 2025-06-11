@@ -54,7 +54,7 @@
 
 .plan-detail-block {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; 
   align-items: center;
   padding: 12px 15px;
   margin-bottom: 12px;

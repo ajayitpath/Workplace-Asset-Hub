@@ -10,7 +10,7 @@ import { InventoryItemModel } from '../../shared/Model/inventory.model';
   styleUrl: './inventorymanagement.component.css'
 })
 export class InventorymanagementComponent {
- public inventoryItems: InventoryItemModel[] = [];
+  public inventoryItems: InventoryItemModel[] = [];
   filteredData: InventoryItemModel[] = [];
   searchText = '';
 
@@ -18,7 +18,7 @@ export class InventorymanagementComponent {
     { field: 'itemName', header: 'Item Name' },
     { field: 'category', header: 'Category' },
     { field: 'currentStock', header: 'Current Stock' },
-    { field:'status', header: 'Status' },
+    { field: 'status', header: 'Status' },
   ];
 
   ngOnInit(): void {
@@ -33,20 +33,19 @@ export class InventorymanagementComponent {
       )
     );
   }
-  onAddInventory()
-  {
-    
+  onAddInventory() {
+
   }
 
-  onEdit(data:string) {
-    
+  onEdit(data: string) {
+
   }
 
   onDelete(id: string) {
- 
+
   }
 
   onView(id: string) {
-    
+
   }
 }

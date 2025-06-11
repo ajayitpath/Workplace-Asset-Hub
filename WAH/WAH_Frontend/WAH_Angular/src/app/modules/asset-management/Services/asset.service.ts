@@ -9,7 +9,7 @@ import { ApiAssetResponse, Asset } from '../../../shared/Model/asset.model';
 export class AssetService {
 
   private baseUrl = 'https://localhost:7126/api/Asset';
-   constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   createAsset(asset: Asset): Observable<Asset> {
     return this.http.post<Asset>(this.baseUrl, asset);
@@ -24,12 +24,10 @@ export class AssetService {
   }
 
   deleteAsset(id: string): Observable<void> {
-    debugger
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
   getAllAssets(): Observable<Asset[]> {
- 
     return this.http.get<Asset[]>(`${this.baseUrl}/list`);
   }
 

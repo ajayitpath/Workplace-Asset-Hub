@@ -21,6 +21,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageService } from 'primeng/api';
+import { AssestcategoriesComponent } from '../assestcategories/assestcategories.component';
+import { AssetManagementComponent } from '../asset-management/asset-management.component';
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, ResetpasswordComponent, EmailVerifyComponent],
   imports: [

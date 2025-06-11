@@ -1,9 +1,8 @@
-
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AssetService } from '../Services/asset.service';
 import { ApiAssetResponse, Asset } from '../../../shared/Model/asset.model';
-import { CategoryService } from '../Services/category.service';
+import { CategoryService } from '../../assestcategories/Services/category.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -18,15 +17,15 @@ export class AddEditComponent {
   @Output() formClose = new EventEmitter<boolean>();
 
   assetForm!: FormGroup;
-  selectedAssetId: string | null = null; 
+  selectedAssetId: string | null = null;
   categoryList: { label: string; value: string }[] = [];
 
   constructor(
-    private fb: FormBuilder, 
-    private assetService: AssetService, 
-    private categoryService: CategoryService,   
-    private route: ActivatedRoute 
-  ) {}
+    private fb: FormBuilder,
+    private assetService: AssetService,
+    private categoryService: CategoryService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -61,8 +60,8 @@ export class AddEditComponent {
       assetCode: ['', Validators.required],
       categoryId: ['', Validators.required],
       brand: ['', Validators.required],
-      model: ['',Validators.required],
-      specification: ['',Validators.required],
+      model: ['', Validators.required],
+      specification: ['', Validators.required],
       quantityTotal: [1, [Validators.required, Validators.min(1)]],
     });
   }
@@ -82,7 +81,7 @@ export class AddEditComponent {
     }
   }
 
- private resetForm(): void {
+  private resetForm(): void {
     this.assetForm.reset({
       assetId: null,
       assetName: '',
@@ -127,7 +126,7 @@ export class AddEditComponent {
   onSubmit(): void {
     if (this.assetForm.valid) {
       const payload: Asset = this.assetForm.value;
-    
+
       const assetId = this.selectedAssetId || payload.assetId;
 
       if (this.isEditMode && assetId) {
