@@ -12,8 +12,8 @@ using WAH.DAL.Data;
 namespace WAH.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250604094643_addedtemporaryusers")]
-    partial class addedtemporaryusers
+    [Migration("20250611063122_Added_Inventory")]
+    partial class Added_Inventory
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,7 +131,6 @@ namespace WAH.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SerialNumber")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -395,6 +394,122 @@ namespace WAH.DAL.Migrations
                     b.ToTable("UserProfiles");
                 });
 
+            modelBuilder.Entity("WAH.DAL.EntityModels.InventoryEntities.InventoryAuditEntity", b =>
+                {
+                    b.Property<Guid>("AuditId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ActualQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("AuditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("AuditedBy")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ExpectedQuantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("AuditId");
+
+                    b.HasIndex("AssetId");
+
+                    b.ToTable("InventoryAudits", (string)null);
+                });
+
+            modelBuilder.Entity("WAH.DAL.EntityModels.InventoryEntities.InventoryEntity", b =>
+                {
+                    b.Property<Guid>("InventoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("LocationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("QuantityAvailable")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantityReserved")
+                        .HasColumnType("int");
+
+                    b.HasKey("InventoryId");
+
+                    b.HasIndex("AssetId");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Inventories", (string)null);
+                });
+
+            modelBuilder.Entity("WAH.DAL.EntityModels.InventoryEntities.StockInEntity", b =>
+                {
+                    b.Property<Guid>("StockInId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReceivedBy")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("ReceivedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("StockInId");
+
+                    b.HasIndex("AssetId");
+
+                    b.ToTable("StockIns", (string)null);
+                });
+
+            modelBuilder.Entity("WAH.DAL.EntityModels.InventoryEntities.StockOutEntity", b =>
+                {
+                    b.Property<Guid>("StockOutId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IssuedBy")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("IssuedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IssuedTo")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("StockOutId");
+
+                    b.HasIndex("AssetId");
+
+                    b.ToTable("StockOuts", (string)null);
+                });
+
             modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetAssignmentEntity", b =>
                 {
                     b.HasOne("WAH.DAL.EntityModels.AssetEntities.AssetItemEntity", "AssetItem")
@@ -504,6 +619,57 @@ namespace WAH.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WAH.DAL.EntityModels.InventoryEntities.InventoryAuditEntity", b =>
+                {
+                    b.HasOne("WAH.DAL.EntityModels.AssetEntities.AssetEntity", "Asset")
+                        .WithMany()
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Asset");
+                });
+
+            modelBuilder.Entity("WAH.DAL.EntityModels.InventoryEntities.InventoryEntity", b =>
+                {
+                    b.HasOne("WAH.DAL.EntityModels.AssetEntities.AssetEntity", "Asset")
+                        .WithMany()
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WAH.DAL.EntityModels.AssetEntities.LocationEntity", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Asset");
+
+                    b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("WAH.DAL.EntityModels.InventoryEntities.StockInEntity", b =>
+                {
+                    b.HasOne("WAH.DAL.EntityModels.AssetEntities.AssetEntity", "Asset")
+                        .WithMany()
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Asset");
+                });
+
+            modelBuilder.Entity("WAH.DAL.EntityModels.InventoryEntities.StockOutEntity", b =>
+                {
+                    b.HasOne("WAH.DAL.EntityModels.AssetEntities.AssetEntity", "Asset")
+                        .WithMany()
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Asset");
                 });
 
             modelBuilder.Entity("WAH.DAL.EntityModels.AssetEntities.AssetCategoryEntity", b =>
