@@ -1,0 +1,32 @@
+<form [formGroup]="requestForm" (ngSubmit)="submitRequest()" class="p-fluid">
+
+    <div class="field mb-3">
+        <label for="assetId">Asset</label>
+        <input id="assetId" type="text" pInputText formControlName="assetId"
+            [ngClass]="{ 'p-invalid': requestForm.get('assetId')?.invalid && requestForm.get('assetId')?.touched }" />
+        <small class="p-error" *ngIf="requestForm.get('assetId')?.invalid && requestForm.get('assetId')?.touched">
+            Asset is required.
+        </small>
+    </div>
+
+    <div class="field mb-3">
+        <label for="userId">User</label>
+        <input id="userId" type="text" pInputText formControlName="userId"
+            [ngClass]="{ 'p-invalid': requestForm.get('userId')?.invalid && requestForm.get('userId')?.touched }" />
+        <small class="p-error" *ngIf="requestForm.get('userId')?.invalid && requestForm.get('userId')?.touched">
+            User is required.
+        </small>
+    </div>
+
+    <div class="field mb-3">
+        <label for="quantityRequested">Quantity</label>
+        <input id="quantityRequested" type="number" pInputText formControlName="quantityRequested"
+            [ngClass]="{ 'p-invalid': requestForm.get('quantityRequested')?.invalid && requestForm.get('quantityRequested')?.touched }" />
+        <small class="p-error"
+            *ngIf="requestForm.get('quantityRequested')?.invalid && requestForm.get('quantityRequested')?.touched">
+            Quantity must be at least 1.
+        </small>
+    </div>
+
+    <button type="submit" pButton label="Submit Request" [disabled]="requestForm.invalid"></button>
+</form>

@@ -1,0 +1,46 @@
+<div class="asset-category-container p-4 bg-white rounded shadow-sm">
+  <!-- Header -->
+  <div class="header mb-4 text-center">
+    <h2 class="title">Asset Categories</h2>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <div class="left flex-grow-1">
+      <span class="p-input-icon-left w-100">
+        <input type="text" pInputText placeholder="Search Category" [(ngModel)]="searchText" class="w-100"
+          (input)="onSearchChange()" />
+      </span>
+    </div>
+    <div class="right">
+      <button pButton type="button" icon="pi pi-plus" label="Add Category" class="p-button-sm p-button-primary"
+        (click)="onAddCategory()"></button>
+    </div>
+  </div>
+
+  <!-- Reusable Table -->
+  <app-reusabletable [columns]="columns" [data]="filteredCategories" idFieldName="CategoryId" [showActions]="true"
+    (edit)="onEdit($event)" (delete)="onDelete($event)" (view)="onView($event)">
+  </app-reusabletable>
+
+  <p-dialog header="{{ isEditMode ? 'Edit Category' : 'Add Category' }}" [(visible)]="showForm" [modal]="true"
+    [closable]="true" [style]="{ width: '30vw' }" (onHide)="onFormClose(false)">
+    <app-add-edit-categories [isEditMode]="isEditMode" [categoryData]="selectedCategory"
+      (formClose)="onFormClose($event)">
+    </app-add-edit-categories>
+  </p-dialog>
+
+  <!-- View Dialog -->
+  <p-dialog [(visible)]="showViewDialog" [modal]="true" [style]="{ width: '500px' }" [closable]="true">
+    <div class="plan-details-container" *ngIf="viewCategory">
+      <h1 class="customh1">Category Details</h1>
+
+      <div class="plan-detail-block">
+        <label class="label1">Category Name:</label>
+        <span class="plan-value">{{ viewCategory.CategoryName }}</span>
+      </div>
+    </div>
+  </p-dialog>
+</div>
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

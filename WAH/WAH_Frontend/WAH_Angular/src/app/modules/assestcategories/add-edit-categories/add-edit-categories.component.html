@@ -1,0 +1,22 @@
+<form (ngSubmit)="save()" [formGroup]="categoryForm" class="p-fluid p-4 shadow rounded bg-white">
+  <h3 class="mb-4">Category Form</h3>
+
+  <div class="field mb-3">
+    <label for="CategoryName" class="form-label font-weight-bold">Category Name</label>
+    <input id="CategoryName" type="text" pInputText formControlName="CategoryName" class="form-control" [ngClass]="{
+        'p-invalid': categoryForm.get('CategoryName')?.invalid && categoryForm.get('CategoryName')?.touched
+      }" />
+    <small *ngIf="categoryForm.get('CategoryName')?.invalid && categoryForm.get('CategoryName')?.touched"
+      class="p-error">
+      Category name is required.
+    </small>
+  </div>
+
+  <div class="d-flex justify-content-between gap-2 mt-4">
+    <button pButton label="Cancel" class="p-button-text p-button-secondary" (click)="closeForm(false)"
+      type="button"></button>
+    <button pButton label="Save" type="submit" class="p-button p-button-primary"></button>
+  </div>
+</form>
+
+<p-toast></p-toast>

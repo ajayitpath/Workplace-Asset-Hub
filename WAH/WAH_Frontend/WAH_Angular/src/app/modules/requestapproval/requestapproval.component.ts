@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { AssetrequestapproveService } from './services/assetrequestapprove.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AssetRequestDto } from '../../shared/Model/assetrequestapprove';
-
-
+import { AssetRequestCreateDto, AssetRequestDto } from '../../shared/Model/assetrequestapprove';
 
 @Component({
   selector: 'app-requestapproval',
@@ -12,13 +10,21 @@ import { AssetRequestDto } from '../../shared/Model/assetrequestapprove';
   styleUrl: './requestapproval.component.css'
 })
 export class RequestapprovalComponent {
-   assetRequests: AssetRequestDto[] = [];
+  onAddCategory() {
+    this.isEditMode = false;
+    this.selectedCategory = null;
+    this.showForm = true;
+  }
+  assetRequests: AssetRequestDto[] = [];
   filteredRequests: AssetRequestDto[] = [];
   searchText: string = '';
   loading = false;
-selectedRequest: AssetRequestDto | null = null;
+  selectedRequest: AssetRequestDto | null = null;
   viewRequest: any | null = null;
-showViewDialog: boolean = false;
+  showViewDialog: boolean = false;
+  showForm: boolean = false;
+  isEditMode: boolean = false;
+  selectedCategory: AssetRequestCreateDto | null = null;
 
   columns = [
     { field: 'AssetName', header: 'Asset Name' },
@@ -32,7 +38,7 @@ showViewDialog: boolean = false;
     private requestService: AssetrequestapproveService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadRequests();
@@ -45,7 +51,11 @@ showViewDialog: boolean = false;
         this.assetRequests = data;
         this.filteredRequests = data;
         this.loading = false;
-        console.log('Asset requests loaded:', data);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Data Loaded',
+          detail: 'Asset requests loaded successfully.'
+        });
       },
       error: () => {
         this.loading = false;
@@ -62,36 +72,40 @@ showViewDialog: boolean = false;
     );
   }
 
-onToggleStatus(rowData: any): void {
-  debugger
-  const newStatus = rowData.Status === 'Approved' ? 'Rejected' : 'Approved';
-  const requestId = rowData.RequestId;
-console.log('Toggling status for request:', requestId, 'to', newStatus);
-  this.confirmationService.confirm({
-    message: `Are you sure you want to ${newStatus.toLowerCase()} this request?`,
-    accept: () => {
-      this.requestService.updateStatus(requestId, newStatus).subscribe({
-        next: () => {
-          this.messageService.add({ severity: 'success', summary: `${newStatus} Successfully` });
-          this.loadRequests();
-        },
-        error: () => {
-          this.loadRequests();
-        }
-      });
-    },
-    reject: () => {
-      // revert toggle UI change if user cancels
-      this.loadRequests();
-    }
-  });
-}
-
-
-  onView(request: AssetRequestDto): void {
-this.viewRequest = request;
-this.showViewDialog = true;
-
+  onToggleStatus(rowData: any): void {
+    const newStatus = rowData.Status === 'Approved' ? 'Rejected' : 'Approved';
+    const requestId = rowData.RequestId;
+    this.confirmationService.confirm({
+      message: `Are you sure you want to ${newStatus.toLowerCase()} this request?`,
+      accept: () => {
+        this.requestService.updateStatus(requestId, newStatus).subscribe({
+          next: () => {
+            this.messageService.add({ severity: 'success', summary: `${newStatus} Successfully` });
+            this.loadRequests();
+          },
+          error: () => {
+            this.loadRequests();
+          }
+        });
+      },
+      reject: () => {
+        // revert toggle UI change if user cancels
+        this.loadRequests();
+      }
+    });
   }
 
+  onView(request: AssetRequestDto): void {
+    this.viewRequest = request;
+    this.showViewDialog = true;
+  }
+  onFormClose() {
+    this.showForm = false;
+    this.selectedCategory = null;
+  }
+
+  onFormSubmit() {
+    this.showForm = false;
+    this.loadRequests();  // refresh the list after submit
+  }
 }

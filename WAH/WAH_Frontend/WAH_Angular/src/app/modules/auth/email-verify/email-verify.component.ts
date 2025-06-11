@@ -19,7 +19,6 @@ export class EmailVerifyComponent {
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private route: ActivatedRoute, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    console.log('ngOnInit called');
     this.otpForm = this.fb.group({
       otp: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]]
     });
