@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WAH.DAL.EntityModels.AuthEntities;
 using WAH.DAL.EntityModels.AssetEntities;
+using WAH.DAL.EntityModels.InventoryEntities;
 
 namespace WAH.DAL.Data
 {
@@ -25,6 +26,11 @@ namespace WAH.DAL.Data
         public DbSet<LocationEntity> Locations { get; set; }
         public DbSet<AssetAssignmentEntity> AssetAssignments { get; set; }
         public DbSet<AssetRequestEntity> AssetRequests { get; set; }
+        // Inventory Entities
+        public DbSet<InventoryEntity> Inventories { get; set; }
+        public DbSet<StockInEntity> StockIns { get; set; }
+        public DbSet<StockOutEntity> StockOuts { get; set; }
+        public DbSet<InventoryAuditEntity> InventoryAudits { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
