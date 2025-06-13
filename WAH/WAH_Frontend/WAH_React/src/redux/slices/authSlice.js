@@ -6,13 +6,13 @@ import {
   forgotPasswordThunk,
   resetPasswordThunk,
   verifyOtpThunk,
-  resendOtpThunk
+  resendOtpThunk,
+  setAuthUserFromToken
 } from '../thunks/authThunk';
 
 const initialState = {
   isAuthenticated: !!localStorage.getItem('token'),
   token: localStorage.getItem('token'),
-  user: null,
   loading: false,
   error: null,
   resetToken: null, 
@@ -26,7 +26,6 @@ const authSlice = createSlice({
     logout(state) {
       state.isAuthenticated = false;
       state.token = null;
-      state.user = null;
       localStorage.removeItem('token');
     },
     clearError(state) {
@@ -36,24 +35,12 @@ const authSlice = createSlice({
     loginSuccess(state, action) {
       state.isAuthenticated = true;
       state.token = action.payload.token;
-      state.user = action.payload.user;
-      localStorage.setItem('token', action.payload.token);
-      localStorage.setItem('user',action.payload.user)
     },
     setUser(state, action) {
     state.user = action.payload;
-  }
+  },
   },
   extraReducers: (builder) => {
-//     const {
-//   loginThunk,
-//   registerThunk,
-//   forgotPasswordThunk,
-//   resetPasswordThunk,
-//   verifyOtpThunk,
-//   resendOtpThunk
-// } = require('../thunks/authThunk');
-
     builder
       // Login
       .addCase(loginThunk.pending, (state) => {
@@ -64,7 +51,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = true;
         state.token = action.payload.token;
-        localStorage.setItem('token', action.payload.token);
       })
       .addCase(loginThunk.rejected, (state, action) => {
         state.loading = false;
@@ -132,13 +118,21 @@ const authSlice = createSlice({
       .addCase(resendOtpThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(setAuthUserFromToken.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(setAuthUserFromToken.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(setAuthUserFromToken.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   }
 });
 
 export const { logout, clearError, loginSuccess, setUser } = authSlice.actions;
-// export const authReducer = authSlice.reducer;
 export default authSlice.reducer;
 
-
-// export default authSlice.reducer;

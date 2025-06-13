@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { jwtDecode } from "jwt-decode";
 import {
     loginUser, 
   registerUser, 
@@ -7,12 +8,17 @@ import {
   verifyOtp,
   resendOtp 
 } from './../../services/Auth/AuthService';
+import { loginSuccess, setUser } from "../slices/authSlice";
 
 export const loginThunk = createAsyncThunk(
   'auth/login',
-  async (credentials, { rejectWithValue }) => {
+  async (credentials, { dispatch, rejectWithValue }) => {
     try {
       const data = await loginUser(credentials);
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        await dispatch(setAuthUserFromToken(data.token));
+      }
       return data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
@@ -76,6 +82,20 @@ export const resendOtpThunk = createAsyncThunk(
       return data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+export const setAuthUserFromToken = createAsyncThunk(
+  'auth/setAuthUser',
+  async (token, { dispatch }) => {
+    try {
+      const decodedUser = jwtDecode(token);
+      dispatch(setUser(decodedUser));
+      dispatch(loginSuccess({ token }));
+      return decodedUser;
+    } catch {
+      throw new Error('Invalid token');
     }
   }
 );

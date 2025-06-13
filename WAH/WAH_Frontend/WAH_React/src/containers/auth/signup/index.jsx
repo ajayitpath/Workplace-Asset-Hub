@@ -1,6 +1,6 @@
 // File: components/forms/SignupForm.jsx
 
-import React, { useState } from "react";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,13 +11,9 @@ import {
   Avatar,
   IconButton,
   TextField,
-
   MenuItem,
-
   FormControl,
-
   InputLabel,
-
   Select,
   InputAdornment,
   Button,
@@ -37,6 +33,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerThunk } from "../../../redux/thunks/authThunk";
 import { ROLES } from "../../../constants/roles";
 import { genderOptions } from "../../../constants/enums";
+import PasswordInput from "../../../components/PasswordInput";
 
 const DEFAULT_ROLE_ID = 3;
 
@@ -46,17 +43,12 @@ const SignupForm = () => {
 
   const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   const {
-
     register,
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-
     resolver: yupResolver(signupSchema),
     mode: "onChange",
     defaultValues: {
@@ -71,37 +63,6 @@ const SignupForm = () => {
       deskNo: "",
     },
   });
-
-  // useEffect(() => {
-  //   if (selectedImage?.[0]) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => setImagePreview(reader.result);
-  //     reader.readAsDataURL(selectedImage[0]);
-  //   } else {
-  //     setImagePreview(null);
-  //   }
-  // }, [selectedImage]);
-
-  //   const onSubmit = async (data) => {
-  //   try {
-  //     const formData = new FormData();
-  //     Object.entries(data).forEach(([key, value]) => {
-  //       if (key === "profileImage" && value[0]) {
-  //         formData.append("profileImageUrl", value[0]);
-  //       } else if (key !== 'role' && value !== null && value !== undefined) { // Skip role field
-  //         formData.append(key, value);
-  //       }
-  //     });
-
-  //     const resultAction = await dispatch(registerThunk(formData));
-  //     if (registerThunk.fulfilled.match(resultAction)) {
-  //       toast.success("Registration successful! Please verify your email.");
-  //       navigate("/otp-verification", { state: { email: data.email } });
-  //     }
-  //   } catch (error) {
-  //     toast.error(error.message || "Registration failed");
-  //   }
-  // };
 
   const onSubmit = async (data) => {
     try {
@@ -158,31 +119,6 @@ const SignupForm = () => {
         </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Avatar Upload
-          <div className="flex justify-center mb-4">
-            <div className="relative">
-              <Avatar
-                src={imagePreview || defaultAvatar}
-                sx={{ width: 120, height: 120, boxShadow: 2 }}
-              />
-              <div
-                className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow cursor-pointer"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <EditIcon sx={{ fontSize: 16, color: "#5974FC" }} />
-              </div>
-            </div>
-          </div> */}
-
-          {/* <input
-            type="file"
-            accept="image/*"
-            {...register("profileImage")}
-            ref={fileInputRef}
-            style={{ display: "none" }}
-            onChange={(e) => setValue("profileImage", [e.target.files[0]])}
-          /> */}
-
           {/* Form Fields */}
           <div className="grid grid-cols-2 gap-6 mb-8">
             <FormInput
@@ -211,44 +147,18 @@ const SignupForm = () => {
               error={errors.phoneNumber?.message}
             />
 
-            <TextField
+            <PasswordInput
               label="Password"
-              type={showPassword ? "text" : "password"}
-              fullWidth
-              {...register("password")}
-              error={!!errors.password}
-              helperText={errors.password?.message}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowPassword((prev) => !prev)}
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
+              name="password"
+              register={register}
+              error={errors.password}
             />
 
-            <TextField
+            <PasswordInput
               label="Confirm Password"
-              type={showConfirmPassword ? "text" : "password"}
-              fullWidth
-              {...register("confirmPassword")}
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword?.message}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowConfirmPassword((prev) => !prev)}
-                    >
-                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
+              name="confirmPassword"
+              register={register}
+              error={errors.password}
             />
 
             <TextField
@@ -328,7 +238,6 @@ const SignupForm = () => {
       </Paper>
     </Box>
   );
-
 };
 
 export default SignupForm;

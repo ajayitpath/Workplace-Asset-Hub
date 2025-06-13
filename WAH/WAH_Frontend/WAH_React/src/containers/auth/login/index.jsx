@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import loginSchema from "../../../schema/login.schema";
@@ -14,18 +14,14 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import { Navigate } from "react-router-dom";
 import { loginThunk } from "../../../redux/thunks/authThunk";
-
+import PasswordInput from '../../../components/PasswordInput';
 
 const Login = () => {
-   
-  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading } = useSelector(state => state.auth);
@@ -38,21 +34,20 @@ const Login = () => {
     resolver: yupResolver(loginSchema),
   });
 
-const onSubmit = async (data) => {
-  try {
-    const resultAction = await dispatch(loginThunk(data));
-    if (loginThunk.fulfilled.match(resultAction)) {
-      const token = resultAction.payload.token;
-      const userInfo = jwtDecode(token);
-      dispatch(setUser(userInfo));
-      toast.success('Login successful!');
-      navigate(URLS.DASHBOARD);
+  const onSubmit = async (data) => {
+    try {
+      const resultAction = await dispatch(loginThunk(data));
+      
+      if (loginThunk.fulfilled.match(resultAction)) {
+        toast.success('Login successful!');
+        navigate(URLS.DASHBOARD);
+      } else {
+        toast.error(resultAction.payload || 'Login failed');
+      }
+    } catch (error) {
+      toast.error(error.message || 'Login failed');
     }
-  } catch (error) {
-    toast.error(error.message || 'Login failed');
-  }
-};
-
+  };
 
   return (
     <Box
@@ -96,32 +91,13 @@ const onSubmit = async (data) => {
             helperText={errors.email?.message}
           />
 
-          <TextField
+          <PasswordInput
             label="Password"
-            variant="outlined"
-            type={showPassword ? "text" : "password"}
-            fullWidth
-            margin="normal"
-            {...register("password")}
-            error={Boolean(errors.password)}
-            helperText={errors.password?.message}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
-                    onClick={() => setShowPassword((show) => !show)}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
+            name="password"
+            register={register}
+            error={errors.password}
           />
-
+          
           <Button
             type="submit"
             fullWidth

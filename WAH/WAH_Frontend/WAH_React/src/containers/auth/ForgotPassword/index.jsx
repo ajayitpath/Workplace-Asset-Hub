@@ -28,7 +28,6 @@ const ForgotPassword = () => {
       const resultAction = await dispatch(forgotPasswordThunk(data.email));
       if (forgotPasswordThunk.fulfilled.match(resultAction)) {
         toast.success("Reset password link sent to your email");
-        // navigate(URLS.RESET_PASSWORD);
       }
     } catch (error) {
       toast.error(error.message || "Failed to process request");

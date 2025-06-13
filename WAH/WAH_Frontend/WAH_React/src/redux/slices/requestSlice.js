@@ -1,4 +1,3 @@
-// File: src/redux/slices/requestSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
