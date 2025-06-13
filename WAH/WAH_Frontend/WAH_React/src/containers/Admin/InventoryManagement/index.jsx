@@ -29,7 +29,7 @@ const handleDeleteConfirm = () =>{
   return (
      <>
       <div className='flex flex-wrap w-full min-h-screen'>
-        {/* sidebar  */}
+        {/* sidebar added */}
         <AdminSidebar />
         {/* Asset List table  */}
         <div className='flex-1 max-w-full'>
@@ -51,10 +51,10 @@ const handleDeleteConfirm = () =>{
                     <th className="py-3 px-4 text-left">Assigned To</th>
                     <th className="py-3 px-4 text-left">Actions</th>
                   </tr>
-                </thead>
+                </thead>      
                 <tbody>
                   {assetData.map(asset=>(
-             
+               
                     <tr className="border-b hover:bg-blue-50">
                       <td className="py-2 px-4">{asset.name}</td>
                       <td className="py-2 px-4">{asset.type}</td>
