@@ -7,7 +7,6 @@ const URLS = {
     VERIFY_EMAIL: '/verify-email',
     DASHBOARD: '/dashboard',
     ASSETMANAGE: '/asset-management',
-    INVENTORYMANAGE: '/inventory-management',
     PROFILE: '/profile',
     SETTINGS: '/settings',
     HELP: '/help',

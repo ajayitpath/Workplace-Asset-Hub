@@ -1,22 +1,62 @@
-import React from 'react';
-import { TextField, Button, Typography, Paper } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Button, Typography, Paper, InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import resetPasswordSchema from './ResetPassword.schema.js';
+import resetPasswordSchema from '../../../schema/ResetPassword.schema.js';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import URLS from '../../../constants/urls.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetPasswordThunk } from '../../../redux/thunks/authThunk.js';
 
 const ResetPassword = () => {
-  const {
+   const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.auth);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+    const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const params = new URLSearchParams(location.search);
+  const token = params.get('token');
+  const email = params.get('email');
+
+
+    const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(resetPasswordSchema),
   });
 
   const onSubmit = async (data) => {
-    console.log('Reset Password Data:', data);
-    // TODO: Call API to reset password
+
+    if (!token || !email) {
+      toast.error('Invalid reset password link');
+      return;
+    }
+
+    try {
+      const resultAction = await dispatch(resetPasswordThunk({
+        token,
+        email,
+        newPassword: data.newPassword,
+        confirmPassword: data.confirmPassword
+      }));
+      
+      if (resetPasswordThunk.fulfilled.match(resultAction)) {
+        toast.success('Password reset successful');
+        navigate(URLS.LOGIN);
+      }
+    } catch (error) {
+      toast.error(error.message || 'Password reset failed');
+    }
   };
+
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-100 to-blue-200 p-4 gap-4">
@@ -24,33 +64,60 @@ const ResetPassword = () => {
         <Typography variant="h5" className="text-center mb-4 text-primary-700 font-semibold p-2 gap-2">
           Reset Password
         </Typography>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="p-4 flex flex-col gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4 flex flex-col gap-4">
           <TextField
             {...register('newPassword')}
             label="New Password"
-            type="password"
+            type={showNewPassword ? 'text' : 'password'}
             fullWidth
             error={!!errors.newPassword}
             helperText={errors.newPassword?.message}
             className="mb-4"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                    edge="end"
+                  >
+                    {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
-          <TextField
+         <TextField
             {...register('confirmPassword')}
             label="Confirm Password"
-            type="password"
+            type={showConfirmPassword ? 'text' : 'password'}
             fullWidth
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword?.message}
-            className="mb-4"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    edge="end"
+                  >
+                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
-          <Button
+           <Button
             variant="contained"
             fullWidth
             type="submit"
-            disabled={isSubmitting}
-            className="bg-primary-600 hover:bg-primary-700"
+            disabled={loading}
+            sx={{
+              mt: 2,
+              py: 1.5,
+              textTransform: 'none',
+            }}
           >
-            Reset Password
+            {loading ? 'Resetting Password...' : 'Reset Password'}
           </Button>
         </form>
       </Paper>

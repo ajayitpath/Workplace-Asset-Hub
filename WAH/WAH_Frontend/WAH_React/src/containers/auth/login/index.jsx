@@ -1,41 +1,82 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import loginSchema from './login.schema';
-import { useNavigate } from 'react-router-dom';
-import URLS from '../../../constants/urls';
-import { Button, TextField, Typography, Box, Paper } from '@mui/material';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import loginSchema from "../../../schema/login.schema";
+import { useNavigate } from "react-router-dom";
+import URLS from "../../../constants/urls";
+import { setUser } from "../../../redux/slices/authSlice";
+import {
+  Button,
+  TextField,
+  Typography,
+  Box,
+  Paper,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
+import { Navigate } from "react-router-dom";
+import { loginThunk } from "../../../redux/thunks/authThunk";
+import PasswordInput from '../../../components/PasswordInput';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { loading } = useSelector(state => state.auth);
+
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    resolver: yupResolver(loginSchema)
+    resolver: yupResolver(loginSchema),
   });
 
   const onSubmit = async (data) => {
-    console.log('Login form data:', data);
-    // await login(data);
-    // setToken(response.token);
-    // navigate(URLS.DASHBOARD);
+    try {
+      const resultAction = await dispatch(loginThunk(data));
+      
+      if (loginThunk.fulfilled.match(resultAction)) {
+        toast.success('Login successful!');
+        navigate(URLS.DASHBOARD);
+      } else {
+        toast.error(resultAction.payload || 'Login failed');
+      }
+    } catch (error) {
+      toast.error(error.message || 'Login failed');
+    }
   };
 
   return (
     <Box
       sx={{
-        minHeight: '100vh',
-        backgroundColor: '#F4F4F6',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        p: 2
+        minHeight: "100vh",
+        backgroundColor: (theme) => theme.palette.background.default,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        p: 2,
       }}
     >
-      <Paper elevation={6} sx={{ p: 4, borderRadius: 4, width: '100%', maxWidth: 400 }}>
-        <Typography variant="h5" fontWeight="bold" textAlign="center" mb={3} color="#2F52FF">
+      <Paper
+        elevation={1}
+        sx={{
+          p: 4,
+          borderRadius: 4,
+          width: "100%",
+          maxWidth: 400,
+          backgroundColor: (theme) => theme.palette.background.paper,
+        }}
+      >
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          textAlign="center"
+          mb={3}
+          color="rgb(0, 0, 0)"
+        >
           Login
         </Typography>
 
@@ -45,22 +86,18 @@ const Login = () => {
             variant="outlined"
             fullWidth
             margin="normal"
-            {...register('email')}
+            {...register("email")}
             error={Boolean(errors.email)}
             helperText={errors.email?.message}
           />
 
-          <TextField
+          <PasswordInput
             label="Password"
-            variant="outlined"
-            type="password"
-            fullWidth
-            margin="normal"
-            {...register('password')}
-            error={Boolean(errors.password)}
-            helperText={errors.password?.message}
+            name="password"
+            register={register}
+            error={errors.password}
           />
-
+          
           <Button
             type="submit"
             fullWidth
@@ -68,21 +105,21 @@ const Login = () => {
             sx={{
               mt: 2,
               mb: 1,
-              backgroundColor: '#2F52FF',
-              textTransform: 'none',
-              '&:hover': {
-                backgroundColor: '#1C3AEF'
-              }
+              backgroundColor: (theme) => theme.palette.primary.main,
+              textTransform: "none",
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.primary.dark,
+              },
             }}
           >
-            Login
+            {loading? "Logging-in" : "Login"}
           </Button>
 
           <Typography
             variant="body2"
             align="center"
             color="#2F35F0"
-            sx={{ cursor: 'pointer', mt: 2 }}
+            sx={{ cursor: "pointer", mt: 2 }}
             onClick={() => navigate(URLS.FORGOT_PASSWORD)}
           >
             Forgot Password?
@@ -92,7 +129,7 @@ const Login = () => {
             variant="body2"
             align="center"
             color="#2F35F0"
-            sx={{ cursor: 'pointer', mt: 1 }}
+            sx={{ cursor: "pointer", mt: 1 }}
             onClick={() => navigate(URLS.SIGNUP)}
           >
             Don't have an account? Sign up

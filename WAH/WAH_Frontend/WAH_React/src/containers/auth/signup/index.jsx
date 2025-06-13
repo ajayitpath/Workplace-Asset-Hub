@@ -1,444 +1,243 @@
-import React from "react";
+// File: components/forms/SignupForm.jsx
 
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import signupSchema from "./signup.schema";
-
-import { registerUser } from "../../../services/Auth/AuthService";
-
-import { useState } from "react";
-
-import FormInput from "../../../components/FormInput";
-
 import {
-
-  TextField,
-
-  MenuItem,
-
-  FormControl,
-
-  InputLabel,
-
-  Select,
-
-  Button,
-
+  Box,
+  Paper,
+  Typography,
   Avatar,
-
+  IconButton,
+  TextField,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  InputAdornment,
+  Button,
 } from "@mui/material";
+import {
+  Visibility,
+  VisibilityOff,
+  Edit as EditIcon,
+} from "@mui/icons-material";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
+import signupSchema from "../../../schema/signup.schema";
+import URLS from "../../../constants/urls";
+import FormInput from "../../../components/FormInput";
+import { useDispatch, useSelector } from "react-redux";
+import { registerThunk } from "../../../redux/thunks/authThunk";
+import { ROLES } from "../../../constants/roles";
+import { genderOptions } from "../../../constants/enums";
+import PasswordInput from "../../../components/PasswordInput";
 
-
-const genders = ["Male", "Female", "Other"];
-
-
+const DEFAULT_ROLE_ID = 3;
 
 const SignupForm = () => {
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
 
-  const [imagePreview, setImagePreview] = useState(null);
+  const navigate = useNavigate();
 
   const {
-
     register,
-
-    handleSubmit,
-
     control,
-
+    handleSubmit,
     formState: { errors },
-
-    watch,
-
-    reset,
-
   } = useForm({
-
     resolver: yupResolver(signupSchema),
-
+    mode: "onChange",
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      gender: "",
+      dob: "",
+      password: "",
+      confirmPassword: "",
+      deskNo: "",
+    },
   });
 
-
-
   const onSubmit = async (data) => {
-
-    const formData = new FormData();
-
-    Object.entries(data).forEach(([key, value]) => {
-
-      if (key === "profileImage") {
-
-        formData.append("profileImageUrl", value[0]); // backend expects `profileImageUrl`
-
-      } else {
-
-        formData.append(key, value);
-
-      }
-
-    });
-
-
-
     try {
+      // Format date to match DateOnly in C#
+      const formattedData = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        gender: parseInt(data.gender), // Convert to number enum
+        dob: new Date(data.dob).toISOString().split("T")[0], // Format: YYYY-MM-DD
+        deskNo: data.deskNo || null,
+        roleId: 3, // Default role ID for User
+      };
 
-      const response = await registerUser(formData);
-
-      console.log("Registered:", response);
-
-      alert("User registered successfully!");
-
-      reset();
-
-      setImagePreview(null);
-
-    } catch (err) {
-
-      console.error(err);
-
-      alert("Registration failed.");
-
+      const resultAction = await dispatch(registerThunk(formattedData));
+      if (registerThunk.fulfilled.match(resultAction)) {
+        toast.success("Registration successful! Please verify your email.");
+        navigate("/verify-email", { state: { email: data.email } });
+      }
+    } catch (error) {
+      toast.error(error.message || "Registration failed");
     }
-
   };
 
-
-
-  const selectedImage = watch("profileImage");
-
-
-
-  React.useEffect(() => {
-
-    if (selectedImage?.[0]) {
-
-      const reader = new FileReader();
-
-      reader.onloadend = () => setImagePreview(reader.result);
-
-      reader.readAsDataURL(selectedImage[0]);
-
-    } else {
-
-      setImagePreview(null);
-
-    }
-
-  }, [selectedImage]);
-
-
-
   return (
-
-    <form
-
-      onSubmit={handleSubmit(onSubmit)}
-
-      className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md space-y-4"
-
+    <Box
+      sx={{
+        minHeight: "100vh",
+        backgroundColor: (theme) => theme.palette.background.default,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        p: 2,
+      }}
     >
-
-      <div className="grid grid-cols-2 sm:grid-cols-1 gap-4">
-
-        <FormInput
-
-          label="First Name"
-
-          name="firstName"
-
-          register={register}
-
-          error={errors.firstName?.message}
-
-        />
-
-        <FormInput
-
-          label="Last Name"
-
-          name="lastName"
-
-          register={register}
-
-          error={errors.lastName?.message}
-
-        />
-
-        <FormInput
-
-          label="Email"
-
-          name="email"
-
-          type="email"
-
-          register={register}
-
-          error={errors.email?.message}
-
-        />
-
-        <FormInput
-
-          label="Phone Number"
-
-          name="phoneNumber"
-
-          register={register}
-
-          error={errors.phoneNumber?.message}
-
-        />
-
-        <FormInput
-
-          label="Password"
-
-          name="password"
-
-          type="password"
-
-          register={register}
-
-          error={errors.password?.message}
-
-        />
-
-        <FormInput
-
-          label="Confirm Password"
-
-          name="confirmPassword"
-
-          type="password"
-
-          register={register}
-
-          error={errors.confirmPassword?.message}
-
-        />
-
-        {/* <FormInput
-
-          label="Desk Number (optional)"
-
-          name="deskNo"
-
-          register={register}
-
-          error={errors.deskNo?.message}
-
-        /> */}
-
-        <div>
-
-          {/* <label className="block text-sm font-medium">Gender</label>
-
-          <select {...register("gender")} className="form-select w-full">
-
-            <option value="">Select Gender</option>
-
-            {genders.map((g) => (
-
-              <option key={g} value={g}>
-
-                {g}
-
-              </option>
-
-            ))}
-
-          </select> */}
-
-          <FormControl fullWidth>
-
-            <InputLabel id="gender-label">Gender</InputLabel>
-
-            <Select
-
-              labelId="gender-label"
-
-              id="gender"
-
-              label="Gender"
-
-              defaultValue=""
-
-              {...register("gender")}
-
-              error={!!errors.gender}
-
-            >
-
-              {genders.map((g) => (
-
-                <MenuItem key={g} value={g}>
-
-                  {g}
-
-                </MenuItem>
-
-              ))}
-
-            </Select>
-
-            <p className="text-red-500 text-xs">{errors.gender?.message}</p>
-
-          </FormControl>
-
-        </div>
-
-
-
-        <div>
-
-          {/* <label className="block text-sm font-medium">Date of Birth</label>
-
-          <input
-
-            type="date"
-
-            {...register("dob")}
-
-            className="form-input w-full"
-
-          />
-
-          <p className="text-red-500 text-xs">{errors.dob?.message}</p> */}
-
-          <TextField
-
-            fullWidth
-
-            label="Date of Birth"
-
-            type="date"
-
-            InputLabelProps={{ shrink: true }}
-
-            {...register("dob")}
-
-            error={!!errors.dob}
-
-            helperText={errors.dob?.message}
-
-          />
-
-        </div>
-
-      </div>
-
-
-
-      <div className="flex items-center justify-center gap-4 w-full max-w-md mx-auto px-4">
-
-        {/* File input with filename */}
-
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 w-full">
-
-          <Button variant="outlined" component="label">
-
-            Upload Image
-
-            <input
-
-              type="file"
-
-              hidden
-
-              accept="image/*"
-
-              className="w-full sm:w-64 cursor-pointer"
-
-              onChange={(e) => {
-
-                const file = e.target.files?.[0];
-
-                if (file) {
-
-                  setImagePreview(URL.createObjectURL(file));
-
-                  setValue("profileImage", file); // Optional if using react-hook-form
-
-                }
-
-              }}
-
+      <Paper
+        elevation={2}
+        sx={{
+          p: 4,
+          borderRadius: 4,
+          width: "100%",
+          maxWidth: 500,
+        }}
+      >
+        <Typography
+          variant="h5"
+          align="center"
+          sx={{ mb: 2, fontWeight: "bold" }}
+        >
+          Create Your Account
+        </Typography>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {/* Form Fields */}
+          <div className="grid grid-cols-2 gap-6 mb-8">
+            <FormInput
+              label="First Name"
+              name="firstName"
+              register={register}
+              error={errors.firstName?.message}
+            />
+            <FormInput
+              label="Last Name"
+              name="lastName"
+              register={register}
+              error={errors.lastName?.message}
+            />
+            <FormInput
+              label="Email"
+              name="email"
+              type="email"
+              register={register}
+              error={errors.email?.message}
+            />
+            <FormInput
+              label="Phone Number"
+              name="phoneNumber"
+              register={register}
+              error={errors.phoneNumber?.message}
             />
 
+            <PasswordInput
+              label="Password"
+              name="password"
+              register={register}
+              error={errors.password}
+            />
+
+            <PasswordInput
+              label="Confirm Password"
+              name="confirmPassword"
+              register={register}
+              error={errors.password}
+            />
+
+            <TextField
+              fullWidth
+              label="Date of Birth"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              {...register("dob")}
+              error={!!errors.dob}
+              helperText={errors.dob?.message}
+              inputProps={{
+                max: new Date().toISOString().split("T")[0], // Prevent future dates
+              }}
+            />
+
+            <FormInput
+              label="Desk Number (optional)"
+              name="deskNo"
+              register={register}
+              error={errors.deskNo?.message}
+            />
+
+            <Controller
+              name="gender"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <FormControl fullWidth error={!!errors.gender}>
+                  <InputLabel id="gender-label">Gender</InputLabel>
+                  <Select labelId="gender-label" label="Gender" {...field}>
+                    {genderOptions.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {errors.gender && (
+                    <FormHelperText error>
+                      {errors.gender.message}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              )}
+            />
+          </div>
+
+          {/* Submit Button */}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={loading}
+            sx={{
+              mt: 2,
+              py: 1.5,
+              textTransform: "none",
+              backgroundColor: (theme) => theme.palette.primary.main,
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.primary.dark,
+              },
+            }}
+          >
+            {loading ? "Registering..." : "Register"}
           </Button>
 
-          {watch("profileImage")?.name && (
-
-            <span className="truncate max-w-[200px] text-sm text-gray-600 text-center">
-
-              {watch("profileImage")?.name}
-
-            </span>
-
-          )}
-
-        </div>
-
-
-
-        {/* Large Avatar preview */}
-
-        {imagePreview && (
-
-          <Avatar
-
-            src={imagePreview}
-
-            alt="Profile Preview"
-
-            sx={{ width: 120, height: 120 }}
-
-            className="shadow-md"
-
-          />
-
-        )}
-
-
-
-        {/* Error message */}
-
-        <p className="text-red-500 text-xs text-center">
-
-          {errors.profileImage?.message}
-
-        </p>
-
-      </div>
-
-
-
-      <div className="flex justify-center pt-4">
-
-        <button
-
-          type="submit"
-
-          className="bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 rounded-md shadow hover:opacity-90 transition"
-
-        >
-
-          Register
-
-        </button>
-
-      </div>
-
-    </form>
-
+          {/* Login Link */}
+          <Typography align="center" variant="body2" sx={{ mt: 2 }}>
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-blue-600 hover:underline font-medium"
+            >
+              Login
+            </Link>
+          </Typography>
+        </form>
+      </Paper>
+    </Box>
   );
-
 };
 
-
-
 export default SignupForm;
-

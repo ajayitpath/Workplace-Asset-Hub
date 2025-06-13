@@ -94,8 +94,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("AllowAngularApp");
-app.UseCors("AllowFrontendDev");
 app.UseCors("AllowFrontendDev");
 app.UseHttpsRedirection();
 app.UseRouting(); //AM Added
