@@ -50,9 +50,17 @@ namespace WAH.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var deleted = await _service.DeleteAsync(id);
-            if (!deleted) return BadRequest("Couldn't delete");
-            return Ok("Category deleted");
+            try
+            {
+                var result = await _service.DeleteAsync(id);
+                if (result)
+                    return NoContent();
+                return BadRequest(new { message = "Failed to delete category" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

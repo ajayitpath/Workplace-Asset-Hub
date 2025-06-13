@@ -7,14 +7,19 @@ namespace WAH.BLL.Services
 {
     public class AssetCategoryService : IAssetCategoryService
     {
-        private readonly IGenericRepository<AssetCategoryEntity> _repo;
-        public AssetCategoryService(IGenericRepository<AssetCategoryEntity> repo)
+        private readonly IGenericRepository<AssetCategoryEntity> _categoryRepo;
+        private readonly IGenericRepository<AssetEntity> _assetRepo;
+
+        public AssetCategoryService(
+            IGenericRepository<AssetCategoryEntity> categoryRepo,
+            IGenericRepository<AssetEntity> assetRepo)
         { 
-            _repo = repo; 
+            _categoryRepo = categoryRepo;
+            _assetRepo = assetRepo;
         }
         public async Task<IEnumerable<AssetCategoryDto>> GetAllAsync()
         {
-            var entities = await _repo.GetAllAsync();
+            var entities = await _categoryRepo.GetAllAsync();
             return entities.Select(e => new AssetCategoryDto
             {
                 CategoryId = e.CategoryId,
@@ -23,7 +28,7 @@ namespace WAH.BLL.Services
         }
         public async Task<AssetCategoryDto?> GetByIdAsync(Guid id)
         {
-            var entity = await _repo.GetByGuidAsync(id);
+            var entity = await _categoryRepo.GetByGuidAsync(id);
             if (entity == null) return null;
             return new AssetCategoryDto
             {
@@ -33,7 +38,7 @@ namespace WAH.BLL.Services
         }
         public async Task<AssetCategoryDto> CreateCategory(AssetCategoryDto dto)
         {
-            var exists = await _repo.FindAsync(x => x.CategoryName == dto.CategoryName);
+            var exists = await _categoryRepo.FindAsync(x => x.CategoryName == dto.CategoryName);
             if (exists.Any())
             {
                 throw new Exception("Category with the same name already exists.");
@@ -43,27 +48,36 @@ namespace WAH.BLL.Services
                 CategoryId = Guid.NewGuid(),
                 CategoryName = dto.CategoryName
             };
-            await _repo.AddAsync(entity);
-            await _repo.SaveChangesAsync();
+            await _categoryRepo.AddAsync(entity);
+            await _categoryRepo.SaveChangesAsync();
             dto.CategoryId = entity.CategoryId;
             return dto;
         }
 
         public async Task<bool> UpdateAsync(AssetCategoryDto dto)
         {
-            var entity = await _repo.GetByGuidAsync(dto.CategoryId);
+            var entity = await _categoryRepo.GetByGuidAsync(dto.CategoryId);
             if (entity == null) return false;
             entity.CategoryName = dto.CategoryName;
-            _repo.Update(entity);
-            await _repo.SaveChangesAsync();
+            await _categoryRepo.SaveChangesAsync();
             return true;
         }
         public async Task<bool> DeleteAsync(Guid id)
         {
-            var entity = await _repo.GetByGuidAsync(id);
-            if (entity == null) return false;
-            _repo.Remove(entity);
-            await _repo.SaveChangesAsync();
+            var entity = await _categoryRepo.GetByGuidAsync(id);
+            if (entity == null) 
+                throw new Exception("Category not found");
+
+            // Check if any assets are using this category
+            var assetsUsingCategory = await _assetRepo.FindAsync(a => a.CategoryId == id && a.IsActive);
+            if (assetsUsingCategory.Any())
+            {
+                var assetCount = assetsUsingCategory.Count();
+                throw new Exception($"Cannot delete category. There are {assetCount} active asset(s) currently using this category. Please reassign or delete these assets first.");
+            }
+
+            _categoryRepo.Remove(entity);
+            await _categoryRepo.SaveChangesAsync();
             return true;
         }    
     }
