@@ -7,6 +7,7 @@ import ResetPassword from "../containers/auth/ResetPassword"
 import OtpVerification from "../containers/auth/OtpVerification"
 import Dashboard from "../containers/Admin/Dashboard"
 import AssetManegement from "../containers/Admin/AssetManegement";
+import Category from "../containers/Admin/Category";
 import InventoryManagement from "../containers/Admin/InventoryManagement"
 import Home from "../components/Home";
 
@@ -15,8 +16,7 @@ const useRoutes = () => {
         {
             id:"root",
             path:URLS.INITIAL,
-            element: <Home/>,
-            isAuth:true,
+            element: <Home/>
         },
         {
             id:"login",
@@ -58,6 +58,12 @@ const useRoutes = () => {
             id:"asset-management",
             path:URLS.ASSETMANAGE,
             element: <AssetManegement/>,
+            isAuth:true,
+        },
+        {
+            id:"category-management",
+            path:URLS.CATEGORY,
+            element: <Category/>,
             isAuth:true,
         },
         {

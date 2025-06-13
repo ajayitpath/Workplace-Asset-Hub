@@ -1,6 +1,6 @@
 import {
   FaTools, FaBoxes, FaClipboardCheck, FaBell, FaChartLine, FaFileAlt,
-  FaQuestionCircle, FaUsersCog, FaCog, FaPlus, FaEye, FaTrash, FaPencilAlt
+  FaQuestionCircle, FaUsersCog, FaCog, FaPlus, FaEye, FaTrash, FaPencilAlt, FaSignOutAlt
 } from 'react-icons/fa';
 import { HiViewGrid } from 'react-icons/hi';
 
@@ -18,7 +18,8 @@ export const icons = {
     add : FaPlus,
     eye : FaEye,
     trash : FaTrash, 
-    pencil : FaPencilAlt
+    pencil : FaPencilAlt,
+    logout : FaSignOutAlt
 }
 export function Icon({ name, ...props }) {
   const IconComponent = icons[name];
