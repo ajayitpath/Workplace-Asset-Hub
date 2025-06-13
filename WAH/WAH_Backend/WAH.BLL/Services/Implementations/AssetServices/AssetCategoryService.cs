@@ -25,7 +25,7 @@ namespace WAH.BLL.Services
                 CategoryId = e.CategoryId,
                 CategoryName = e.CategoryName
             });
-        }
+        } 
         public async Task<AssetCategoryDto?> GetByIdAsync(Guid id)
         {
             var entity = await _categoryRepo.GetByGuidAsync(id);
