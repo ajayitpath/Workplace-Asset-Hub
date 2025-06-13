@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function Home() {
+  console.log("Hello Chaitali");
   return (
     <>
       <div className='flex gap-5 justify-center items-center min-h-screen'>

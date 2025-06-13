@@ -1,4 +1,4 @@
-import {Icon} from '../../../constants/icons';
+import { Icon } from '../../../constants/icons';
 import { Pie, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
 import { Link, NavLink } from 'react-router-dom';
@@ -41,10 +41,10 @@ function Dashboard() {
 
       <div className='flex flex-wrap w-full min-h-screen'>
         {/* Sidebar */}
-       <AdminSidebar/>
+        <AdminSidebar />
 
         {/* Main Content */}
-        <div className='flex-1 max-w-full h-auto lg:h-screen p-4 md:p-8 lg:p-10 space-y-6 md:space-y-10 overflow-auto border-r border-gray-400'>
+        <div className='flex-1 max-w-full h-auto lg:h-screen p-4 md:p-8 lg:p-5 space-y-6 md:space-y-10 overflow-auto border-r border-gray-400'>
           {/* Cards Section */}
           <div className='grid grid-cols-3 md:grid-cols-3 gap-4 md:gap-6'>
             <div className='bg-white p-6 md:p-8 rounded-xl shadow-md hover:shadow-lg transition text-center'>
@@ -78,11 +78,11 @@ function Dashboard() {
 
           {/* Charts Section */}
           <div className="flex flex-wrap md:flex-row justify-evenly items-center mt-6 md:mt-10 gap-6">
-            <div className="bg-white p-4 md:p-5 rounded shadow lg:w-1/3 mb-4 lg:mb-0">
+            <div className="bg-white p-4 md:p-5 rounded shadow w-full md:w-1/3 max-w-lg mb-4 md:mb-0">
               <h2 className="text-lg font-bold mb-2 text-center">Assets Distribution</h2>
               <Pie data={pieData} />
             </div>
-            <div className="bg-white p-4 md:p-5 rounded shadow lg:w-1/2">
+            <div className="bg-white p-4 md:p-5 rounded shadow w-full md:w-1/2 max-w-2xl">
               <h2 className="text-lg font-bold mb-2 text-center">Assets Added Over Months</h2>
               <Bar data={barData} />
             </div>
