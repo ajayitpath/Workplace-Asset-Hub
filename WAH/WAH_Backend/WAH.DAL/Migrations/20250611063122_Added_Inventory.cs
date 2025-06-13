@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WAH.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class RemoveUniquePhoneNumber : Migration
+    public partial class Added_Inventory : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -135,7 +135,7 @@ namespace WAH.DAL.Migrations
                 {
                     AssetItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AssetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SerialNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    SerialNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     PurchaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     WarrantyExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -156,6 +156,98 @@ namespace WAH.DAL.Migrations
                         principalTable: "Locations",
                         principalColumn: "LocationId",
                         onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Inventories",
+                columns: table => new
+                {
+                    InventoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AssetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuantityAvailable = table.Column<int>(type: "int", nullable: false),
+                    QuantityReserved = table.Column<int>(type: "int", nullable: false),
+                    LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Inventories", x => x.InventoryId);
+                    table.ForeignKey(
+                        name: "FK_Inventories_Assets_AssetId",
+                        column: x => x.AssetId,
+                        principalTable: "Assets",
+                        principalColumn: "AssetId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Inventories_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "LocationId",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InventoryAudits",
+                columns: table => new
+                {
+                    AuditId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AssetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ExpectedQuantity = table.Column<int>(type: "int", nullable: false),
+                    ActualQuantity = table.Column<int>(type: "int", nullable: false),
+                    AuditDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AuditedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InventoryAudits", x => x.AuditId);
+                    table.ForeignKey(
+                        name: "FK_InventoryAudits_Assets_AssetId",
+                        column: x => x.AssetId,
+                        principalTable: "Assets",
+                        principalColumn: "AssetId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockIns",
+                columns: table => new
+                {
+                    StockInId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AssetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    ReceivedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReceivedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockIns", x => x.StockInId);
+                    table.ForeignKey(
+                        name: "FK_StockIns_Assets_AssetId",
+                        column: x => x.AssetId,
+                        principalTable: "Assets",
+                        principalColumn: "AssetId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockOuts",
+                columns: table => new
+                {
+                    StockOutId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AssetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    IssuedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IssuedTo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IssuedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockOuts", x => x.StockOutId);
+                    table.ForeignKey(
+                        name: "FK_StockOuts_Assets_AssetId",
+                        column: x => x.AssetId,
+                        principalTable: "Assets",
+                        principalColumn: "AssetId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -290,10 +382,35 @@ namespace WAH.DAL.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Inventories_AssetId",
+                table: "Inventories",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Inventories_LocationId",
+                table: "Inventories",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InventoryAudits_AssetId",
+                table: "InventoryAudits",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Roles_Name",
                 table: "Roles",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StockIns_AssetId",
+                table: "StockIns",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StockOuts_AssetId",
+                table: "StockOuts",
+                column: "AssetId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TemporaryUsers_Email",
@@ -343,6 +460,18 @@ namespace WAH.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AssetRequests");
+
+            migrationBuilder.DropTable(
+                name: "Inventories");
+
+            migrationBuilder.DropTable(
+                name: "InventoryAudits");
+
+            migrationBuilder.DropTable(
+                name: "StockIns");
+
+            migrationBuilder.DropTable(
+                name: "StockOuts");
 
             migrationBuilder.DropTable(
                 name: "TemporaryUsers");
