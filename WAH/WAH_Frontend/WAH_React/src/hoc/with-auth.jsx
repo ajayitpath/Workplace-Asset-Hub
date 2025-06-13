@@ -1,18 +1,20 @@
+
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import URLS from '../constants/urls';
+import { isAuthenticated } from '../utils/auth';
 
 const withAuth = (RenderComponent) => {
-const WarppedComponent = (props) => {
-    const token = localStorage.getItem('token');
-    if (token){
-        return <Navigate to={URLS.INITIAL} replace />;
-    }
-    return <RenderComponent {...props} />;
-
+  const WrappedComponent = (props) => {
+    return isAuthenticated() ? (
+      <Navigate to={URLS.INITIAL} replace />
+    ) : (
+      <RenderComponent {...props} />
+    );
   };
 
-  WarppedComponent.displayName = `withAuth(${RenderComponent.displayName || RenderComponent.name || 'Component'})`;
-  return WarppedComponent;
-}
+  WrappedComponent.displayName = `withAuth(${RenderComponent.displayName || RenderComponent.name || 'Component'})`;
+  return WrappedComponent;
+};
+
 export default withAuth;

@@ -1,25 +1,41 @@
 import axiosInstance from '../../api/axios';
 import ENDPOINTS from '../../api/endpoints';
 
-const loginUser = async (payload) => {
-  const res = await axiosInstance.post(ENDPOINTS.LOGIN, payload);
+const loginUser = async (credentials) => {
+  const { data } = await axiosInstance.post(ENDPOINTS.LOGIN,credentials)
+  return data;
+};
+
+const registerUser = async (formData) => {
+  const res = await axiosInstance.post(ENDPOINTS.REGISTER, formData);
   return res.data;
 };
-const registerUser = async (payload) => {
-  const res = await axiosInstance.post(ENDPOINTS.REGISTER, payload);
+
+const forgotPassword = async (email) => {
+  const res = await axiosInstance.post(ENDPOINTS.FORGOT_PASSWORD, { email });
   return res.data;
 };
-const forgotPassword = async (payload) => {
-  const res = await axiosInstance.post(ENDPOINTS.FORGOT_PASSWORD, payload);
+
+const resetPassword = async (resetData) => {
+  const { token, newPassword, confirmPassword } = resetData;
+  const res = await axiosInstance.post(ENDPOINTS.RESET_PASSWORD, {
+    token,
+    newPassword,
+    confirmPassword
+  });
   return res.data;
 };
-const resetPassword = async (payload) => {
-  const res = await axiosInstance.post(ENDPOINTS.RESET_PASSWORD, payload);
+
+const verifyOtp = async (email, otp) => {
+  const res = await axiosInstance.post(ENDPOINTS.VERIFY_OTP, { email, otp });
   return res.data;
 };
-const verifyEmail = async (payload) => {
-  const res = await axiosInstance.post(ENDPOINTS.VERIFY_EMAIL, payload);
+
+const resendOtp = async (email) => {
+  const res = await axiosInstance.post(ENDPOINTS.RESEND_OTP, { email });
   return res.data;
 };
-export { loginUser, registerUser, forgotPassword, resetPassword, verifyEmail };
+
+
+export { loginUser, registerUser, forgotPassword, resetPassword, verifyOtp, resendOtp };
 

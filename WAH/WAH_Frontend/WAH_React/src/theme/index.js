@@ -11,6 +11,7 @@ const theme = createTheme({
     },
     background: {
       default:'#FFFFFF' ,  // Replace with color from Figma
+      paper: '#FFFFFF',
     },
     text: {
       primary:'#000000' ,

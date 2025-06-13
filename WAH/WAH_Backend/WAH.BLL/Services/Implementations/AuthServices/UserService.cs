@@ -50,7 +50,7 @@ namespace WAH.BLL.Services.Implementations.AuthServices
         {
             var user = (await _userRepository.FindAsync(u => u.Email == dto.Email)).FirstOrDefault();
             if (user == null) return null;
-            string baseUrl = "http://localhost:4200/auth";
+            string baseUrl = "http://localhost:4200";
             var token = _jwtTokenService.GeneratePasswordResetToken(user);
             var resetLink = $"{baseUrl}/reset-password?token={token}&email={dto.Email}";
             var otp = _otpService.GenerateAndCacheOtp(dto.Email);

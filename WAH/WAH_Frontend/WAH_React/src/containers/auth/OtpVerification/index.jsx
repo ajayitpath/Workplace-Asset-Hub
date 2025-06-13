@@ -2,21 +2,59 @@ import React from 'react';
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { otpSchema } from './OtpVerification.schema';
+import { otpSchema } from '../../../schema/OtpVerification.schema';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import URLS from '../../../constants/urls';
+import { useDispatch, useSelector } from 'react-redux';
+import { verifyOtpThunk, resendOtpThunk } from '../../../redux/thunks/authThunk';
 
 const OtpVerification = () => {
+  const dispatch = useDispatch();
+    const { loading } = useSelector(state => state.auth);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const email = location.state?.email;
+  
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(otpSchema),
   });
 
   const onSubmit = async (data) => {
-    console.log('OTP Verification Request:', data);
-    // TODO: Call API to verify OTP
+    if (!email) {
+      toast.error('Email not found');
+      return;
+    }
+    try {
+      const resultAction = await dispatch(verifyOtpThunk({ email, otp: data.otp }));
+      if (verifyOtpThunk.fulfilled.match(resultAction)) {
+        toast.success('Email verified successfully');
+        navigate(URLS.LOGIN);
+      }
+    } catch (error) {
+      toast.error(error.message || 'OTP verification failed');
+    }
   };
+
+  const handleResendOtp = async () => {
+  if (!email) {
+    toast.error('Email not found');
+    return;
+  }
+  try {
+    const resultAction = await dispatch(resendOtpThunk(email));
+    if (resendOtpThunk.fulfilled.match(resultAction)) {
+      toast.success('OTP resent successfully');
+    }
+  } catch (error) {
+    toast.error(error.message || 'Failed to resend OTP');
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-purple-200 p-4 gap-4">
@@ -37,16 +75,16 @@ const OtpVerification = () => {
             variant="contained"
             fullWidth
             type="submit"
-            disabled={isSubmitting}
+            disabled={loading}
             className="bg-primary-600 hover:bg-primary-700"
           >
-            Verify OTP
+            {loading ? 'Verifying...' : 'Verify OTP'}
           </Button>
         </form>
         <Button
           className="mt-4 text-sm text-blue-700 normal-case"
           fullWidth
-          onClick={() => console.log('Resend OTP')}
+          onClick={handleResendOtp}
         >
           Resend OTP
         </Button>

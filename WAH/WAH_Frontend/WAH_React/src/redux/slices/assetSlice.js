@@ -1,4 +1,3 @@
-// File: src/redux/slices/assetSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -6,6 +5,7 @@ const initialState = {
   loading: false,
   error: null,
 };
+
 
 const assetSlice = createSlice({
   name: 'asset',
